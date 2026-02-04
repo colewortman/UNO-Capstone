@@ -1,4 +1,4 @@
-import { HealthResponse } from "../lib/types";
+import { HealthResponse } from "../types";
 
 async function getHealth(): Promise<HealthResponse> {
   const apiUrl = process.env.API_URL || "http://localhost:3001";
