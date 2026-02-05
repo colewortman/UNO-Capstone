@@ -3,6 +3,8 @@ import app from "./app";
 
 const PORT = process.env.PORT || 3001;
 
+// This is a CI/CD test
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
