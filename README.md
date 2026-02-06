@@ -1,8 +1,6 @@
 # UNO-Capstone
 
-## Startup
-
-  ## Both backend and frontend need to be running for the health check to render on the app
+## Startup (Both backend and frontend need to be running for the health check to render on the app)
 
   ### Get the backend API running
   Navigate to the api folder and run: 
