@@ -1,16 +1,23 @@
 # UNO-Capstone
 
-## Startup (Both backend and frontend need to be running for the health check to render on the app)
+## Startup
 
-  ### Get the backend API running
-  Navigate to the api folder and run: 
-    npm install
-    npm run dev
+> **Note:** Both backend and frontend need to be running for the health check to render on the app.
 
-  ### Get the frontend running
-  Navigate to the web folder and run: 
-    npm install
-    npm run dev
+### Backend API
 
-  After the first startup, you shouldn't have to run npm install unless dependencies have changed in the package-lock
-  
+Navigate to the `api` folder and run:
+```bash
+npm install
+npm run dev
+```
+
+### Frontend
+
+Navigate to the `web` folder and run:
+```bash
+npm install
+npm run dev
+```
+
+> **Tip:** After the first startup, you only need to run `npm install` again if dependencies have changed in `package-lock.json`.
