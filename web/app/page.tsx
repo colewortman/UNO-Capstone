@@ -21,6 +21,9 @@ export default function Home() {
         >
           View FAQ
         </Link>
+        <Link href="/animation-lab" className="mt-2 text-lg font-medium text-indigo-600 hover:underline">
+          Animation Lab
+        </Link>
         <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
           <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
             Welcome to the initial website setup!
