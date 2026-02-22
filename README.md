@@ -1,23 +1,13 @@
 # UNO-Capstone
 
-## Startup
+## Demo
 
-> **Note:** Both backend and frontend need to be running for the health check to render on the app.
+Visit the live site using the link: [GitHub Pages](colewortman.github.io/UNO-Capstone/)
 
-### Backend API
+## Code
 
-Navigate to the `api` folder and run:
+To get started locally, navigate to the `web` folder and run:
 ```bash
 npm install
 npm run dev
 ```
-
-### Frontend
-
-Navigate to the `web` folder and run:
-```bash
-npm install
-npm run dev
-```
-
-> **Tip:** After the first startup, you only need to run `npm install` again if dependencies have changed in `package-lock.json`.
