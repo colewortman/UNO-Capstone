@@ -26,6 +26,7 @@ export default function AnimationLab() {
   //   - All animations created here are automatically killed on unmount
   useGSAP(
     () => {
+      // ── Scroll-scrub rotation (Boxes) ────────────────────────────
       gsap.utils.toArray<HTMLElement>(".anim-box").forEach((box) => {
         gsap.to(box, {
           rotation: 360,
@@ -36,6 +37,29 @@ export default function AnimationLab() {
             end: "bottom top", // animation ends when box's bottom edge leaves viewport top
             scrub: 1, // ties progress to scroll; "1" = 1s lag for smoothness
           },
+        });
+      });
+
+      // ── Hover lift with easing (Circles) ─────────────────────────
+      // Easing controls how a value accelerates and decelerates over time.
+      // All circles move the same distance (y: -20px) — only the ease differs,
+      // which is why hover easing is one of the best ways to feel the difference.
+      //
+      // Each circle reads its ease from a data attribute so the GSAP logic stays
+      // generic — the "personality" of each circle lives in the JSX, not here.
+      //
+      // overwrite: "auto" — if a new tween starts before the previous one
+      // finishes (e.g. fast mouse flick in/out), GSAP resolves the conflict
+      // instead of stacking two animations fighting over the same property.
+      gsap.utils.toArray<HTMLElement>(".hover-circle").forEach((circle) => {
+        const easeIn = circle.dataset.easeIn ?? "power2.out";
+        const easeOut = circle.dataset.easeOut ?? "power2.inOut";
+
+        circle.addEventListener("mouseenter", () => {
+          gsap.to(circle, { y: -20, duration: 0.35, ease: easeIn, overwrite: "auto" });
+        });
+        circle.addEventListener("mouseleave", () => {
+          gsap.to(circle, { y: 0, duration: 0.55, ease: easeOut, overwrite: "auto" });
         });
       });
     },
@@ -68,16 +92,43 @@ export default function AnimationLab() {
           </p>
         </section>
 
-        {/* ── Circles ──────────────────────────────────────── */}
+        {/* ── Circles — Hover Easing ───────────────────────── */}
+        {/*
+          All four circles animate the same property (y: -20px) with the same
+          duration — the ONLY difference is the ease curve. Hover each one to
+          feel how the curve changes the "personality" of the motion:
+
+          power2.out  — starts fast, decelerates smoothly. The go-to for most UI.
+          elastic.out — overshoots and oscillates like a spring. Playful, bouncy.
+          back.out    — slightly overshoots before settling. Feels "juicy" / weighty.
+          expo.out    — extremely sharp start, then coasts very gradually to a stop.
+        */}
         <section className="mb-56">
           <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-400">
-            Circles
+            Circles — Hover Easing
           </p>
-          <div className="flex flex-wrap gap-6">
-            <div className="h-24 w-24 rounded-full bg-violet-500" />
-            <div className="h-24 w-24 rounded-full bg-teal-500" />
-            <div className="h-24 w-24 rounded-full bg-orange-400" />
-            <div className="h-24 w-24 rounded-full bg-pink-500" />
+          <div className="flex flex-wrap gap-10">
+            {[
+              { color: "bg-violet-500", easeIn: "power2.out",       easeOut: "power2.inOut",    label: "power2.out"    },
+              { color: "bg-teal-500",   easeIn: "elastic.out(1,0.3)",easeOut: "power2.out",      label: "elastic.out"   },
+              { color: "bg-orange-400", easeIn: "back.out(1.7)",     easeOut: "power2.out",      label: "back.out"      },
+              { color: "bg-pink-500",   easeIn: "expo.out",          easeOut: "power2.out",      label: "expo.out"      },
+            ].map(({ color, easeIn, easeOut, label }) => (
+              <div key={label} className="flex flex-col items-center gap-3">
+                {/*
+                  hover-circle     — GSAP selector target (scoped to containerRef)
+                  data-ease-in/out — read by the useGSAP listener; decouples the
+                                     "which ease" decision from the animation logic
+                  cursor-pointer   — signals interactivity to the user
+                */}
+                <div
+                  className={`hover-circle h-24 w-24 cursor-pointer rounded-full ${color}`}
+                  data-ease-in={easeIn}
+                  data-ease-out={easeOut}
+                />
+                <span className="font-mono text-xs text-zinc-400">{label}</span>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -121,6 +172,70 @@ export default function AnimationLab() {
             <div className="anim-box h-24 w-24 rounded-md bg-emerald-500" />
             <div className="anim-box h-24 w-24 rounded-md bg-amber-400" />
             <div className="anim-box h-24 w-48 rounded-md bg-zinc-700" />
+          </div>
+        </section>
+
+        {/* ── Sticky Positioning ───────────────────────────────────── */}
+        {/*
+          How position: sticky works:
+          1. The element scrolls normally — just like position: relative
+          2. Once it reaches the threshold you set (e.g. top: 32px from the viewport top),
+             it "sticks" in place — just like position: fixed
+          3. BUT it only sticks while its PARENT container is still visible on screen.
+             When the parent exits the viewport, the sticky element is dragged along with it.
+          4. GOTCHA: any ancestor with overflow: hidden / auto / scroll BREAKS sticky!
+             Keep the path from the sticky element to the scroll container overflow-free.
+        */}
+        <section className="mb-56">
+          {/* ── Demo 1: Sticky sidebar ─────────────────────────── */}
+          <p className="mb-3 text-sm font-semibold text-zinc-700">
+            Demo 1 — Sticky sidebar
+          </p>
+          {/*
+            Two-column layout. Left column uses sticky; right column is plain content.
+            The left panel scrolls normally, then sticks at top-8 (32px from viewport top),
+            and stays there until THIS <section> element scrolls off screen.
+          */}
+          <div className="mb-20 flex gap-8">
+            {/* Left: sticky panel */}
+            <div className="w-44 flex-shrink-0">
+              {/*
+                `sticky`  — enables sticky positioning
+                `top-8`   — sticks when the element is 32px from the top of the viewport.
+                            Without a top/bottom/left/right value, sticky does nothing!
+              */}
+              <div className="sticky top-8 rounded-xl bg-violet-500 p-5 text-white shadow-lg">
+                <span className="mb-2 block font-mono text-xs text-violet-200">
+                  sticky top-8
+                </span>
+                <p className="text-sm font-semibold leading-snug">
+                  I scroll normally, then pin 32px from the top.
+                </p>
+                <p className="mt-2 text-xs text-violet-200">
+                  Keep scrolling — I stay here while my parent section is on
+                  screen!
+                </p>
+              </div>
+            </div>
+
+            {/* Right: plain tall content — no special CSS needed */}
+            <div className="flex-1 space-y-4">
+              {Array.from({ length: 9 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm"
+                >
+                  <p className="text-sm font-semibold text-zinc-800">
+                    Item {i + 1}
+                  </p>
+                  <p className="mt-1 text-sm text-zinc-500">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Vestibulum ante ipsum primis in faucibus orci luctus et
+                    ultrices posuere cubilia curae.
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 
