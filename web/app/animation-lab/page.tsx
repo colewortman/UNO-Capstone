@@ -6,12 +6,17 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useLenis } from "lenis/react";
+import SplitType from "split-type";
 
 // Register once at module scope so plugins are available globally
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function AnimationLab() {
   const containerRef = useRef<HTMLDivElement>(null);
+  // Store tween references so replay buttons can call .restart() on demand
+  const charTweenRef = useRef<gsap.core.Tween | null>(null);
+  const lineTweenRef = useRef<gsap.core.Tween | null>(null);
+  const wordTweenRef = useRef<gsap.core.Tween | null>(null);
 
   // Bridge: tell ScrollTrigger to recalculate on every Lenis scroll tick.
   // Without this, ScrollTrigger reads stale scroll positions because Lenis
@@ -40,6 +45,100 @@ export default function AnimationLab() {
         });
       });
 
+      // ── Typography animation (text splitting) ────────────────────
+      // SplitType breaks a text node into individual <span> elements so GSAP
+      // has something to target per character, word, or line.
+      // Without splitting, you can only animate the whole text block at once.
+
+      // Demo 1: Char stagger — animates every character independently.
+      // `types: "chars,words"` splits into both; we animate .chars.
+      // stagger staggers the start time of each char's tween by 0.03s.
+      const charSplit = new SplitType(".typo-chars", { types: "chars,words" });
+      // once: true kills the ScrollTrigger after the first fire so it won't
+      // interfere when the replay button calls .restart() later.
+      charTweenRef.current = gsap.from(charSplit.chars!, {
+        y: 50,
+        opacity: 0,
+        stagger: 0.03, // each char starts 30ms after the previous
+        duration: 0.5,
+        ease: "power3.out",
+        scrollTrigger: { trigger: ".typo-chars", start: "top 85%", once: true },
+      });
+
+      // Demo 2: Line mask reveal — the classic "curtain" effect.
+      // SplitType wraps each visual line in its own div.
+      // We insert an overflow:hidden div around each line (the "mask").
+      // Animating the line from y:"100%" makes it slide up from below the mask —
+      // text appears to emerge from beneath a surface rather than just fading in.
+      const lineSplit = new SplitType(".typo-lines", { types: "lines" });
+      lineSplit.lines?.forEach((line) => {
+        const mask = document.createElement("div");
+        mask.style.overflow = "hidden";
+        line.parentNode!.insertBefore(mask, line);
+        mask.appendChild(line);
+      });
+      lineTweenRef.current = gsap.from(lineSplit.lines!, {
+        y: "100%", // start fully below the overflow:hidden mask
+        duration: 0.75,
+        stagger: 0.12, // each line starts 120ms after the previous
+        ease: "power4.out",
+        scrollTrigger: { trigger: ".typo-lines", start: "top 85%", once: true },
+      });
+
+      // Demo 3: Word stagger with back.out — a "juicy" middle ground.
+      // Splitting by words is less granular than chars but more dynamic than lines.
+      // back.out adds a slight overshoot, making each word feel weighted on arrival.
+      const wordSplit = new SplitType(".typo-words", { types: "words" });
+      wordTweenRef.current = gsap.from(wordSplit.words!, {
+        y: 30,
+        opacity: 0,
+        stagger: 0.07,
+        duration: 0.5,
+        ease: "back.out(1.4)",
+        scrollTrigger: { trigger: ".typo-words", start: "top 85%", once: true },
+      });
+
+      // ── Stacked cards hover reveal ────────────────────────────────
+      // Cards 2 and 3 sit behind card 1 with a small peek offset so the
+      // user can see the stack before interacting.
+      // The CONTAINER is the mouseenter/mouseleave trigger — not card 1.
+      // This means moving from card 1 to the spread cards doesn't collapse
+      // the stack, because the mouse never leaves the container boundary.
+      const cards = gsap.utils.toArray<HTMLElement>(".card-stack");
+      const stackContainer =
+        gsap.utils.toArray<HTMLElement>(".card-stack-container")[0];
+
+      // Initial peek: cards 2 and 3 shift slightly right/down to reveal their edges
+      gsap.set(cards[1], { x: 8, y: 6 });
+      gsap.set(cards[2], { x: 16, y: 12 });
+
+      const gap = 24; // gap-6 = 24px
+
+      stackContainer.addEventListener("mouseenter", () => {
+        const w = cards[0].offsetWidth; // measure at call time for accuracy
+        gsap.to(cards[1], {
+          x: w + gap,
+          y: 0,
+          duration: 0.45,
+          ease: "power2.out",
+          overwrite: "auto",
+        });
+        gsap.to(cards[2], {
+          x: (w + gap) * 2,
+          y: 0,
+          duration: 0.45,
+          ease: "power2.out",
+          delay: 0.05, // slight cascade so cards fan out sequentially
+          overwrite: "auto",
+        });
+      });
+
+      stackContainer.addEventListener("mouseleave", () => {
+        // Collapse back to the peek state
+        gsap.to(cards[1], { x: 8, y: 6, duration: 0.4, ease: "power2.inOut", overwrite: "auto" });
+        gsap.to(cards[2], { x: 16, y: 12, duration: 0.4, ease: "power2.inOut", overwrite: "auto" });
+      });
+
       // ── Hover lift with easing (Circles) ─────────────────────────
       // Easing controls how a value accelerates and decelerates over time.
       // All circles move the same distance (y: -20px) — only the ease differs,
@@ -56,10 +155,20 @@ export default function AnimationLab() {
         const easeOut = circle.dataset.easeOut ?? "power2.inOut";
 
         circle.addEventListener("mouseenter", () => {
-          gsap.to(circle, { y: -20, duration: 0.35, ease: easeIn, overwrite: "auto" });
+          gsap.to(circle, {
+            y: -20,
+            duration: 0.35,
+            ease: easeIn,
+            overwrite: "auto",
+          });
         });
         circle.addEventListener("mouseleave", () => {
-          gsap.to(circle, { y: 0, duration: 0.55, ease: easeOut, overwrite: "auto" });
+          gsap.to(circle, {
+            y: 0,
+            duration: 0.55,
+            ease: easeOut,
+            overwrite: "auto",
+          });
         });
       });
     },
@@ -109,10 +218,30 @@ export default function AnimationLab() {
           </p>
           <div className="flex flex-wrap gap-10">
             {[
-              { color: "bg-violet-500", easeIn: "power2.out",       easeOut: "power2.inOut",    label: "power2.out"    },
-              { color: "bg-teal-500",   easeIn: "elastic.out(1,0.3)",easeOut: "power2.out",      label: "elastic.out"   },
-              { color: "bg-orange-400", easeIn: "back.out(1.7)",     easeOut: "power2.out",      label: "back.out"      },
-              { color: "bg-pink-500",   easeIn: "expo.out",          easeOut: "power2.out",      label: "expo.out"      },
+              {
+                color: "bg-violet-500",
+                easeIn: "power2.out",
+                easeOut: "power2.inOut",
+                label: "power2.out",
+              },
+              {
+                color: "bg-teal-500",
+                easeIn: "elastic.out(1,0.3)",
+                easeOut: "power2.out",
+                label: "elastic.out",
+              },
+              {
+                color: "bg-orange-400",
+                easeIn: "back.out(1.7)",
+                easeOut: "power2.out",
+                label: "back.out",
+              },
+              {
+                color: "bg-pink-500",
+                easeIn: "expo.out",
+                easeOut: "power2.out",
+                label: "expo.out",
+              },
             ].map(({ color, easeIn, easeOut, label }) => (
               <div key={label} className="flex flex-col items-center gap-3">
                 {/*
@@ -133,27 +262,41 @@ export default function AnimationLab() {
         </section>
 
         {/* ── Cards ────────────────────────────────────────── */}
+        {/*
+          All three cards are absolutely positioned at the same spot — stacked.
+          z-index order: Card 1 (top) → Card 2 → Card 3 (bottom).
+          Cards 2 and 3 start with a small x/y peek so the user sees the stack.
+          Hovering the container fans the cards out; leaving collapses them back.
+          The container is the trigger (not card 1) so moving between spread
+          cards doesn't accidentally collapse the animation.
+        */}
         <section className="mb-56">
           <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-400">
             Cards
           </p>
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-3">
+          {/*
+            card-stack-container — GSAP mouseenter/mouseleave target
+            h-44 — reserves space in the normal flow for the absolutely
+                    positioned cards (they'd otherwise collapse to 0 height)
+            cursor-pointer — visual hint that this area is interactive
+          */}
+          <div className="card-stack-container relative h-44 cursor-pointer">
             {[
-              { title: "Card One", color: "border-indigo-200" },
-              { title: "Card Two", color: "border-rose-200" },
-              { title: "Card Three", color: "border-emerald-200" },
-            ].map(({ title, color }) => (
+              { title: "Card One",   color: "border-indigo-200", z: 3 },
+              { title: "Card Two",   color: "border-rose-200",   z: 2 },
+              { title: "Card Three", color: "border-emerald-200", z: 1 },
+            ].map(({ title, color, z }) => (
               <div
                 key={title}
-                className={`rounded-xl border-2 ${color} bg-white p-6 shadow-sm`}
+                style={{ zIndex: z }}
+                className={`card-stack absolute w-64 rounded-xl border-2 ${color} bg-white p-6 shadow-sm`}
               >
                 <h3 className="mb-2 text-lg font-semibold text-zinc-800">
                   {title}
                 </h3>
                 <p className="text-sm text-zinc-500">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Vestibulum ante ipsum primis in faucibus orci luctus et
-                  ultrices posuere cubilia curae.
+                  Vestibulum ante ipsum primis in faucibus.
                 </p>
               </div>
             ))}
@@ -239,51 +382,100 @@ export default function AnimationLab() {
           </div>
         </section>
 
-        {/* ── Typography ───────────────────────────────────── */}
+        {/* ── Typography Animation ─────────────────────────── */}
+        {/*
+          Text splitting = wrapping each char / word / line in its own <span>
+          so GSAP (or any animation library) can target them individually.
+          SplitType does the DOM surgery; GSAP drives the motion.
+
+          Three granularity levels to compare:
+            chars — maximum drama, best for short headings (2–5 words)
+            lines — elegant and fast to read; great for hero sections
+            words — middle ground; natural rhythm for body-sized text
+        */}
         <section className="mb-56">
           <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-400">
-            Typography
+            Typography Animation
           </p>
-          <div className="space-y-4">
-            <h1 className="text-5xl font-bold text-zinc-900">Heading One</h1>
-            <h2 className="text-3xl font-semibold text-zinc-800">
-              Heading Two
+
+          {/* Demo 1: Char stagger ───────────────────────────────── */}
+          {/*
+            SplitType wraps every character in a <span class="char">.
+            GSAP then staggers each span: char 0 starts at t=0, char 1 at t=0.03s,
+            char 2 at t=0.06s … The visual result is a cascade of letters.
+            Works best on short, bold headings — long paragraphs have too many chars.
+          */}
+          <div className="mb-20">
+            <div className="mb-3 flex items-center gap-4">
+              <p className="font-mono text-xs text-zinc-400">
+                types: &quot;chars&quot; · stagger: 0.03s · power3.out
+              </p>
+              <button
+                onClick={() => charTweenRef.current?.restart()}
+                className="rounded bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-200 hover:text-zinc-800"
+              >
+                ↺ Replay
+              </button>
+            </div>
+            <h2 className="typo-chars text-5xl font-bold leading-tight text-zinc-900">
+              Every letter
+              <br />
+              is its own span.
             </h2>
-            <h3 className="text-xl font-medium text-zinc-700">Heading Three</h3>
-            <p className="max-w-prose text-base text-zinc-600">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
-            <p className="max-w-prose text-sm font-light text-zinc-500">
-              Duis aute irure dolor in reprehenderit in voluptate velit esse
-              cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-              cupidatat non proident.
-            </p>
           </div>
-        </section>
 
-        {/* ── Mixed Grid ───────────────────────────────────── */}
-        <section className="mb-56">
-          <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-400">
-            Mixed Grid
-          </p>
-          <div className="grid grid-cols-4 gap-4 items-center">
-            <div className="h-20 w-20 rounded-md bg-indigo-400" />
-            <div className="col-span-2 text-zinc-600 text-sm leading-relaxed">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Pellentesque habitant morbi tristique senectus et netus et
-              malesuada fames.
+          {/* Demo 2: Line mask reveal ───────────────────────────── */}
+          {/*
+            SplitType wraps each visual line in a <div class="line">.
+            We then insert an overflow:hidden wrapper around every .line div —
+            this is the "mask". The line starts at y:100% (fully below the mask)
+            and slides up to y:0. Because the mask hides anything below its edge,
+            the text looks like it's emerging from beneath a surface.
+            This is the most elegant reveal for large hero headings.
+          */}
+          <div className="mb-20">
+            <div className="mb-3 flex items-center gap-4">
+              <p className="font-mono text-xs text-zinc-400">
+                types: &quot;lines&quot; · overflow:hidden mask · y: 100%→0 ·
+                power4.out
+              </p>
+              <button
+                onClick={() => lineTweenRef.current?.restart()}
+                className="rounded bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-200 hover:text-zinc-800"
+              >
+                ↺ Replay
+              </button>
             </div>
-            <div className="h-20 w-20 rounded-full bg-rose-400 justify-self-end" />
+            <h2 className="typo-lines text-5xl font-bold leading-tight text-zinc-900">
+              Lines emerge
+              <br />
+              from beneath
+              <br />
+              the surface.
+            </h2>
+          </div>
 
-            <div className="col-span-2 text-zinc-600 text-sm leading-relaxed">
-              Vestibulum ante ipsum primis in faucibus orci luctus et ultrices
-              posuere cubilia curae; Proin vel ante a orci tempus eleifend.
+          {/* Demo 3: Word stagger ───────────────────────────────── */}
+          {/*
+            Splitting by words is less granular than chars, which makes it
+            readable and natural for longer phrases. back.out adds a slight
+            overshoot so each word "lands" with a satisfying weight.
+          */}
+          <div>
+            <div className="mb-3 flex items-center gap-4">
+              <p className="font-mono text-xs text-zinc-400">
+                types: &quot;words&quot; · stagger: 0.07s · back.out(1.4)
+              </p>
+              <button
+                onClick={() => wordTweenRef.current?.restart()}
+                className="rounded bg-zinc-100 px-2.5 py-1 text-xs font-medium text-zinc-500 transition-colors hover:bg-zinc-200 hover:text-zinc-800"
+              >
+                ↺ Replay
+              </button>
             </div>
-            <div className="h-20 w-20 rounded-md bg-emerald-400" />
-            <div className="h-20 w-20 rounded-full bg-amber-400 justify-self-end" />
+            <p className="typo-words max-w-xl text-3xl font-medium leading-snug text-zinc-700">
+              Words cascade in one by one with ease.
+            </p>
           </div>
         </section>
       </div>
