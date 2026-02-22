@@ -124,6 +124,70 @@ export default function AnimationLab() {
           </div>
         </section>
 
+        {/* ── Sticky Positioning ───────────────────────────────────── */}
+        {/*
+          How position: sticky works:
+          1. The element scrolls normally — just like position: relative
+          2. Once it reaches the threshold you set (e.g. top: 32px from the viewport top),
+             it "sticks" in place — just like position: fixed
+          3. BUT it only sticks while its PARENT container is still visible on screen.
+             When the parent exits the viewport, the sticky element is dragged along with it.
+          4. GOTCHA: any ancestor with overflow: hidden / auto / scroll BREAKS sticky!
+             Keep the path from the sticky element to the scroll container overflow-free.
+        */}
+        <section className="mb-56">
+          {/* ── Demo 1: Sticky sidebar ─────────────────────────── */}
+          <p className="mb-3 text-sm font-semibold text-zinc-700">
+            Demo 1 — Sticky sidebar
+          </p>
+          {/*
+            Two-column layout. Left column uses sticky; right column is plain content.
+            The left panel scrolls normally, then sticks at top-8 (32px from viewport top),
+            and stays there until THIS <section> element scrolls off screen.
+          */}
+          <div className="mb-20 flex gap-8">
+            {/* Left: sticky panel */}
+            <div className="w-44 flex-shrink-0">
+              {/*
+                `sticky`  — enables sticky positioning
+                `top-8`   — sticks when the element is 32px from the top of the viewport.
+                            Without a top/bottom/left/right value, sticky does nothing!
+              */}
+              <div className="sticky top-8 rounded-xl bg-violet-500 p-5 text-white shadow-lg">
+                <span className="mb-2 block font-mono text-xs text-violet-200">
+                  sticky top-8
+                </span>
+                <p className="text-sm font-semibold leading-snug">
+                  I scroll normally, then pin 32px from the top.
+                </p>
+                <p className="mt-2 text-xs text-violet-200">
+                  Keep scrolling — I stay here while my parent section is on
+                  screen!
+                </p>
+              </div>
+            </div>
+
+            {/* Right: plain tall content — no special CSS needed */}
+            <div className="flex-1 space-y-4">
+              {Array.from({ length: 9 }).map((_, i) => (
+                <div
+                  key={i}
+                  className="rounded-lg border border-zinc-200 bg-white p-4 shadow-sm"
+                >
+                  <p className="text-sm font-semibold text-zinc-800">
+                    Item {i + 1}
+                  </p>
+                  <p className="mt-1 text-sm text-zinc-500">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Vestibulum ante ipsum primis in faucibus orci luctus et
+                    ultrices posuere cubilia curae.
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── Typography ───────────────────────────────────── */}
         <section className="mb-56">
           <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-400">
