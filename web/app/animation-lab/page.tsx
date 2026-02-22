@@ -26,6 +26,7 @@ export default function AnimationLab() {
   //   - All animations created here are automatically killed on unmount
   useGSAP(
     () => {
+      // ── Scroll-scrub rotation (Boxes) ────────────────────────────
       gsap.utils.toArray<HTMLElement>(".anim-box").forEach((box) => {
         gsap.to(box, {
           rotation: 360,
@@ -36,6 +37,29 @@ export default function AnimationLab() {
             end: "bottom top", // animation ends when box's bottom edge leaves viewport top
             scrub: 1, // ties progress to scroll; "1" = 1s lag for smoothness
           },
+        });
+      });
+
+      // ── Hover lift with easing (Circles) ─────────────────────────
+      // Easing controls how a value accelerates and decelerates over time.
+      // All circles move the same distance (y: -20px) — only the ease differs,
+      // which is why hover easing is one of the best ways to feel the difference.
+      //
+      // Each circle reads its ease from a data attribute so the GSAP logic stays
+      // generic — the "personality" of each circle lives in the JSX, not here.
+      //
+      // overwrite: "auto" — if a new tween starts before the previous one
+      // finishes (e.g. fast mouse flick in/out), GSAP resolves the conflict
+      // instead of stacking two animations fighting over the same property.
+      gsap.utils.toArray<HTMLElement>(".hover-circle").forEach((circle) => {
+        const easeIn = circle.dataset.easeIn ?? "power2.out";
+        const easeOut = circle.dataset.easeOut ?? "power2.inOut";
+
+        circle.addEventListener("mouseenter", () => {
+          gsap.to(circle, { y: -20, duration: 0.35, ease: easeIn, overwrite: "auto" });
+        });
+        circle.addEventListener("mouseleave", () => {
+          gsap.to(circle, { y: 0, duration: 0.55, ease: easeOut, overwrite: "auto" });
         });
       });
     },
@@ -68,16 +92,43 @@ export default function AnimationLab() {
           </p>
         </section>
 
-        {/* ── Circles ──────────────────────────────────────── */}
+        {/* ── Circles — Hover Easing ───────────────────────── */}
+        {/*
+          All four circles animate the same property (y: -20px) with the same
+          duration — the ONLY difference is the ease curve. Hover each one to
+          feel how the curve changes the "personality" of the motion:
+
+          power2.out  — starts fast, decelerates smoothly. The go-to for most UI.
+          elastic.out — overshoots and oscillates like a spring. Playful, bouncy.
+          back.out    — slightly overshoots before settling. Feels "juicy" / weighty.
+          expo.out    — extremely sharp start, then coasts very gradually to a stop.
+        */}
         <section className="mb-56">
           <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-zinc-400">
-            Circles
+            Circles — Hover Easing
           </p>
-          <div className="flex flex-wrap gap-6">
-            <div className="h-24 w-24 rounded-full bg-violet-500" />
-            <div className="h-24 w-24 rounded-full bg-teal-500" />
-            <div className="h-24 w-24 rounded-full bg-orange-400" />
-            <div className="h-24 w-24 rounded-full bg-pink-500" />
+          <div className="flex flex-wrap gap-10">
+            {[
+              { color: "bg-violet-500", easeIn: "power2.out",       easeOut: "power2.inOut",    label: "power2.out"    },
+              { color: "bg-teal-500",   easeIn: "elastic.out(1,0.3)",easeOut: "power2.out",      label: "elastic.out"   },
+              { color: "bg-orange-400", easeIn: "back.out(1.7)",     easeOut: "power2.out",      label: "back.out"      },
+              { color: "bg-pink-500",   easeIn: "expo.out",          easeOut: "power2.out",      label: "expo.out"      },
+            ].map(({ color, easeIn, easeOut, label }) => (
+              <div key={label} className="flex flex-col items-center gap-3">
+                {/*
+                  hover-circle     — GSAP selector target (scoped to containerRef)
+                  data-ease-in/out — read by the useGSAP listener; decouples the
+                                     "which ease" decision from the animation logic
+                  cursor-pointer   — signals interactivity to the user
+                */}
+                <div
+                  className={`hover-circle h-24 w-24 cursor-pointer rounded-full ${color}`}
+                  data-ease-in={easeIn}
+                  data-ease-out={easeOut}
+                />
+                <span className="font-mono text-xs text-zinc-400">{label}</span>
+              </div>
+            ))}
           </div>
         </section>
 
