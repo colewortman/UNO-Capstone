@@ -2,7 +2,7 @@
 
 ## Demo
 
-Visit the live site using the link: [GitHub Pages](colewortman.github.io/UNO-Capstone/)
+Visit the live site using the GitHub Pages link in the `about` section of the repository
 
 ## Code
 
