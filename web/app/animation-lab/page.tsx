@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -17,6 +17,81 @@ export default function AnimationLab() {
   const charTweenRef = useRef<gsap.core.Tween | null>(null);
   const lineTweenRef = useRef<gsap.core.Tween | null>(null);
   const wordTweenRef = useRef<gsap.core.Tween | null>(null);
+  const vantaDotsRef = useRef<HTMLDivElement>(null);
+  const vantaNetRef = useRef<HTMLDivElement>(null);
+
+  // Vanta.js needs to be initialized after mount since it manipulates the DOM directly.
+  // Dynamic import avoids SSR issues — Three.js and Vanta both need `window`.
+  useEffect(() => {
+    const effects: { destroy: () => void }[] = [];
+
+    const initVanta = async () => {
+      // CRITICAL: Set window.THREE BEFORE importing any Vanta modules.
+      // Each Vanta effect captures `let p = window.THREE` at module load
+      // time — if window.THREE isn't set yet, p is undefined and the
+      // effect silently falls back to a solid backgroundColor.
+      const THREE = await import("three");
+      (window as unknown as Record<string, unknown>).THREE = THREE;
+
+      // Import all Vanta modules AFTER window.THREE is set
+      const [{ default: DOTS }, { default: NET }] = await Promise.all([
+        import("vanta/dist/vanta.dots.min"),
+        import("vanta/dist/vanta.net.min"),
+      ]);
+
+      // ── Dots ────────────────────────────────────────────
+      // Dots has no "speed" option — its animation speed is tied to
+      // spacing (larger = fewer dots = calmer feel).
+      if (vantaDotsRef.current) {
+        effects.push(
+          DOTS({
+            el: vantaDotsRef.current,
+            mouseControls: false,
+            touchControls: false,
+            gyroControls: false,
+            minHeight: 200,
+            minWidth: 200,
+            scale: 1.0,
+            scaleMobile: 1.0,
+            color: 0x2563eb,
+            color2: 0x1e3a5f,
+            backgroundColor: 0x000000,
+            showLines: false,
+            spacing: 35,
+            size: 3,
+            speed: 0.2,
+          }),
+        );
+      }
+
+      // ── Net ─────────────────────────────────────────────
+      if (vantaNetRef.current) {
+        effects.push(
+          NET({
+            el: vantaNetRef.current,
+            mouseControls: true,
+            touchControls: true,
+            gyroControls: false,
+            minHeight: 200,
+            minWidth: 200,
+            scale: 1.0,
+            scaleMobile: 1.0,
+            color: 0x3b82f6,
+            backgroundColor: 0x0a0a0a,
+            points: 6,
+            maxDistance: 22,
+            spacing: 18,
+          }),
+        );
+      }
+    };
+
+    initVanta();
+
+    return () => {
+      effects.forEach((e) => e.destroy());
+    };
+  }, []);
 
   // Bridge: tell ScrollTrigger to recalculate on every Lenis scroll tick.
   // Without this, ScrollTrigger reads stale scroll positions because Lenis
@@ -105,8 +180,9 @@ export default function AnimationLab() {
       // This means moving from card 1 to the spread cards doesn't collapse
       // the stack, because the mouse never leaves the container boundary.
       const cards = gsap.utils.toArray<HTMLElement>(".card-stack");
-      const stackContainer =
-        gsap.utils.toArray<HTMLElement>(".card-stack-container")[0];
+      const stackContainer = gsap.utils.toArray<HTMLElement>(
+        ".card-stack-container",
+      )[0];
 
       // Initial peek: cards 2 and 3 shift slightly right/down to reveal their edges
       gsap.set(cards[1], { x: 8, y: 6 });
@@ -135,8 +211,20 @@ export default function AnimationLab() {
 
       stackContainer.addEventListener("mouseleave", () => {
         // Collapse back to the peek state
-        gsap.to(cards[1], { x: 8, y: 6, duration: 0.4, ease: "power2.inOut", overwrite: "auto" });
-        gsap.to(cards[2], { x: 16, y: 12, duration: 0.4, ease: "power2.inOut", overwrite: "auto" });
+        gsap.to(cards[1], {
+          x: 8,
+          y: 6,
+          duration: 0.4,
+          ease: "power2.inOut",
+          overwrite: "auto",
+        });
+        gsap.to(cards[2], {
+          x: 16,
+          y: 12,
+          duration: 0.4,
+          ease: "power2.inOut",
+          overwrite: "auto",
+        });
       });
 
       // ── Hover lift with easing (Circles) ─────────────────────────
@@ -194,11 +282,99 @@ export default function AnimationLab() {
           <h1 className="text-6xl font-bold tracking-tight text-zinc-900">
             Animation Lab
           </h1>
-          <p className="mt-4 max-w-xl text-lg text-zinc-500">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            Pellentesque euismod, nisi vel consectetur interdum, nisl nunc
-            egestas nunc, vitae tincidunt nisl nunc euismod nunc.
-          </p>
+        </section>
+
+        {/* ── Animated Gradient Background ─────────────────── */}
+        {/*
+          Pure CSS animated gradient — no JS needed.
+          Uses @keyframes to continuously shift a large background-size
+          gradient across the section. The background is 400% wide so
+          there's enough "canvas" for the position to travel smoothly.
+          The animation loops infinitely with ease-in-out for organic motion.
+        */}
+        <section className="gradient-bg relative -mx-8 mb-16 flex min-h-[60vh] items-center justify-center overflow-hidden">
+          <div className="relative z-10 text-center">
+            <h2 className="text-5xl font-bold tracking-tight text-white drop-shadow-lg">
+              Animated Gradient
+            </h2>
+            <p className="mt-4 max-w-md text-lg text-blue-200/80">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Pellentesque euismod, nisi vel consectetur interdum, nisl nunc
+              egestas nunc, vitae tincidunt nisl nunc euismod nunc.
+            </p>
+          </div>
+        </section>
+
+        {/* Inline style tag for the gradient animation keyframes */}
+        <style>{`
+          .gradient-bg {
+            background: linear-gradient(
+              -45deg,
+              #000000,
+              #001233,
+              #001845,
+              #002855,
+              #023e7d,
+              #001233,
+              #000000,
+              #002855
+            );
+            background-size: 400% 400%;
+            animation: gradientShift 12s ease-in-out infinite;
+          }
+
+          @keyframes gradientShift {
+            0% {
+              background-position: 0% 50%;
+            }
+            25% {
+              background-position: 100% 25%;
+            }
+            50% {
+              background-position: 100% 50%;
+            }
+            75% {
+              background-position: 0% 75%;
+            }
+            100% {
+              background-position: 0% 50%;
+            }
+          }
+        `}</style>
+
+        {/* ── Vanta.js Backgrounds ─────────────────────────── */}
+        {/*
+          Vanta.js renders Three.js WebGL scenes into ref'd divs.
+          Dynamic imports avoid SSR crashes (Three.js needs window/document).
+          All effects are destroyed on unmount to prevent memory leaks.
+        */}
+
+        {/* Dots — floating dots with mouse interaction */}
+        <section
+          ref={vantaDotsRef}
+          className="relative -mx-8 mb-16 flex min-h-[60vh] items-center justify-center"
+        >
+          <div className="relative z-10 text-center">
+            <h2 className="text-5xl font-bold tracking-tight text-white drop-shadow-lg">
+              Vanta.js Dots
+            </h2>
+          </div>
+        </section>
+
+        {/* Net — connected node network */}
+        <section
+          ref={vantaNetRef}
+          className="relative -mx-8 mb-16 flex min-h-[60vh] items-center justify-center"
+        >
+          <div className="relative z-10 text-center">
+            <h2 className="text-5xl font-bold tracking-tight text-white drop-shadow-lg">
+              Vanta.js Net
+            </h2>
+            <p className="mt-4 max-w-md text-lg text-blue-200/80">
+              Connected nodes forming a living network. Lines appear between
+              nearby points as they drift.
+            </p>
+          </div>
         </section>
 
         {/* ── Circles — Hover Easing ───────────────────────── */}
@@ -282,8 +458,8 @@ export default function AnimationLab() {
           */}
           <div className="card-stack-container relative h-44 cursor-pointer">
             {[
-              { title: "Card One",   color: "border-indigo-200", z: 3 },
-              { title: "Card Two",   color: "border-rose-200",   z: 2 },
+              { title: "Card One", color: "border-indigo-200", z: 3 },
+              { title: "Card Two", color: "border-rose-200", z: 2 },
               { title: "Card Three", color: "border-emerald-200", z: 1 },
             ].map(({ title, color, z }) => (
               <div
