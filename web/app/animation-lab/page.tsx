@@ -8,11 +8,11 @@ import { useGSAP } from "@gsap/react";
 import { useLenis } from "lenis/react";
 import SplitType from "split-type";
 
-// Register once at module scope so plugins are available globally
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function AnimationLab() {
   const containerRef = useRef<HTMLDivElement>(null);
+
   // Store tween references so replay buttons can call .restart() on demand
   const charTweenRef = useRef<gsap.core.Tween | null>(null);
   const lineTweenRef = useRef<gsap.core.Tween | null>(null);
@@ -26,10 +26,6 @@ export default function AnimationLab() {
     const effects: { destroy: () => void }[] = [];
 
     const initVanta = async () => {
-      // CRITICAL: Set window.THREE BEFORE importing any Vanta modules.
-      // Each Vanta effect captures `let p = window.THREE` at module load
-      // time — if window.THREE isn't set yet, p is undefined and the
-      // effect silently falls back to a solid backgroundColor.
       const THREE = await import("three");
       (window as unknown as Record<string, unknown>).THREE = THREE;
 
@@ -40,8 +36,6 @@ export default function AnimationLab() {
       ]);
 
       // ── Dots ────────────────────────────────────────────
-      // Dots has no "speed" option — its animation speed is tied to
-      // spacing (larger = fewer dots = calmer feel).
       if (vantaDotsRef.current) {
         effects.push(
           DOTS({
@@ -94,8 +88,6 @@ export default function AnimationLab() {
   }, []);
 
   // Bridge: tell ScrollTrigger to recalculate on every Lenis scroll tick.
-  // Without this, ScrollTrigger reads stale scroll positions because Lenis
-  // intercepts native scroll events and replaces them with its own loop.
   useLenis(() => {
     ScrollTrigger.update();
   });
