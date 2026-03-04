@@ -509,7 +509,7 @@ export default function AnimationLab() {
           */}
           <div className="mb-20 flex gap-8">
             {/* Left: sticky panel */}
-            <div className="w-44 flex-shrink-0">
+            <div className="w-44 shrink-0">
               {/*
                 `sticky`  — enables sticky positioning
                 `top-8`   — sticks when the element is 32px from the top of the viewport.
