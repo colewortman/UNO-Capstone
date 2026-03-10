@@ -1,28 +1,85 @@
-import Link from "next/link";
+import styles from "./page.module.css";
+
+function Section({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <section className={`${styles.section} ${className ?? ""}`}>
+      <div className={styles.sectionInner}>{children}</div>
+    </section>
+  );
+}
+
+function Placeholder({ label }: { label: string }) {
+  return <div className={styles.placeholder}>{label}</div>;
+}
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Link
-          href="/pricing"
-          className="mt-4 text-lg font-medium text-blue-600 hover:underline"
-        >
-          View Pricing
-        </Link>
-        <Link
-          href="/faq"
-          className="mt-4 text-lg font-medium text-blue-600 hover:underline"
-        >
-          View FAQ
-        </Link>
-        <Link
-          href="/animation-lab"
-          className="mt-2 text-lg font-medium text-indigo-600 hover:underline"
-        >
-          Animation Lab
-        </Link>
-      </main>
-    </div>
+    <main className={styles.page}>
+      {/* Hero */}
+      <Section>
+        <Placeholder label="Hero" />
+      </Section>
+
+      {/* Social Proof */}
+      <Section>
+        <Placeholder label="Social Proof" />
+      </Section>
+
+      {/* Problem / Solution */}
+      <Section>
+        <Placeholder label="Problem / Solution" />
+      </Section>
+
+      {/* Product Demo */}
+      <Section>
+        <Placeholder label="Features" />
+      </Section>
+
+      {/* How It Works */}
+      <Section>
+        <Placeholder label="How It Works" />
+      </Section>
+
+      {/* Feature Highlights */}
+      <Section>
+        <Placeholder label="Feature Highlights" />
+      </Section>
+
+      {/* Speed Comparison (differentiator) */}
+      <Section>
+        <Placeholder label="Speed Comparison" />
+      </Section>
+
+      {/* ROI Calculator */}
+      <Section>
+        <Placeholder label="ROI Calculator" />
+      </Section>
+
+      {/* Competitor Comparison */}
+      <Section>
+        <Placeholder label="Competitor Comparison" />
+      </Section>
+
+      {/* Testimonials */}
+      <Section>
+        <Placeholder label="Testimonials" />
+      </Section>
+
+      {/* FAQ */}
+      <Section>
+        <Placeholder label="FAQ" />
+      </Section>
+
+      {/* CTA */}
+      <Section>
+        <Placeholder label="CTA" />
+      </Section>
+    </main>
   );
 }
