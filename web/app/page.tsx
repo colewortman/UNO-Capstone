@@ -1,3 +1,4 @@
+import ProblemSolution from "./components/ProblemSolution";
 import styles from "./page.module.css";
 import HeroSection from "./components/HeroSection";
 import ProductDemoSection from "./components/ProductDemoSection";
@@ -36,7 +37,7 @@ export default function Home() {
 
       {/* Problem / Solution */}
       <Section>
-        <Placeholder label="Problem / Solution" />
+        <ProblemSolution />
       </Section>
 
       {/* Product Demo */}
