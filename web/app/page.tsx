@@ -1,4 +1,7 @@
 import styles from "./page.module.css";
+import HeroSection from "./components/HeroSection";
+import ProductDemoSection from "./components/ProductDemoSection";
+import FinalCTASection from "./components/FinalCTASection";
 
 function Section({
   children,
@@ -23,7 +26,7 @@ export default function Home() {
     <main className={styles.page}>
       {/* Hero */}
       <Section>
-        <Placeholder label="Hero" />
+        <HeroSection />
       </Section>
 
       {/* Social Proof */}
@@ -38,7 +41,7 @@ export default function Home() {
 
       {/* Product Demo */}
       <Section>
-        <Placeholder label="Features" />
+        <ProductDemoSection />
       </Section>
 
       {/* How It Works */}
@@ -78,7 +81,7 @@ export default function Home() {
 
       {/* CTA */}
       <Section>
-        <Placeholder label="CTA" />
+        <FinalCTASection />
       </Section>
     </main>
   );
