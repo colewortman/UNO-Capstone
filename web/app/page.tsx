@@ -1,3 +1,4 @@
+import ProblemSolution from "./components/ProblemSolution";
 import styles from "./page.module.css";
 
 function Section({
@@ -33,7 +34,7 @@ export default function Home() {
 
       {/* Problem / Solution */}
       <Section>
-        <Placeholder label="Problem / Solution" />
+        <ProblemSolution />
       </Section>
 
       {/* Product Demo */}
