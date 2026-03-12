@@ -1,8 +1,9 @@
-import ProblemSolution from "./components/ProblemSolution";
+import ProblemSolutionSection from "./components/ProblemSolutionSection";
 import styles from "./page.module.css";
 import HeroSection from "./components/HeroSection";
 import ProductDemoSection from "./components/ProductDemoSection";
 import FinalCTASection from "./components/FinalCTASection";
+import SocialProofSection from "./components/SocialProofSection";
 
 function Section({
   children,
@@ -32,12 +33,12 @@ export default function Home() {
 
       {/* Social Proof */}
       <Section>
-        <Placeholder label="Social Proof" />
+        <SocialProofSection />
       </Section>
 
       {/* Problem / Solution */}
       <Section>
-        <ProblemSolution />
+        <ProblemSolutionSection />
       </Section>
 
       {/* Product Demo */}

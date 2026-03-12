@@ -8,7 +8,7 @@ import SplitType from "split-type";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
-export default function ProblemSolution() {
+export default function ProblemSolutionSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
