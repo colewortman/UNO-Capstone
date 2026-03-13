@@ -5,6 +5,7 @@ import ProductDemoSection from "./components/ProductDemoSection";
 import FinalCTASection from "./components/FinalCTASection";
 import SocialProofSection from "./components/SocialProofSection";
 import ROICalculator from "./components/ROICalculator";
+import HowItWorksSection from "./components/HowItWorksSection";
 
 function Section({
   children,
@@ -49,7 +50,7 @@ export default function Home() {
 
       {/* How It Works */}
       <Section>
-        <Placeholder label="How It Works" />
+        <HowItWorksSection />
       </Section>
 
       {/* Feature Highlights */}
