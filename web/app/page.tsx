@@ -4,6 +4,7 @@ import HeroSection from "./components/HeroSection";
 import ProductDemoSection from "./components/ProductDemoSection";
 import FinalCTASection from "./components/FinalCTASection";
 import SocialProofSection from "./components/SocialProofSection";
+import ROICalculator from "./components/ROICalculator";
 
 function Section({
   children,
@@ -63,7 +64,7 @@ export default function Home() {
 
       {/* ROI Calculator */}
       <Section>
-        <Placeholder label="ROI Calculator" />
+        <ROICalculator />
       </Section>
 
       {/* Competitor Comparison */}
