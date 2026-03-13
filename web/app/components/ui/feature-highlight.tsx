@@ -1,6 +1,6 @@
 import * as React from "react";
 import { motion, Variants } from "framer-motion";
-import { cn } from "@/lib/utils"; // Assuming you have a utility for class names
+import { cn } from "@/lib/utils";
 
 // Props definition for the FeatureHighlight component
 interface FeatureHighlightProps extends React.HTMLAttributes<HTMLDivElement> {
