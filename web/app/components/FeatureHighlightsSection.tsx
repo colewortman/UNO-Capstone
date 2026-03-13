@@ -2,6 +2,7 @@ import { CheckCircle2 } from "lucide-react";
 import { FeatureHighlight } from "./ui/feature-highlight";
 
 // Helper component for inline icons to manage styling
+/** Not being used currently
 const InlineIcon = ({ src, alt }: { src: string; alt: string }) => (
   <img
     src={src}
@@ -9,6 +10,7 @@ const InlineIcon = ({ src, alt }: { src: string; alt: string }) => (
     className="mx-1 inline-block h-6 w-6 align-middle"
   />
 );
+*/
 
 export default function FeatureHighlightsSection() {
   // Define the features as an array of React nodes
