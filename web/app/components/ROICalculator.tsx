@@ -90,13 +90,13 @@ export default function ROICalculator() {
     }).format(value);
   };
 
-  const formatPercent = (value: number) => {
+  /*const formatPercent = (value: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'percent',
       minimumFractionDigits: 1,
       maximumFractionDigits: 1,
     }).format(value / 100);
-  };
+  };*/
 
   return (
     <div className="w-full max-w-10xl mx-auto px-8 py-8 pb-0">
