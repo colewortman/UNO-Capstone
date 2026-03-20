@@ -1,57 +1,109 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useRef, useEffect, useState } from "react";
+import {
+  NavigationMenu,
+  NavigationMenuList,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+  NavigationMenuPositioner,
+  NavigationMenuPopup,
+  NavigationMenuArrow,
+  navigationMenuTriggerStyle,
+} from "@/app/components/ui/navigation-menu";
 
 export default function NavigationBar() {
-  const pathname = usePathname();
-  const linksRef = useRef<(HTMLAnchorElement | null)[]>([]);
-  const [indicator, setIndicator] = useState({ left: 0, width: 0 });
-
-  const links = [
-    { href: "/", label: "Home" },
-    { href: "/pricing", label: "Pricing" },
-    { href: "/faq", label: "FAQ" },
-  ];
-
-  useEffect(() => {
-    const activeIndex = links.findIndex((link) => link.href === pathname);
-    const activeEl = linksRef.current[activeIndex];
-    if (activeEl) {
-      const parent = activeEl.closest("ul");
-      if (parent) {
-        const parentRect = parent.getBoundingClientRect();
-        const elRect = activeEl.getBoundingClientRect();
-        setIndicator({
-          left: elRect.left - parentRect.left,
-          width: elRect.width,
-        });
-      }
-    }
-  }, [pathname]);
-
   return (
-    <nav className="fixed top-0 left-0 w-full bg-black text-white z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-center">
-        <ul className="relative flex gap-8">
-          {links.map(({ href, label }, i) => (
-            <li key={href}>
-              <Link
-                ref={(el) => { linksRef.current[i] = el; }}
-                href={href}
-                className="hover:text-gray-300 transition-colors pb-2"
+    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
+        {/* Logo / Brand */}
+
+        {/* Navigation */}
+        <NavigationMenu>
+          <NavigationMenuList>
+            {/* Services dropdown */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>Home</NavigationMenuTrigger>
+              <NavigationMenuPositioner>
+                <NavigationMenuPopup>
+                  <NavigationMenuArrow />
+                  <NavigationMenuContent>
+                    <ul className="grid w-100 gap-1 p-2 md:w-125 md:grid-cols-2">
+                      <li>
+                        <NavigationMenuLink href="/" render={<Link href="/" />}>
+                          <span className="font-medium">All Services</span>
+                          <span className="text-muted-foreground text-xs">
+                            View our full range of offerings
+                          </span>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink href="/#roi-calculator" render={<Link href="/#roi-calculator" />}>
+                          <span className="font-medium">ROI Calculator</span>
+                          <span className="text-muted-foreground text-xs">
+                            See how much Bar IQ can save your business
+                          </span>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuPopup>
+              </NavigationMenuPositioner>
+            </NavigationMenuItem>
+
+            {/* Pricing link */}
+            <NavigationMenuItem>
+              <NavigationMenuLink
+                href="/pricing"
+                render={<Link href="/pricing" />}
+                className={navigationMenuTriggerStyle()}
               >
-                {label}
-              </Link>
-            </li>
-          ))}
-          <span
-            className="absolute bottom-0 h-0.5 bg-blue-500 transition-all duration-300 ease-in-out"
-            style={{ left: indicator.left, width: indicator.width }}
-          />
-        </ul>
+                Pricing
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+
+            {/* FAQ link */}
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>FAQ</NavigationMenuTrigger>
+              <NavigationMenuPositioner>
+                <NavigationMenuPopup>
+                  <NavigationMenuArrow />
+                  <NavigationMenuContent>
+                    <ul className="grid w-100 gap-1 p-2 md:w-125 md:grid-cols-2">
+                      <li>
+                        <NavigationMenuLink
+                          href="/faq"
+                          render={<Link href="/faq" />}
+                        >
+                          <span className="font-medium">
+                            Frequently Asked Questions
+                          </span>
+                          <span className="text-muted-foreground text-xs">
+                            View answers to our most frequently asked questions
+                          </span>
+                        </NavigationMenuLink>
+                      </li>
+                      <li>
+                        <NavigationMenuLink
+                          href="/faq"
+                          render={<Link href="/faq" />}
+                        >
+                          <span className="font-medium">Contact</span>
+                          <span className="text-muted-foreground text-xs">
+                            View our contact information
+                          </span>
+                        </NavigationMenuLink>
+                      </li>
+                    </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuPopup>
+              </NavigationMenuPositioner>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
       </div>
-    </nav>
+    </header>
   );
 }
