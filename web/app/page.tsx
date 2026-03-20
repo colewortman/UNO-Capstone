@@ -9,12 +9,14 @@ import HowItWorksSection from "./components/HowItWorksSection";
 function Section({
   children,
   className,
+  id,
 }: {
   children: React.ReactNode;
   className?: string;
+  id?: string;
 }) {
   return (
-    <section className={`${styles.section} ${className ?? ""}`}>
+    <section id={id} className={`${styles.section} ${className ?? ""}`}>
       <div className={styles.sectionInner}>{children}</div>
     </section>
   );
@@ -63,7 +65,7 @@ export default function Home() {
       </Section>
 
       {/* ROI Calculator */}
-      <Section>
+      <Section className="scroll-mt-20" id="roi-calculator">
         <Placeholder label="ROI Calculator" />
       </Section>
 
