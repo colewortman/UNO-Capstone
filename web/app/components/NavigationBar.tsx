@@ -1,5 +1,6 @@
 "use client";
 
+import { useCallback } from "react";
 import Link from "next/link";
 import {
   NavigationMenu,
@@ -15,6 +16,29 @@ import {
 } from "@/app/components/ui/navigation-menu";
 
 export default function NavigationBar() {
+  const scrollToHash = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    const href = e.currentTarget.getAttribute("href") ?? "";
+    const hash = href.includes("#") ? href.split("#")[1] : null;
+    if (hash) {
+      // If we're already on the home page, prevent navigation and just scroll
+      const isHomePage =
+        window.location.pathname === "/" ||
+        window.location.pathname === "/UNO-Capstone" ||
+        window.location.pathname === "/UNO-Capstone/";
+      if (isHomePage) {
+        e.preventDefault();
+        const el = document.getElementById(hash);
+        el?.scrollIntoView({ behavior: "smooth" });
+      } else {
+        // Let the Link navigate to "/", then scroll after load
+        setTimeout(() => {
+          const el = document.getElementById(hash);
+          el?.scrollIntoView({ behavior: "smooth" });
+        }, 500);
+      }
+    }
+  }, []);
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
@@ -40,7 +64,7 @@ export default function NavigationBar() {
                         </NavigationMenuLink>
                       </li>
                       <li>
-                        <NavigationMenuLink href="/#roi-calculator" render={<Link href="/#roi-calculator" />}>
+                        <NavigationMenuLink href="/#roi-calculator" render={<Link href="/#roi-calculator" onClick={scrollToHash} />}>
                           <span className="font-medium">ROI Calculator</span>
                           <span className="text-muted-foreground text-xs">
                             See how much Bar IQ can save your business
