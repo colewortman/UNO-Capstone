@@ -312,7 +312,8 @@ export default function ROICalculator() {
             <p className={`text-4xl font-bold text-green-600 ${valueFadeClass}`}>{formatCurrency(displayMetrics.annualSavingsBeforeSubscription)}</p>
             <p className="text-xs text-green-600 mt-2">pour + labor savings</p>
             <p className="text-xs text-green-700 mt-2">
-              Recovering {(hoursCountingBottles *12).toFixed(0)} staff hours per year ({formatCurrency(hoursCountingBottles * hourlyWage * 12)})
+              Recovering {(hoursCountingBottles * 12).toFixed(0)} staff hours per year{" "}
+                    ({formatCurrency(hoursCountingBottles * hourlyWage * 12)})
             </p>
           </div>
 
