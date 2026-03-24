@@ -6,9 +6,12 @@ type ResultMetrics = {
   currentPourCostDollars: number;
   annualRevenueBoosted: number;
   annualCost: number;
-  annualCostReduction: number;
+  annualSavingsBeforeSubscription: number;
   roi: number;
-  annualSavings: number;
+  netAnnualSavings: number;
+  paybackPeriodMonths: number | null;
+  projectedPourCostPercentage: number;
+  paybackPeriodDays: number | null;
 };
 
 export default function ROICalculator() {
@@ -17,6 +20,7 @@ export default function ROICalculator() {
   // monthly bottle-counting hours, converted to annual when needed
   const [hoursCountingBottles, setHoursCountingBottles] = useState(8);
   const [hourlyWage, setHourlyWage] = useState(20);
+  const [expectPourImprov, setExpectPourImprov] = useState(1);
 
   // pricing tiers (monthly subscription)
   const tiers = [
@@ -28,9 +32,6 @@ export default function ROICalculator() {
   ];
   const [selectedTier, setSelectedTier] = useState(0); // default to Starter
   const [isValueFading, setIsValueFading] = useState(false);
-
-  // constants
-  const POUR_COST_REDUCTION = 0.25; // reduces pour cost by 25%
 
   const getTierIndexFromSales = (sales: number) => {
     if (sales < 250000) return 0;
@@ -48,20 +49,26 @@ export default function ROICalculator() {
 
   const buildMetrics = (): ResultMetrics => {
     const currentPourCostDollars = annualSales * (pourCostPercentage / 100);
-    const annualRevenueBoosted = currentPourCostDollars * POUR_COST_REDUCTION;
+    const projectedPourCostPercentage = Math.max(0, pourCostPercentage - expectPourImprov);
+    const annualRevenueBoosted = annualSales * (expectPourImprov / 100);
     const annualCost = tiers[selectedTier].monthly * 12;
     const laborSavings = hoursCountingBottles * hourlyWage * 12; // monthly hours to annual - included in calculations but not displayed
-    const annualCostReduction = annualRevenueBoosted - annualCost + laborSavings;
-    const roi = ((annualCostReduction - annualCost) / annualCost) * 100;
-    const annualSavings = annualRevenueBoosted - annualCost + laborSavings;
+    const annualSavingsBeforeSubscription = annualRevenueBoosted + laborSavings;
+    const netAnnualSavings = annualSavingsBeforeSubscription - annualCost;
+    const roi = (netAnnualSavings / annualCost) * 100;
+    const paybackPeriodMonths = netAnnualSavings > 0 ? annualCost / (netAnnualSavings / 12) : null;
+    const paybackPeriodDays = paybackPeriodMonths !== null ? paybackPeriodMonths * 30.4 : null;
 
     return {
       currentPourCostDollars,
       annualRevenueBoosted,
       annualCost,
-      annualCostReduction,
+      annualSavingsBeforeSubscription,
       roi,
-      annualSavings,
+      netAnnualSavings,
+      paybackPeriodMonths,
+      projectedPourCostPercentage,
+      paybackPeriodDays,
     };
   };
 
@@ -75,7 +82,7 @@ export default function ROICalculator() {
     }, 130);
 
     return () => window.clearTimeout(timer);
-  }, [annualSales, pourCostPercentage, hoursCountingBottles, hourlyWage, selectedTier]);
+  }, [annualSales, pourCostPercentage, hoursCountingBottles, hourlyWage, expectPourImprov, selectedTier]);
 
   const valueFadeClass = `transition-all duration-200 ${
     isValueFading ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'
@@ -90,13 +97,13 @@ export default function ROICalculator() {
     }).format(value);
   };
 
-  /*const formatPercent = (value: number) => {
+  const formatPercent = (value: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'percent',
       minimumFractionDigits: 1,
       maximumFractionDigits: 1,
     }).format(value / 100);
-  };*/
+  };
 
   return (
     <div className="w-full max-w-10xl mx-auto px-8 py-8 pb-0">
@@ -110,6 +117,9 @@ export default function ROICalculator() {
         <div className="flex flex-col md:flex-row md:space-x-8">
           {/* Input Section */}
           <div className="md:w-1/2 bg-white rounded-lg shadow-lg p-8 space-y-8">
+            <h6 className="text-xl font-semibold text-gray-800 text-center">
+              Tiers are recommended based on annual liquor sales
+            </h6>
             {/* pricing tier tabs */}
             <div className="flex flex-wrap justify-center gap-2 mb-6 overflow-x-auto">
               {tiers.map((tier, idx) => (
@@ -166,6 +176,27 @@ export default function ROICalculator() {
                 <div className="flex justify-between text-sm text-gray-500">
                   <span>5%</span>
                   <span>30%</span>
+                </div>
+              </div>
+
+              {/* Expected Pour Cost Improvement */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-end">
+                  <label className="text-lg font-semibold text-gray-800">Expected Pour Cost Improvement</label>
+                  <span className="text-2xl font-bold text-orange-600">{expectPourImprov.toFixed(1)}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="1"
+                  max="6"
+                  step="0.1"
+                  value={expectPourImprov}
+                  onChange={(e) => setExpectPourImprov(Number(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
+                />
+                <div className="flex justify-between text-sm text-gray-500">
+                  <span>1%</span>
+                  <span>6%</span>
                 </div>
               </div>
 
@@ -229,7 +260,8 @@ export default function ROICalculator() {
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
             <p className="text-sm font-semibold text-blue-700 mb-2">Annual Revenue Boost</p>
             <p className={`text-4xl font-bold text-blue-600 ${valueFadeClass}`}>{formatCurrency(displayMetrics.annualRevenueBoosted)}</p>
-            <p className="text-xs text-blue-600 mt-2">from reducing pour costs</p>
+            <p className="text-xs text-blue-600 mt-2"> reducing pour costs from {pourCostPercentage.toFixed(1)}% → {displayMetrics.projectedPourCostPercentage.toFixed(1)}%
+            </p>
           </div>
 
           {/* Liqur Vision Annual Cost */}
@@ -239,48 +271,45 @@ export default function ROICalculator() {
             <p className="text-xs text-yellow-600 mt-2">yearly subscription</p>
           </div>
 
-          {/* Annual Labor Savings - commented out */}
-          {/* <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 border border-purple-200">
-            <p className="text-sm font-semibold text-purple-700 mb-2">Annual Labor Savings</p>
-            <p className="text-4xl font-bold text-purple-600">{formatCurrency(laborSavings)}</p>
-            <p className="text-xs text-purple-600 mt-2">from automated counting</p>
-          </div> */}
-
-          {/* Annual Revenue Reduction (Cost Reduction) */}
+          {/* Annual Savings Before Subscription */}
           <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
-            <p className="text-sm font-semibold text-green-700 mb-2">Annual Net Savings</p>
-            <p className={`text-4xl font-bold text-green-600 ${valueFadeClass}`}>{formatCurrency(displayMetrics.annualCostReduction)}</p>
-            <p className="text-xs text-green-600 mt-2">total annual reduction</p>
+            <p className="text-sm font-semibold text-green-700 mb-2">Annual Savings Before Subscription</p>
+            <p className={`text-4xl font-bold text-green-600 ${valueFadeClass}`}>{formatCurrency(displayMetrics.annualSavingsBeforeSubscription)}</p>
+            <p className="text-xs text-green-600 mt-2">pour + labor savings</p>
+            <p className="text-xs text-green-700 mt-2">
+              Recovering {(hoursCountingBottles *12).toFixed(0)} staff hours per year ({formatCurrency(hoursCountingBottles * hourlyWage * 12)})
+            </p>
           </div>
 
           {/* ROI */}
-          <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg p-6 w-full relative md:-translate-x-1 ml-32 pl-12 border border-emerald-200">
+          <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg p-6 w-full relative md:-translate-x-1  pl-12 border border-emerald-200">
             <p className="text-sm font-semibold text-emerald-700 mb-2">Return on Investment</p>
             <p className={`text-4xl font-bold text-emerald-600 ${valueFadeClass}`}>{displayMetrics.roi.toFixed(0)}%</p>
-            <p className="text-xs text-emerald-600 mt-2">annual ROI</p>
+            <p className="text-xs text-emerald-600 mt-2">
+              For every $1 spent, bars recover about ${Math.max(displayMetrics.roi / 100, 0).toFixed(2)} in lost inventory.
+            </p>
+          </div>
+
+          {/* Payback Period */}
+          <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-6 border border-indigo-200">
+            <p className="text-sm font-semibold text-indigo-700 mb-2">Payback Period</p>
+            <p className={`text-4xl font-bold text-indigo-600 ${valueFadeClass}`}>
+              {displayMetrics.paybackPeriodMonths !== null ? `${displayMetrics.paybackPeriodMonths.toFixed(1)} mo` : 'N/A'}
+            </p>
+            <p className="text-xs text-indigo-600 mt-2">
+              {displayMetrics.paybackPeriodDays !== null ? `Payback period: ${Math.round(displayMetrics.paybackPeriodDays)} days` : 'Payback period: not available'}
+            </p>
           </div>
         </div>
 
         {/* Summary Card */}
         <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-8 text-white text-center space-y-4">
-          <p className="text-lg font-semibold">Total Annual Savings w/ subscription</p>
-          <p className={`text-5xl font-bold ${valueFadeClass}`}>{formatCurrency(displayMetrics.annualSavings)}</p>
+          <p className="text-lg font-semibold">Net Annual Savings (After Subscription)</p>
+          <p className={`text-5xl font-bold ${valueFadeClass}`}>{formatCurrency(displayMetrics.netAnnualSavings)}</p>
           <p className="text-blue-100">
-            Using the {tiers[selectedTier].name} plan (${tiers[selectedTier].monthly}/mo), you'll save {formatCurrency(displayMetrics.annualSavings)} per year by reducing pour costs and labor hours.
+            Using the {tiers[selectedTier].name} plan (${tiers[selectedTier].monthly}/mo), you'll net {formatCurrency(displayMetrics.netAnnualSavings)} per year after subscription costs.
           </p>
         </div>
-
-        {/* Payback Period - commented out */}
-        {/* {annualCostReduction > 0 && (
-          <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-            <p className="text-center text-gray-700">
-              <span className="font-semibold">Payback Period: </span>
-              <span className="text-xl font-bold text-blue-600">
-                {(liqurVisionAnnualCost / annualCostReduction * 12).toFixed(1)} months
-              </span>
-            </p>
-          </div>
-        )} */}
       </div>
     </div>
   </div>
