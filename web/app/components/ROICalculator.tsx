@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 type ResultMetrics = {
   currentPourCostDollars: number;
@@ -24,11 +24,11 @@ export default function ROICalculator() {
 
   // pricing tiers (monthly subscription)
   const tiers = [
-    { name: 'Starter', monthly: 79 },
-    { name: 'Essential', monthly: 149 },
-    { name: 'Professional', monthly: 299 },
-    { name: 'Advanced', monthly: 599 },
-    { name: 'Top Shelf', monthly: 1199 },
+    { name: "Starter", monthly: 79 },
+    { name: "Essential", monthly: 149 },
+    { name: "Professional", monthly: 299 },
+    { name: "Advanced", monthly: 599 },
+    { name: "Top Shelf", monthly: 1199 },
   ];
   const [selectedTier, setSelectedTier] = useState(0); // default to Starter
   const [isValueFading, setIsValueFading] = useState(false);
@@ -72,7 +72,8 @@ export default function ROICalculator() {
     };
   };
 
-  const [displayMetrics, setDisplayMetrics] = useState<ResultMetrics>(buildMetrics());
+  const [displayMetrics, setDisplayMetrics] =
+    useState<ResultMetrics>(buildMetrics());
 
   useEffect(() => {
     setIsValueFading(true);
@@ -85,13 +86,13 @@ export default function ROICalculator() {
   }, [annualSales, pourCostPercentage, hoursCountingBottles, hourlyWage, expectPourImprov, selectedTier]);
 
   const valueFadeClass = `transition-all duration-200 ${
-    isValueFading ? 'opacity-0 translate-y-1' : 'opacity-100 translate-y-0'
+    isValueFading ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"
   }`;
 
   const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
       minimumFractionDigits: 0,
       maximumFractionDigits: 0,
     }).format(value);
@@ -111,7 +112,9 @@ export default function ROICalculator() {
         {/* Title */}
         <div className="text-center space-y-2">
           <h2 className="text-4xl font-bold">ROI Calculator</h2>
-          <p className="text-gray-600 text-lg">See how much BarIq can save your business</p>
+          <p className="text-gray-600 text-lg">
+            See how much BarIq can save your business
+          </p>
         </div>
 
         <div className="flex flex-col md:flex-row md:space-x-8">
@@ -125,10 +128,10 @@ export default function ROICalculator() {
               {tiers.map((tier, idx) => (
                 <button
                   key={tier.name}
-                  className={`px-3 py-1 text-sm font-medium rounded-full whitespace-nowrap flex-shrink-0 ${
+                  className={`px-3 py-1 text-sm font-medium rounded-full whitespace-nowrap shrink-0 ${
                     idx === selectedTier
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                   }`}
                   onClick={() => setSelectedTier(idx)}
                 >
@@ -140,8 +143,12 @@ export default function ROICalculator() {
               {/* Annual Liquor Sales */}
               <div className="space-y-3">
                 <div className="flex justify-between items-end">
-                  <label className="text-lg font-semibold text-gray-800">Annual Liquor Sales</label>
-                  <span className="text-2xl font-bold text-blue-600">{formatCurrency(annualSales)}</span>
+                  <label className="text-lg font-semibold text-gray-800">
+                    Annual Liquor Sales
+                  </label>
+                  <span className="text-2xl font-bold text-blue-600">
+                    {formatCurrency(annualSales)}
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -161,8 +168,12 @@ export default function ROICalculator() {
               {/* Current Pour Cost */}
               <div className="space-y-6">
                 <div className="flex justify-between items-end">
-                  <label className="text-lg font-semibold text-gray-800">Current Pour Cost</label>
-                  <span className="text-2xl font-bold text-red-600">{pourCostPercentage.toFixed(1)}%</span>
+                  <label className="text-lg font-semibold text-gray-800">
+                    Current Pour Cost
+                  </label>
+                  <span className="text-2xl font-bold text-red-600">
+                    {pourCostPercentage.toFixed(1)}%
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -170,7 +181,9 @@ export default function ROICalculator() {
                   max="30"
                   step="0.5"
                   value={pourCostPercentage}
-                  onChange={(e) => setPourCostPercentage(Number(e.target.value))}
+                  onChange={(e) =>
+                    setPourCostPercentage(Number(e.target.value))
+                  }
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-red-600"
                 />
                 <div className="flex justify-between text-sm text-gray-500">
@@ -206,7 +219,9 @@ export default function ROICalculator() {
                   <label className="text-lg font-semibold text-gray-800">
                     Monthly Hours Counting Bottles
                   </label>
-                  <span className="text-2xl font-bold text-purple-600">{hoursCountingBottles.toFixed(0)} hrs/mo</span>
+                  <span className="text-2xl font-bold text-purple-600">
+                    {hoursCountingBottles.toFixed(0)} hrs/mo
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -214,7 +229,9 @@ export default function ROICalculator() {
                   max="160"
                   step="1"
                   value={hoursCountingBottles}
-                  onChange={(e) => setHoursCountingBottles(Number(e.target.value))}
+                  onChange={(e) =>
+                    setHoursCountingBottles(Number(e.target.value))
+                  }
                   className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
                 />
                 <div className="flex justify-between text-sm text-gray-500">
@@ -226,8 +243,12 @@ export default function ROICalculator() {
               {/* Average Hourly Wage */}
               <div className="space-y-3">
                 <div className="flex justify-between items-end">
-                  <label className="text-lg font-semibold text-gray-800">Average Hourly Wage</label>
-                  <span className="text-2xl font-bold text-green-600">{formatCurrency(hourlyWage)}/hr</span>
+                  <label className="text-lg font-semibold text-gray-800">
+                    Average Hourly Wage
+                  </label>
+                  <span className="text-2xl font-bold text-green-600">
+                    {formatCurrency(hourlyWage)}/hr
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -244,17 +265,23 @@ export default function ROICalculator() {
                 </div>
               </div>
             </div>
-          </div>    
+          </div>
 
           {/* Results Section */}
           <div className="md:w-2/3 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Current Pour Cost */}
-          <div className="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-6 border border-red-200">
-            <p className="text-sm font-semibold text-red-700 mb-2">Current Pour Cost</p>
-            <p className={`text-4xl font-bold text-red-600 ${valueFadeClass}`}>{formatCurrency(displayMetrics.currentPourCostDollars)}</p>
-            <p className="text-xs text-red-600 mt-2">per year in losses</p>
-          </div>
+              {/* Current Pour Cost */}
+              <div className="bg-linear-to-br from-red-50 to-red-100 rounded-lg p-6 border border-red-200">
+                <p className="text-sm font-semibold text-red-700 mb-2">
+                  Current Pour Cost
+                </p>
+                <p
+                  className={`text-4xl font-bold text-red-600 ${valueFadeClass}`}
+                >
+                  {formatCurrency(displayMetrics.currentPourCostDollars)}
+                </p>
+                <p className="text-xs text-red-600 mt-2">per year in losses</p>
+              </div>
 
           {/* Annual Revenue Boost */}
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
@@ -264,12 +291,20 @@ export default function ROICalculator() {
             </p>
           </div>
 
-          {/* Liqur Vision Annual Cost */}
-          <div className="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-6 border border-yellow-200">
-            <p className="text-sm font-semibold text-yellow-700 mb-2">Annual Cost</p>
-            <p className={`text-4xl font-bold text-yellow-600 ${valueFadeClass}`}>{formatCurrency(displayMetrics.annualCost)}</p>
-            <p className="text-xs text-yellow-600 mt-2">yearly subscription</p>
-          </div>
+              {/* Liqur Vision Annual Cost */}
+              <div className="bg-linear-to-br from-yellow-50 to-yellow-100 rounded-lg p-6 border border-yellow-200">
+                <p className="text-sm font-semibold text-yellow-700 mb-2">
+                  Annual Cost
+                </p>
+                <p
+                  className={`text-4xl font-bold text-yellow-600 ${valueFadeClass}`}
+                >
+                  {formatCurrency(displayMetrics.annualCost)}
+                </p>
+                <p className="text-xs text-yellow-600 mt-2">
+                  yearly subscription
+                </p>
+              </div>
 
           {/* Annual Savings Before Subscription */}
           <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
@@ -312,7 +347,5 @@ export default function ROICalculator() {
         </div>
       </div>
     </div>
-  </div>
-</div>
   );
 }

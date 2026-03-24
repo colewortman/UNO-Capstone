@@ -1,5 +1,7 @@
 # UNO-Capstone
 
+This application is a updated website redesign for Bar IQ, meant to better represent their changing brand as the company continues to grow and reach new industries.
+
 ## Demo
 
 Visit the live site using the GitHub Pages link in the `about` section of the repository
@@ -11,3 +13,9 @@ To get started locally, navigate to the `web` folder and run:
 npm install
 npm run dev
 ```
+
+## Release Notes
+
+Milestone 1: Basic project setup and reasearch/discovery
+
+Milestone 2: Design and create React components for the site
