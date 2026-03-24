@@ -50,6 +50,11 @@ export default function Home() {
         <ProductDemoSection />
       </Section>
 
+      {/* Testimonials */}
+      <Section>
+        <Placeholder label="Testimonials" />
+      </Section>
+
       {/* How It Works */}
       <Section>
         <HowItWorksSection />
@@ -60,24 +65,14 @@ export default function Home() {
         <Placeholder label="Feature Highlights" />
       </Section>
 
-      {/* Speed Comparison (differentiator) */}
+      {/* Comparisons (differentiator) */}
       <Section>
-        <Placeholder label="Speed Comparison" />
+        <Placeholder label="Comparison" />
       </Section>
 
       {/* ROI Calculator */}
       <Section className="scroll-mt-20" id="roi-calculator">
         <ROICalculator />
-      </Section>
-
-      {/* Competitor Comparison */}
-      <Section>
-        <Placeholder label="Competitor Comparison" />
-      </Section>
-
-      {/* Testimonials */}
-      <Section>
-        <Placeholder label="Testimonials" />
       </Section>
 
       {/* FAQ */}
@@ -88,6 +83,11 @@ export default function Home() {
       {/* CTA */}
       <Section>
         <FinalCTASection />
+      </Section>
+
+      {/* Footer */}
+      <Section>
+        <Placeholder label="Footer" />
       </Section>
     </main>
   );
