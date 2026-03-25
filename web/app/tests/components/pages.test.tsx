@@ -29,12 +29,18 @@ describe('Pricing Page', () => {
 describe('FAQ Page', () => {
   it('renders the heading', () => {
     render(<FAQPage />)
-    expect(screen.getByRole('heading', { name: 'Frequently Asked Questions' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Questions, answered simply.' })).toBeInTheDocument()
   })
 
-  it('has a link back to home', () => {
+  it('renders FAQ questions as interactive buttons', () => {
     render(<FAQPage />)
-    const link = screen.getByRole('link', { name: 'Back to Home' })
-    expect(link).toHaveAttribute('href', '/')
+    const buttons = screen.getAllByRole('button')
+    expect(buttons.length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('How long does inventory usually take?').length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('displays the first FAQ answer by default', () => {
+    render(<FAQPage />)
+    expect(screen.getByText(/Most bar teams can complete a session/)).toBeInTheDocument()
   })
 })
