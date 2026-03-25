@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import SplitType from "split-type";
+import { FeatureCarousel } from "./ui/feature-carousel";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -13,76 +13,101 @@ export default function ProblemSolutionSection() {
 
   useGSAP(
     () => {
-      // Line mask reveal for left-side text
-      const lineSplit = new SplitType(".ps-text", { types: "lines" });
-
-      lineSplit.lines?.forEach((line) => {
-        const mask = document.createElement("div");
-        mask.style.overflow = "hidden";
-        line.parentNode!.insertBefore(mask, line);
-        mask.appendChild(line);
+      // Hide solution panels initially so they don't flash
+      gsap.set(".ps-solution .fc-blue-panel", { xPercent: 100, opacity: 0 });
+      gsap.set(".ps-solution .fc-image-panel", {
+        xPercent: -60,
+        opacity: 0,
+        filter: "blur(12px)",
       });
 
-      gsap.from(lineSplit.lines!, {
-        y: "100%",
-        duration: 0.75,
-        stagger: 0.12,
-        ease: "power4.out",
-        scrollTrigger: {
-          trigger: ".ps-text",
-          start: "top 85%",
-          once: true,
-        },
-      });
+      // Hide "The Solution" title initially (pushed down below the mask)
+      gsap.set(".ps-title-solution-text", { yPercent: 100 });
 
-      // Pin the section, then crossfade everything out left / bartender_phone in
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: ".ps-section",
           start: "top top",
-          end: "+=100%",
+          end: "+=150%",
           pin: true,
-          scrub: true,
+          scrub: 0.8,
         },
       });
 
-      // Fade out left text to the left
-      tl.to(".ps-left", {
-        xPercent: -50,
-        opacity: 0,
-        duration: 0.6,
+      // --- Title out + Problem carousel out (overlapped) ---
+
+      // "The Problem" title slides down out of its mask
+      tl.to(".ps-title-problem-text", {
+        yPercent: 100,
+        duration: 0.35,
         ease: "power2.in",
       });
 
-      // Fade out right image to the left
+      // Problem blue panel starts fading out alongside the title
       tl.to(
-        ".ps-image",
+        ".ps-problem .fc-blue-panel",
         {
-          xPercent: -50,
+          xPercent: -100,
           opacity: 0,
           duration: 0.5,
           ease: "power2.in",
         },
-        "<",
+        "<0.1",
       );
 
-      // Mark the start of the fade-in sequence
-      tl.addLabel("fadeIn", "<0.5");
-
-      // Fade in solution text from the right
-      tl.fromTo(
-        ".ps-solution",
-        { xPercent: 50, opacity: 0 },
-        { xPercent: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
-        "fadeIn",
+      // Problem image panel blurs and slides to the right
+      tl.to(
+        ".ps-problem .fc-image-panel",
+        {
+          xPercent: 60,
+          filter: "blur(12px)",
+          opacity: 0,
+          duration: 0.5,
+          ease: "power2.in",
+        },
+        "<0.05",
       );
 
-      // Fade in bartender_phone from the right
+      // --- Solution carousel in + Title in (overlapped) ---
+
+      tl.addLabel("reveal", "-=0.15");
+
+      // Solution image panel slides in from the left
       tl.fromTo(
-        ".ps-bartender_phone",
-        { xPercent: 50, opacity: 0 },
-        { xPercent: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
-        "fadeIn+=0.1",
+        ".ps-solution .fc-image-panel",
+        { xPercent: -60, filter: "blur(12px)", opacity: 0 },
+        {
+          xPercent: 0,
+          filter: "blur(0px)",
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+        "reveal",
+      );
+
+      // Solution blue panel slides in from the right
+      tl.fromTo(
+        ".ps-solution .fc-blue-panel",
+        { xPercent: 100, opacity: 0 },
+        {
+          xPercent: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+        "reveal+=0.05",
+      );
+
+      // "The Solution" title slides up, starting near the end of the carousel reveal
+      tl.to(
+        ".ps-title-solution-text",
+        {
+          yPercent: 0,
+          duration: 0.35,
+          ease: "power2.out",
+        },
+        "-=0.35",
       );
     },
     { scope: sectionRef },
@@ -90,63 +115,31 @@ export default function ProblemSolutionSection() {
 
   return (
     <div ref={sectionRef}>
-      <section className="ps-section relative h-screen overflow-hidden px-16">
-        {/* Initial layout: left text + right image */}
-        <div className="flex h-full w-full items-center">
-          <div className="mx-auto flex w-full max-w-screen-2xl gap-32">
-            {/* Left side — Problem text */}
-            <div className="ps-left w-1/2 text-pretty">
-              <h2 className="ps-text text-5xl font-bold leading-tight">
-                Inventory is too slow
+      <section className="ps-section relative h-screen overflow-hidden">
+        {/* Title with line-masked swap animation */}
+        <div className="relative z-10 pt-42 flex justify-center">
+          <div className="relative">
+            <div className="ps-title-problem overflow-hidden">
+              <h2 className="ps-title-problem-text text-center text-4xl font-semibold md:text-5xl">
+                The Problem
               </h2>
-              <p className="ps-text mt-8 text-xl leading-relaxed">
-                Counting takes hours, spreadsheets take longer, insights come
-                weeks later. Manual inventory isn&apos;t just frustrating,
-                it&apos;s expensive.
-              </p>
-              <p className="ps-text mt-8 text-xl leading-relaxed">
-                You don&apos;t need more reports. You need faster truth.
-              </p>
             </div>
-
-            {/* Right side — clipboard image */}
-            <div className="ps-image w-1/2 flex items-center justify-center">
-              <img
-                src="/UNO-Capstone/bartender_clipboard.png"
-                alt="bartender_clipboard"
-                className="max-h-[70vh] w-full object-contain"
-              />
+            <div className="ps-title-solution overflow-hidden absolute inset-0">
+              <h2 className="ps-title-solution-text text-center text-4xl font-semibold md:text-5xl">
+                The Solution
+              </h2>
             </div>
           </div>
         </div>
 
-        {/* Incoming content — starts hidden, fades in from the right */}
-        <div className="absolute inset-0 flex items-center px-16">
-          <div className="mx-auto flex w-full max-w-screen-2xl gap-32">
-            {/* Left — phone image */}
-            <div className="ps-bartender_phone w-1/2 flex items-center justify-center opacity-0">
-              <img
-                src="/UNO-Capstone/bartender_phone.png"
-                alt="bartender_phone"
-                className="max-h-[70vh] w-full object-contain"
-              />
-            </div>
+        {/* Problem carousel — normal layout (blue left, images right) */}
+        <div className="ps-problem absolute inset-x-0 top-20 bottom-0 flex items-center justify-center p-8">
+          <FeatureCarousel />
+        </div>
 
-            {/* Right — solution text */}
-            <div className="ps-solution w-1/2 flex flex-col justify-center opacity-0">
-              <h2 className="text-5xl font-bold leading-tight">
-                Inventory at the speed of light
-              </h2>
-              <p className="mt-8 text-xl leading-relaxed">
-                Liqr Vision turns your smartphone into the fastest inventory
-                system in hospitality.
-              </p>
-              <p className="mt-8 text-xl leading-relaxed">
-                Scan a bottle, your dashboard updates in real time. What used to
-                take hours now takes minutes.
-              </p>
-            </div>
-          </div>
+        {/* Solution carousel — inverted layout (images left, blue right) */}
+        <div className="ps-solution absolute inset-x-0 top-20 bottom-0 flex items-center justify-center p-8">
+          <FeatureCarousel inverted />
         </div>
       </section>
     </div>

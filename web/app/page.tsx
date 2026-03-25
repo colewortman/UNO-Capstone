@@ -35,7 +35,7 @@ export default function Home() {
         <HeroSection />
       </Section>
 
-      {/* Social Proof */}
+      {/* Social Proof Logos */}
       <Section>
         <SocialProofSection />
       </Section>
