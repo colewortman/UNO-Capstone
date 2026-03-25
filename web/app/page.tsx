@@ -1,8 +1,10 @@
 import ProblemSolutionSection from "./components/ProblemSolutionSection";
 import styles from "./page.module.css";
+import FooterSection from "./components/FooterSection";
 import HeroSection from "./components/HeroSection";
 import ProductDemoSection from "./components/ProductDemoSection";
 import FinalCTASection from "./components/FinalCTASection";
+import FeatureHighlightsSection from "./components/FeatureHighlights";
 import SocialProofSection from "./components/SocialProofSection";
 import ROICalculator from "./components/ROICalculator";
 import HowItWorksSection from "./components/HowItWorksSection";
@@ -31,7 +33,7 @@ export default function Home() {
   return (
     <main className={styles.page}>
       {/* Hero */}
-      <Section>
+      <Section className={styles.heroSection}>
         <HeroSection />
       </Section>
 
@@ -62,7 +64,7 @@ export default function Home() {
 
       {/* Feature Highlights */}
       <Section>
-        <Placeholder label="Feature Highlights" />
+        <FeatureHighlightsSection />
       </Section>
 
       {/* Comparisons (differentiator) */}
@@ -86,9 +88,7 @@ export default function Home() {
       </Section>
 
       {/* Footer */}
-      <Section>
-        <Placeholder label="Footer" />
-      </Section>
+      <FooterSection />
     </main>
   );
 }
