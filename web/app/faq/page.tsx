@@ -78,8 +78,8 @@ export default function FAQSection() {
           </div>
 
           {/* Right side */}
-          <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-8 shadow-[0_0_40px_rgba(255,255,255,0.03)] backdrop-blur-sm md:p-10">
-            <div className="mb-6 inline-flex rounded-full border border-white/10 bg-white/[0.04] px-4 py-2 text-sm text-blue-300">
+          <div className="rounded-4x1 border border-white/10 bg-white/3 p-8 shadow-[0_0_40px_rgba(255,255,255,0.03)] backdrop-blur-sm md:p-10">
+            <div className="mb-6 inline-flex rounded-full border border-white/10 bg-white/4 px-4 py-2 text-sm text-blue-300">
               {activeIndex + 1} / {faqItems.length}
             </div>
 

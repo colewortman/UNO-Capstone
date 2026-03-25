@@ -3,6 +3,7 @@ import FooterSection from "./components/FooterSection";
 import HeroSection from "./components/HeroSection";
 import ProductDemoSection from "./components/ProductDemoSection";
 import FinalCTASection from "./components/FinalCTASection";
+import FeatureHighlightsSection from "./components/FeatureHighlights";
 
 function Section({
   children,
@@ -26,7 +27,7 @@ export default function Home() {
   return (
     <main className={styles.page}>
       {/* Hero */}
-      <Section>
+      <Section className={styles.heroSection}>
         <HeroSection />
       </Section>
 
@@ -52,7 +53,7 @@ export default function Home() {
 
       {/* Feature Highlights */}
       <Section>
-        <Placeholder label="Feature Highlights" />
+        <FeatureHighlightsSection />
       </Section>
 
       {/* Speed Comparison (differentiator) */}
@@ -86,9 +87,7 @@ export default function Home() {
       </Section>
 
       {/* Footer */}
-      <Section>
-        <FooterSection />
-      </Section>
+      <FooterSection />
     </main>
   );
 }

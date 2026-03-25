@@ -54,9 +54,9 @@ export default function FeatureHighlightsSection() {
           {features.map((feature) => (
             <div
               key={feature.title}
-              className="rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6 transition hover:border-white/20 hover:bg-white/[0.05]"
+              className="rounded-[1.75rem] border border-white/10 bg-white/3 p-6 transition hover:border-white/20 hover:bg-white/5"
             >
-              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-lg text-blue-300">
+              <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/4 text-lg text-blue-300">
                 {feature.icon}
               </div>
 
