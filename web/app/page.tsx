@@ -1,19 +1,25 @@
+import ProblemSolutionSection from "./components/ProblemSolutionSection";
 import styles from "./page.module.css";
 import FooterSection from "./components/FooterSection";
 import HeroSection from "./components/HeroSection";
 import ProductDemoSection from "./components/ProductDemoSection";
 import FinalCTASection from "./components/FinalCTASection";
 import FeatureHighlightsSection from "./components/FeatureHighlights";
+import SocialProofSection from "./components/SocialProofSection";
+import ROICalculator from "./components/ROICalculator";
+import HowItWorksSection from "./components/HowItWorksSection";
 
 function Section({
   children,
   className,
+  id,
 }: {
   children: React.ReactNode;
   className?: string;
+  id?: string;
 }) {
   return (
-    <section className={`${styles.section} ${className ?? ""}`}>
+    <section id={id} className={`${styles.section} ${className ?? ""}`}>
       <div className={styles.sectionInner}>{children}</div>
     </section>
   );
@@ -31,14 +37,14 @@ export default function Home() {
         <HeroSection />
       </Section>
 
-      {/* Social Proof */}
+      {/* Social Proof Logos */}
       <Section>
-        <Placeholder label="Social Proof" />
+        <SocialProofSection />
       </Section>
 
       {/* Problem / Solution */}
       <Section>
-        <Placeholder label="Problem / Solution" />
+        <ProblemSolutionSection />
       </Section>
 
       {/* Product Demo */}
@@ -46,9 +52,14 @@ export default function Home() {
         <ProductDemoSection />
       </Section>
 
+      {/* Testimonials */}
+      <Section>
+        <Placeholder label="Testimonials" />
+      </Section>
+
       {/* How It Works */}
       <Section>
-        <Placeholder label="How It Works" />
+        <HowItWorksSection />
       </Section>
 
       {/* Feature Highlights */}
@@ -56,24 +67,14 @@ export default function Home() {
         <FeatureHighlightsSection />
       </Section>
 
-      {/* Speed Comparison (differentiator) */}
+      {/* Comparisons (differentiator) */}
       <Section>
-        <Placeholder label="Speed Comparison" />
+        <Placeholder label="Comparison" />
       </Section>
 
       {/* ROI Calculator */}
-      <Section>
-        <Placeholder label="ROI Calculator" />
-      </Section>
-
-      {/* Competitor Comparison */}
-      <Section>
-        <Placeholder label="Competitor Comparison" />
-      </Section>
-
-      {/* Testimonials */}
-      <Section>
-        <Placeholder label="Testimonials" />
+      <Section className="scroll-mt-20" id="roi-calculator">
+        <ROICalculator />
       </Section>
 
       {/* FAQ */}
