@@ -45,6 +45,14 @@
     #000;
 }
 
+.socialProofSection {
+  min-height: auto;
+  padding: 3rem 2rem;
+  background:
+    radial-gradient(ellipse 50% 80% at 50% 0%, rgba(59, 130, 246, 0.1) 0%, transparent 60%),
+    #000;
+}
+
 .placeholder {
   display: flex;
   align-items: center;

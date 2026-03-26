@@ -1,52 +1,50 @@
-import {
-  Slack,
-  Github,
-  Figma,
-  Chrome,
-  Dribbble,
-  Trello,
-  Twitch,
-  Youtube,
-} from "lucide-react";
+import { LogoCloud } from "./ui/logo-cloud-4";
 
-import { OrbitingCircles } from "./ui/orbiting-circles";
-import { AnimatedGradientText } from "./ui/animated-gradient-text";
+const logos = [
+  {
+    src: "https://svgl.app/library/nvidia-wordmark-light.svg",
+    alt: "Nvidia Logo",
+  },
+  {
+    src: "https://svgl.app/library/supabase_wordmark_light.svg",
+    alt: "Supabase Logo",
+  },
+  {
+    src: "https://svgl.app/library/openai_wordmark_light.svg",
+    alt: "OpenAI Logo",
+  },
+  {
+    src: "https://svgl.app/library/turso-wordmark-light.svg",
+    alt: "Turso Logo",
+  },
+  {
+    src: "https://svgl.app/library/vercel_wordmark.svg",
+    alt: "Vercel Logo",
+  },
+  {
+    src: "https://svgl.app/library/github_wordmark_light.svg",
+    alt: "GitHub Logo",
+  },
+  {
+    src: "https://svgl.app/library/claude-ai-wordmark-icon_light.svg",
+    alt: "Claude AI Logo",
+  },
+  {
+    src: "https://svgl.app/library/clerk-wordmark-light.svg",
+    alt: "Clerk Logo",
+  },
+];
 
 export default function SocialProofSection() {
   return (
-    <div className="flex flex-col items-center gap-8 py-16">
-      <AnimatedGradientText
-        className="text-4xl font-bold uppercase tracking-[0.2em] md:text-5xl"
-        speed={0.75}
-        colorFrom="#F19A38"
-        colorTo="#F9D84A"
-      >
-        Used by Leading Companies
-      </AnimatedGradientText>
+    <div className="w-full">
+      <h2 className="mb-5 text-center">
+        <span className="font-black text-xl tracking-tight text-white/80 md:text-2xl">
+          These companies increase their profit by 5% with Liqr Vision
+        </span>
+      </h2>
 
-      <div className="relative flex h-125 w-full items-center justify-center">
-        {/* Outer ring */}
-        <OrbitingCircles radius={200} speed={0.5} iconSize={40} path={false}>
-          <Slack className="size-10 text-white/70" />
-          <Github className="size-10 text-white/70" />
-          <Figma className="size-10 text-white/70" />
-          <Chrome className="size-10 text-white/70" />
-          <Dribbble className="size-10 text-white/70" />
-        </OrbitingCircles>
-
-        {/* Inner ring */}
-        <OrbitingCircles
-          radius={110}
-          speed={0.4}
-          iconSize={36}
-          reverse
-          path={false}
-        >
-          <Trello className="size-9 text-white/70" />
-          <Twitch className="size-9 text-white/70" />
-          <Youtube className="size-9 text-white/70" />
-        </OrbitingCircles>
-      </div>
+      <LogoCloud logos={logos} />
     </div>
   );
 }
