@@ -7,6 +7,8 @@ type ResultMetrics = {
   annualRevenueBoosted: number;
   annualCost: number;
   annualSavingsBeforeSubscription: number;
+  annualHours: number;
+  annualLabor: number;
   roi: number;
   netAnnualSavings: number;
   paybackPeriodMonths: number | null;
@@ -58,12 +60,16 @@ export default function ROICalculator() {
     const roi = (netAnnualSavings / annualCost) * 100;
     const paybackPeriodMonths = netAnnualSavings > 0 ? annualCost / (netAnnualSavings / 12) : null;
     const paybackPeriodDays = paybackPeriodMonths !== null ? paybackPeriodMonths * 30.4 : null;
+    const annualHours = hoursCountingBottles * 12;
+    const annualLabor = hoursCountingBottles * hourlyWage * 12;
 
     return {
       currentPourCostDollars,
       annualRevenueBoosted,
       annualCost,
       annualSavingsBeforeSubscription,
+      annualHours,
+      annualLabor,
       roi,
       netAnnualSavings,
       paybackPeriodMonths,
@@ -312,6 +318,8 @@ export default function ROICalculator() {
             <p className={`text-4xl font-bold text-green-600 ${valueFadeClass}`}>{formatCurrency(displayMetrics.annualSavingsBeforeSubscription)}</p>
             <p className="text-xs text-green-600 mt-2">pour + labor savings</p>
             <p className="text-xs text-green-700 mt-2">
+              Recovering {displayMetrics.annualHours.toFixed(0)} staff hours per year ({formatCurrency(displayMetrics.annualLabor)})
+            </p>
           </div>
 
           {/* ROI */}
@@ -343,7 +351,18 @@ export default function ROICalculator() {
             Using the {tiers[selectedTier].name} plan (${tiers[selectedTier].monthly}/mo), you'll net {formatCurrency(displayMetrics.netAnnualSavings)} per year after subscription costs.
           </p>
         </div>
+
+        <div className="flex justify-center">
+          <button
+            type="button"
+            className="inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
+            aria-label="See pricing">
+            See Pricing
+          </button>
+        </div>
       </div>
+    </div>
+    </div>
     </div>
   );
 }
