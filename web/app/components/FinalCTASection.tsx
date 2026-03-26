@@ -6,8 +6,8 @@
 
 export default function FinalCTASection() {
   return (
-    <section className="relative bg-black px-6 py-24 text-white md:px-10 lg:px-16">
-      <div className="mx-auto max-w-7xl grid items-center gap-16 lg:grid-cols-[1fr_1fr]">
+    <div className="relative">
+      <div className="grid items-center gap-16 lg:grid-cols-[1fr_1fr]">
         
         {/* LEFT SIDE */}
         <div className="max-w-xl">
@@ -103,6 +103,6 @@ export default function FinalCTASection() {
           </div>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

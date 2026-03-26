@@ -38,7 +38,7 @@ export default function Home() {
       </Section>
 
       {/* Social Proof Logos */}
-      <Section>
+      <Section className={styles.socialProofSection}>
         <SocialProofSection />
       </Section>
 
