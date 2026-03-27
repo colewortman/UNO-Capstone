@@ -19,6 +19,7 @@ export default function ROICalculator() {
   // monthly bottle-counting hours, converted to annual when needed
   const [hoursCountingBottles, setHoursCountingBottles] = useState(8);
   const [hourlyWage, setHourlyWage] = useState(20);
+  const [expectPourImprov, setExpectPourImprov] = useState(1);
 
   // pricing tiers (monthly subscription)
   const tiers = [
