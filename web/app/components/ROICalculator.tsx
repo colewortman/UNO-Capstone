@@ -32,9 +32,6 @@ export default function ROICalculator() {
   const [selectedTier, setSelectedTier] = useState(0); // default to Starter
   const [isValueFading, setIsValueFading] = useState(false);
 
-  // constants
-  const POUR_COST_REDUCTION = 0.25; // reduces pour cost by 25%
-
   const getTierIndexFromSales = (sales: number) => {
     if (sales < 250000) return 0;
     if (sales < 750000) return 1;
@@ -85,13 +82,7 @@ export default function ROICalculator() {
     }, 130);
 
     return () => window.clearTimeout(timer);
-  }, [
-    annualSales,
-    pourCostPercentage,
-    hoursCountingBottles,
-    hourlyWage,
-    selectedTier,
-  ]);
+  }, [annualSales, pourCostPercentage, hoursCountingBottles, hourlyWage, expectPourImprov, selectedTier]);
 
   const valueFadeClass = `transition-all duration-200 ${
     isValueFading ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"
