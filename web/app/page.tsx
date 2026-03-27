@@ -8,6 +8,7 @@ import FeatureHighlightsSection from "./components/FeatureHighlights";
 import SocialProofSection from "./components/SocialProofSection";
 import ROICalculator from "./components/ROICalculator";
 import HowItWorksSection from "./components/HowItWorksSection";
+import {TestimonialsSection} from "./components/Testimonials";
 
 function Section({
   children,
@@ -74,12 +75,17 @@ export default function Home() {
 
       {/* ROI Calculator */}
       <Section className="scroll-mt-20" id="roi-calculator">
-        <ROICalculator />
+        <ROICalculator/>
       </Section>
 
-      {/* FAQ */}
+      {/* Competitor Comparison */}
       <Section>
-        <Placeholder label="FAQ" />
+        <Placeholder label="Competitor Comparison" />
+      </Section>
+
+      {/* Testimonials */}
+      <Section id="testimonials" className="scroll-mt-20">
+        <TestimonialsSection />
       </Section>
 
       {/* CTA */}

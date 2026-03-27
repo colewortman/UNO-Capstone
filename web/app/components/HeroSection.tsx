@@ -51,11 +51,16 @@ export default function HeroSection() {
           manual inventory work.
         </div>
 
-        <div className="mt-auto">
-          <p className="text-5xl font-semibold text-white">50K+</p>
-          <p className="mt-2 max-w-55 text-sm leading-6 text-white/55">
-            Trusted to support high-volume inventory workflows.
-          </p>
+          <button className="rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10">
+            See Pricing
+          </button>
+
+          <a
+            href="#testimonials"
+            className="rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10"
+          >
+            See Testimonials
+          </a>
         </div>
       </div>
     </div>
