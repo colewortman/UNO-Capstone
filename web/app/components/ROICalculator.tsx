@@ -19,7 +19,6 @@ export default function ROICalculator() {
   // monthly bottle-counting hours, converted to annual when needed
   const [hoursCountingBottles, setHoursCountingBottles] = useState(8);
   const [hourlyWage, setHourlyWage] = useState(20);
-  const [expectPourImprov, setExpectPourImprov] = useState(1);
 
   // pricing tiers (monthly subscription)
   const tiers = [
@@ -31,6 +30,9 @@ export default function ROICalculator() {
   ];
   const [selectedTier, setSelectedTier] = useState(0); // default to Starter
   const [isValueFading, setIsValueFading] = useState(false);
+
+  // constants
+  const POUR_COST_REDUCTION = 0.25; // reduces pour cost by 25%
 
   const getTierIndexFromSales = (sales: number) => {
     if (sales < 250000) return 0;
@@ -82,7 +84,13 @@ export default function ROICalculator() {
     }, 130);
 
     return () => window.clearTimeout(timer);
-  }, [annualSales, pourCostPercentage, hoursCountingBottles, hourlyWage, expectPourImprov, selectedTier]);
+  }, [
+    annualSales,
+    pourCostPercentage,
+    hoursCountingBottles,
+    hourlyWage,
+    selectedTier,
+  ]);
 
   const valueFadeClass = `transition-all duration-200 ${
     isValueFading ? "opacity-0 translate-y-1" : "opacity-100 translate-y-0"
