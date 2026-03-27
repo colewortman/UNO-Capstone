@@ -1,19 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
 
 type ResultMetrics = {
   currentPourCostDollars: number;
   annualRevenueBoosted: number;
   annualCost: number;
-  annualSavingsBeforeSubscription: number;
-  annualHours: number;
-  annualLabor: number;
+  annualCostReductionWithBarIq: number;
   roi: number;
   netAnnualSavings: number;
-  paybackPeriodMonths: number | null;
   projectedPourCostPercentage: number;
-  paybackPeriodDays: number | null;
 };
 
 export default function ROICalculator() {
@@ -51,30 +48,26 @@ export default function ROICalculator() {
 
   const buildMetrics = (): ResultMetrics => {
     const currentPourCostDollars = annualSales * (pourCostPercentage / 100);
-    const projectedPourCostPercentage = Math.max(0, pourCostPercentage - expectPourImprov);
+    const projectedPourCostPercentage = Math.max(
+      0,
+      pourCostPercentage - expectPourImprov,
+    );
     const annualRevenueBoosted = annualSales * (expectPourImprov / 100);
     const annualCost = tiers[selectedTier].monthly * 12;
-    const laborSavings = hoursCountingBottles * hourlyWage * 12; // monthly hours to annual - included in calculations but not displayed
-    const annualSavingsBeforeSubscription = annualRevenueBoosted + laborSavings;
+    const annualCostReductionWithBarIq = hoursCountingBottles * hourlyWage * 12;
+    const annualSavingsBeforeSubscription =
+      annualRevenueBoosted + annualCostReductionWithBarIq;
     const netAnnualSavings = annualSavingsBeforeSubscription - annualCost;
     const roi = (netAnnualSavings / annualCost) * 100;
-    const paybackPeriodMonths = netAnnualSavings > 0 ? annualCost / (netAnnualSavings / 12) : null;
-    const paybackPeriodDays = paybackPeriodMonths !== null ? paybackPeriodMonths * 30.4 : null;
-    const annualHours = hoursCountingBottles * 12;
-    const annualLabor = hoursCountingBottles * hourlyWage * 12;
 
     return {
       currentPourCostDollars,
       annualRevenueBoosted,
       annualCost,
-      annualSavingsBeforeSubscription,
-      annualHours,
-      annualLabor,
+      annualCostReductionWithBarIq,
       roi,
       netAnnualSavings,
-      paybackPeriodMonths,
       projectedPourCostPercentage,
-      paybackPeriodDays,
     };
   };
 
@@ -104,40 +97,71 @@ export default function ROICalculator() {
     }).format(value);
   };
 
-  const formatPercent = (value: number) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'percent',
-      minimumFractionDigits: 1,
-      maximumFractionDigits: 1,
-    }).format(value / 100);
-  };
+  const sliderBaseClass =
+    "h-3 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-white";
+
+  const resultRows = [
+    {
+      label: "Current Pour Cost",
+      value: formatCurrency(displayMetrics.currentPourCostDollars),
+      detail: "Estimated yearly losses at your current pour cost.",
+    },
+    {
+      label: "Pour Cost Savings with BarIQ",
+      value: formatCurrency(displayMetrics.annualRevenueBoosted),
+      detail: `Projected pour cost improvement from ${pourCostPercentage.toFixed(1)}% to ${displayMetrics.projectedPourCostPercentage.toFixed(1)}%.`,
+    },
+    {
+      label: "Annual Cost Reduction with BarIQ",
+      value: formatCurrency(displayMetrics.annualCostReductionWithBarIq),
+      detail: "Estimated labor savings from reducing manual bottle counts.",
+    },
+    {
+      label: "ROI Percentage",
+      value: `${displayMetrics.roi.toFixed(0)}%`,
+      detail: "Return after subscription costs are factored in.",
+    },
+    {
+      label: "Annual Savings with a BarIQ Subscription",
+      value: formatCurrency(displayMetrics.netAnnualSavings),
+      detail: `Based on the ${tiers[selectedTier].name} plan at $${tiers[selectedTier].monthly}/mo.`,
+    },
+  ];
 
   return (
-    <div className="w-full max-w-10xl mx-auto px-8 py-8 pb-0">
-      <div className="space-y-12">
-        {/* Title */}
-        <div className="text-center space-y-2">
-          <h2 className="text-4xl font-bold">ROI Calculator</h2>
-          <p className="text-gray-600 text-lg">
-            See how much BarIq can save your business
+    <div className="mx-auto w-full max-w-7xl px-6 py-10">
+      <div className="space-y-8">
+        <div className="space-y-3 text-center">
+          <h2 className="text-4xl font-bold text-white md:text-5xl">
+            ROI Calculator
+          </h2>
+          <p className="text-base text-white/65 md:text-lg">
+            Enter the inputs and see how BarIQ changes your annual results.
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row md:space-x-8">
-          {/* Input Section */}
-          <div className="md:w-1/2 bg-white rounded-lg shadow-lg p-8 space-y-8">
-            <h6 className="text-xl font-semibold text-gray-800 text-center">
-              Tiers are recommended based on annual liquor sales
-            </h6>
-            {/* pricing tier tabs */}
-            <div className="flex flex-wrap justify-center gap-2 mb-6 overflow-x-auto">
+        <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+          <div className="rounded-[28px] border border-white/10 bg-black px-6 py-7 text-white shadow-[0_20px_60px_rgba(0,0,0,0.35)] sm:px-8 sm:py-8">
+            <div className="mb-8 flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm uppercase tracking-[0.2em] text-white/45">
+                  Your current process
+                </p>
+                <h3 className="mt-2 text-2xl font-semibold">
+                  Auto-matched to pricing tier
+                </h3>
+              </div>
+            </div>
+
+            <div className="mb-8 flex flex-wrap gap-2 overflow-x-auto">
               {tiers.map((tier, idx) => (
                 <button
                   key={tier.name}
-                  className={`px-3 py-1 text-sm font-medium rounded-full whitespace-nowrap shrink-0 ${
+                  type="button"
+                  className={`rounded-full border px-4 py-2 text-sm font-medium whitespace-nowrap transition ${
                     idx === selectedTier
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                      ? "border-white bg-white text-black"
+                      : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
                   }`}
                   onClick={() => setSelectedTier(idx)}
                 >
@@ -145,14 +169,14 @@ export default function ROICalculator() {
                 </button>
               ))}
             </div>
-            <div className="space-y-6">
-              {/* Annual Liquor Sales */}
+
+            <div className="space-y-7">
               <div className="space-y-3">
-                <div className="flex justify-between items-end">
-                  <label className="text-lg font-semibold text-gray-800">
+                <div className="flex items-end justify-between gap-4">
+                  <label className="text-sm font-medium text-white/70">
                     Annual Liquor Sales
                   </label>
-                  <span className="text-2xl font-bold text-blue-600">
+                  <span className="text-3xl font-semibold text-white">
                     {formatCurrency(annualSales)}
                   </span>
                 </div>
@@ -163,21 +187,20 @@ export default function ROICalculator() {
                   step="10000"
                   value={annualSales}
                   onChange={(e) => setAnnualSales(Number(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                  className={sliderBaseClass}
                 />
-                <div className="flex justify-between text-sm text-gray-500">
+                <div className="flex justify-between text-xs text-white/40">
                   <span>$10k</span>
                   <span>$10M</span>
                 </div>
               </div>
 
-              {/* Current Pour Cost */}
-              <div className="space-y-6">
-                <div className="flex justify-between items-end">
-                  <label className="text-lg font-semibold text-gray-800">
+              <div className="space-y-3">
+                <div className="flex items-end justify-between gap-4">
+                  <label className="text-sm font-medium text-white/70">
                     Current Pour Cost
                   </label>
-                  <span className="text-2xl font-bold text-red-600">
+                  <span className="text-3xl font-semibold text-white">
                     {pourCostPercentage.toFixed(1)}%
                   </span>
                 </div>
@@ -190,19 +213,22 @@ export default function ROICalculator() {
                   onChange={(e) =>
                     setPourCostPercentage(Number(e.target.value))
                   }
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-red-600"
+                  className={sliderBaseClass}
                 />
-                <div className="flex justify-between text-sm text-gray-500">
+                <div className="flex justify-between text-xs text-white/40">
                   <span>5%</span>
                   <span>30%</span>
                 </div>
               </div>
 
-              {/* Expected Pour Cost Improvement */}
               <div className="space-y-3">
-                <div className="flex justify-between items-end">
-                  <label className="text-lg font-semibold text-gray-800">Expected Pour Cost Improvement</label>
-                  <span className="text-2xl font-bold text-orange-600">{expectPourImprov.toFixed(1)}%</span>
+                <div className="flex items-end justify-between gap-4">
+                  <label className="text-sm font-medium text-white/70">
+                    Expected Pour Cost Improvement
+                  </label>
+                  <span className="text-3xl font-semibold text-white">
+                    {expectPourImprov.toFixed(1)}%
+                  </span>
                 </div>
                 <input
                   type="range"
@@ -211,21 +237,20 @@ export default function ROICalculator() {
                   step="0.1"
                   value={expectPourImprov}
                   onChange={(e) => setExpectPourImprov(Number(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-orange-600"
+                  className={sliderBaseClass}
                 />
-                <div className="flex justify-between text-sm text-gray-500">
-                  <span>1%</span>
-                  <span>6%</span>
+                <div className="flex justify-between text-xs text-white/40">
+                  <span>60%</span>
+                  <span>80%</span>
                 </div>
               </div>
 
-              {/* Hours Counting Bottles */}
               <div className="space-y-3">
-                <div className="flex justify-between items-end">
-                  <label className="text-lg font-semibold text-gray-800">
+                <div className="flex items-end justify-between gap-4">
+                  <label className="text-sm font-medium text-white/70">
                     Monthly Hours Counting Bottles
                   </label>
-                  <span className="text-2xl font-bold text-purple-600">
+                  <span className="text-3xl font-semibold text-white">
                     {hoursCountingBottles.toFixed(0)} hrs/mo
                   </span>
                 </div>
@@ -238,21 +263,20 @@ export default function ROICalculator() {
                   onChange={(e) =>
                     setHoursCountingBottles(Number(e.target.value))
                   }
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-purple-600"
+                  className={sliderBaseClass}
                 />
-                <div className="flex justify-between text-sm text-gray-500">
+                <div className="flex justify-between text-xs text-white/40">
                   <span>0 hrs/mo</span>
                   <span>160 hrs/mo</span>
                 </div>
               </div>
 
-              {/* Average Hourly Wage */}
               <div className="space-y-3">
-                <div className="flex justify-between items-end">
-                  <label className="text-lg font-semibold text-gray-800">
+                <div className="flex items-end justify-between gap-4">
+                  <label className="text-sm font-medium text-white/70">
                     Average Hourly Wage
                   </label>
-                  <span className="text-2xl font-bold text-green-600">
+                  <span className="text-3xl font-semibold text-white">
                     {formatCurrency(hourlyWage)}/hr
                   </span>
                 </div>
@@ -263,9 +287,9 @@ export default function ROICalculator() {
                   step="1"
                   value={hourlyWage}
                   onChange={(e) => setHourlyWage(Number(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-green-600"
+                  className={sliderBaseClass}
                 />
-                <div className="flex justify-between text-sm text-gray-500">
+                <div className="flex justify-between text-xs text-white/40">
                   <span>$10/hr</span>
                   <span>$100/hr</span>
                 </div>
@@ -273,96 +297,71 @@ export default function ROICalculator() {
             </div>
           </div>
 
-          {/* Results Section */}
-          <div className="md:w-2/3 space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Current Pour Cost */}
-              <div className="bg-linear-to-br from-red-50 to-red-100 rounded-lg p-6 border border-red-200">
-                <p className="text-sm font-semibold text-red-700 mb-2">
-                  Current Pour Cost
+          <div className="rounded-[28px] bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 px-6 py-7 text-white shadow-[0_30px_80px_rgba(37,99,235,0.45)] sm:px-8 sm:py-8">
+            <div className="mb-8 flex items-start justify-between gap-4">
+              <div>
+                <p className="text-sm uppercase tracking-[0.2em] text-blue-100/70">
+                  ROI calculation results
                 </p>
-                <p
-                  className={`text-4xl font-bold text-red-600 ${valueFadeClass}`}
-                >
-                  {formatCurrency(displayMetrics.currentPourCostDollars)}
-                </p>
-                <p className="text-xs text-red-600 mt-2">per year in losses</p>
+                <h3 className="mt-2 text-2xl font-semibold md:text-3xl">
+                  What BarIQ could return each year
+                </h3>
               </div>
+              <div className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white/80">
+                {tiers[selectedTier].name} tier selected
+              </div>
+            </div>
 
-          {/* Annual Revenue Boost */}
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 border border-blue-200">
-            <p className="text-sm font-semibold text-blue-700 mb-2">Annual Revenue Boost</p>
-            <p className={`text-4xl font-bold text-blue-600 ${valueFadeClass}`}>{formatCurrency(displayMetrics.annualRevenueBoosted)}</p>
-            <p className="text-xs text-blue-600 mt-2"> reducing pour costs from {pourCostPercentage.toFixed(1)}% → {displayMetrics.projectedPourCostPercentage.toFixed(1)}%
-            </p>
-          </div>
-
-              {/* Liqur Vision Annual Cost */}
-              <div className="bg-linear-to-br from-yellow-50 to-yellow-100 rounded-lg p-6 border border-yellow-200">
-                <p className="text-sm font-semibold text-yellow-700 mb-2">
-                  Annual Cost
-                </p>
-                <p
-                  className={`text-4xl font-bold text-yellow-600 ${valueFadeClass}`}
+            <div className="space-y-5">
+              {resultRows.map((row) => (
+                <div
+                  key={row.label}
+                  className="rounded-2xl border border-white/15 bg-white/8 px-5 py-4 backdrop-blur-sm"
                 >
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="space-y-1">
+                      <p className="text-sm font-medium text-blue-100/85">
+                        {row.label}
+                      </p>
+                      <p className="text-xs leading-5 text-blue-100/65">
+                        {row.detail}
+                      </p>
+                    </div>
+                    <p className={`text-2xl font-semibold text-white sm:text-3xl ${valueFadeClass}`}>
+                      {row.value}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-white/15 bg-black/20 px-5 py-5">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-sm font-medium text-blue-100/80">
+                    Annual BarIQ Subscription
+                  </p>
+                  <p className="mt-1 text-xs text-blue-100/60">
+                    {tiers[selectedTier].name} plan billed at ${tiers[selectedTier].monthly} per month.
+                  </p>
+                </div>
+                <p className={`text-2xl font-semibold ${valueFadeClass}`}>
                   {formatCurrency(displayMetrics.annualCost)}
                 </p>
-                <p className="text-xs text-yellow-600 mt-2">
-                  yearly subscription
-                </p>
               </div>
+            </div>
 
-          {/* Annual Savings Before Subscription */}
-          <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 border border-green-200">
-            <p className="text-sm font-semibold text-green-700 mb-2">Annual Savings Before Subscription</p>
-            <p className={`text-4xl font-bold text-green-600 ${valueFadeClass}`}>{formatCurrency(displayMetrics.annualSavingsBeforeSubscription)}</p>
-            <p className="text-xs text-green-600 mt-2">pour + labor savings</p>
-            <p className="text-xs text-green-700 mt-2">
-              Recovering {displayMetrics.annualHours.toFixed(0)} staff hours per year ({formatCurrency(displayMetrics.annualLabor)})
-            </p>
+            <div className="mt-8">
+              <Link
+                href="/pricing"
+                className="inline-flex w-full items-center justify-center rounded-2xl bg-black px-6 py-4 text-sm font-semibold text-white transition hover:bg-black/85"
+              >
+                See Pricing
+              </Link>
+            </div>
           </div>
-
-          {/* ROI */}
-          <div className="bg-gradient-to-br from-emerald-50 to-emerald-100 rounded-lg p-6 w-full relative md:-translate-x-1  pl-12 border border-emerald-200">
-            <p className="text-sm font-semibold text-emerald-700 mb-2">Return on Investment</p>
-            <p className={`text-4xl font-bold text-emerald-600 ${valueFadeClass}`}>{displayMetrics.roi.toFixed(0)}%</p>
-            <p className="text-xs text-emerald-600 mt-2">
-              For every $1 spent, bars recover about ${Math.max(displayMetrics.roi / 100, 0).toFixed(2)} in lost inventory.
-            </p>
-          </div>
-
-          {/* Payback Period */}
-          <div className="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-lg p-6 border border-indigo-200">
-            <p className="text-sm font-semibold text-indigo-700 mb-2">Payback Period</p>
-            <p className={`text-4xl font-bold text-indigo-600 ${valueFadeClass}`}>
-              {displayMetrics.paybackPeriodMonths !== null ? `${displayMetrics.paybackPeriodMonths.toFixed(1)} mo` : 'N/A'}
-            </p>
-            <p className="text-xs text-indigo-600 mt-2">
-              {displayMetrics.paybackPeriodDays !== null ? `Payback period: ${Math.round(displayMetrics.paybackPeriodDays)} days` : 'Payback period: not available'}
-            </p>
-          </div>
-        </div>
-
-        {/* Summary Card */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-800 rounded-lg p-8 text-white text-center space-y-4">
-          <p className="text-lg font-semibold">Net Annual Savings (After Subscription)</p>
-          <p className={`text-5xl font-bold ${valueFadeClass}`}>{formatCurrency(displayMetrics.netAnnualSavings)}</p>
-          <p className="text-blue-100">
-            Using the {tiers[selectedTier].name} plan (${tiers[selectedTier].monthly}/mo), you'll net {formatCurrency(displayMetrics.netAnnualSavings)} per year after subscription costs.
-          </p>
-        </div>
-
-        <div className="flex justify-center">
-          <button
-            type="button"
-            className="inline-flex items-center justify-center rounded-md bg-blue-600 px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-blue-700"
-            aria-label="See pricing">
-            See Pricing
-          </button>
         </div>
       </div>
-    </div>
-    </div>
     </div>
   );
 }

@@ -23,6 +23,13 @@ export default function HeroSection() {
           <button className="rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10">
             See Pricing
           </button>
+
+          <a
+            href="#testimonials"
+            className="rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10"
+          >
+            See Testimonials
+          </a>
         </div>
       </div>
     </section>
