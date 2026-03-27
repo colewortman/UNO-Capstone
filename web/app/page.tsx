@@ -53,9 +53,9 @@ export default function Home() {
         <ProductDemoSection />
       </Section>
 
-      {/* Testimonials */}
-      <Section>
-        <Placeholder label="Testimonials" />
+       {/* Testimonials */}
+      <Section id="testimonials" className="scroll-mt-20">
+        <TestimonialsSection />
       </Section>
 
       {/* How It Works */}
@@ -81,11 +81,6 @@ export default function Home() {
       {/* Competitor Comparison */}
       <Section>
         <Placeholder label="Competitor Comparison" />
-      </Section>
-
-      {/* Testimonials */}
-      <Section id="testimonials" className="scroll-mt-20">
-        <TestimonialsSection />
       </Section>
 
       {/* CTA */}
