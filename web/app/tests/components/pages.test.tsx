@@ -21,7 +21,7 @@ describe('Pricing Page', () => {
 
   it('has a link back to home', () => {
     render(<PricingPage />)
-    const link = screen.getByRole('link', { name: 'Back to Home' })
+    const link = screen.getByRole('link', { name: /Back to Home/i })
     expect(link).toHaveAttribute('href', '/')
   })
 })
