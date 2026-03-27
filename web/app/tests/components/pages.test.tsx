@@ -16,7 +16,7 @@ afterEach(() => cleanup())
 describe('Pricing Page', () => {
   it('renders the heading', () => {
     render(<PricingPage />)
-    expect(screen.getByRole('heading', { name: 'Pricing' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'From concept to launch — all in one place.' })).toBeInTheDocument()
   })
 
   it('has a link back to home', () => {
