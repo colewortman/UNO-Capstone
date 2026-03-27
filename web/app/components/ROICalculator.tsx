@@ -128,6 +128,9 @@ export default function ROICalculator() {
     },
   ];
 
+  const summaryRows = resultRows.slice(0, 3);
+  const highlightRows = resultRows.slice(3);
+
   return (
     <div className="mx-auto w-full max-w-7xl px-6 py-10">
       <div className="space-y-8">
@@ -165,7 +168,7 @@ export default function ROICalculator() {
                   }`}
                   onClick={() => setSelectedTier(idx)}
                 >
-                  {tier.name} (${tier.monthly})
+                  {tier.name}
                 </button>
               ))}
             </div>
@@ -313,7 +316,7 @@ export default function ROICalculator() {
             </div>
 
             <div className="space-y-5">
-              {resultRows.map((row) => (
+              {summaryRows.map((row) => (
                 <div
                   key={row.label}
                   className="rounded-2xl border border-white/15 bg-white/8 px-5 py-4 backdrop-blur-sm"
@@ -335,23 +338,28 @@ export default function ROICalculator() {
               ))}
             </div>
 
-            <div className="mt-8 rounded-2xl border border-white/15 bg-black/20 px-5 py-5">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-sm font-medium text-blue-100/80">
-                    Annual BarIQ Subscription
-                  </p>
-                  <p className="mt-1 text-xs text-blue-100/60">
-                    {tiers[selectedTier].name} plan billed at ${tiers[selectedTier].monthly} per month.
-                  </p>
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              {highlightRows.map((row) => (
+                <div
+                  key={row.label}
+                  className="rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur-sm"
+                >
+                  <div className="space-y-2">
+                    <p className="text-sm font-medium text-blue-100/90">
+                      {row.label}
+                    </p>
+                    <p className={`text-3xl font-semibold text-white ${valueFadeClass}`}>
+                      {row.value}
+                    </p>
+                    <p className="text-xs leading-5 text-blue-100/65">
+                      {row.detail}
+                    </p>
+                  </div>
                 </div>
-                <p className={`text-2xl font-semibold ${valueFadeClass}`}>
-                  {formatCurrency(displayMetrics.annualCost)}
-                </p>
-              </div>
+              ))}
             </div>
 
-            <div className="mt-8">
+            <div className="mt-6">
               <Link
                 href="/pricing"
                 className="inline-flex w-full items-center justify-center rounded-2xl bg-black px-6 py-4 text-sm font-semibold text-white transition hover:bg-black/85"
