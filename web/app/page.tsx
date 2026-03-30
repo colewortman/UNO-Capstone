@@ -7,8 +7,7 @@ import FinalCTASection from "./components/FinalCTASection";
 import FeatureHighlightsSection from "./components/FeatureHighlights";
 import SocialProofSection from "./components/SocialProofSection";
 import ROICalculator from "./components/ROICalculator";
-import HowItWorksSection from "./components/HowItWorksSection";
-import {TestimonialsSection} from "./components/Testimonials";
+import { TestimonialsSection } from "./components/Testimonials";
 
 function Section({
   children,
@@ -53,14 +52,9 @@ export default function Home() {
         <ProductDemoSection />
       </Section>
 
-       {/* Testimonials */}
+      {/* Testimonials */}
       <Section id="testimonials" className="scroll-mt-20">
         <TestimonialsSection />
-      </Section>
-
-      {/* How It Works */}
-      <Section>
-        <HowItWorksSection />
       </Section>
 
       {/* Feature Highlights */}
@@ -70,17 +64,12 @@ export default function Home() {
 
       {/* Comparisons (differentiator) */}
       <Section>
-        <Placeholder label="Comparison" />
+        <Placeholder label="Comparisons" />
       </Section>
 
       {/* ROI Calculator */}
       <Section className="scroll-mt-20" id="roi-calculator">
-        <ROICalculator/>
-      </Section>
-
-      {/* Competitor Comparison */}
-      <Section>
-        <Placeholder label="Competitor Comparison" />
+        <ROICalculator />
       </Section>
 
       {/* CTA */}
