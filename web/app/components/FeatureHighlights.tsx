@@ -5,6 +5,7 @@ const features = [
     title: "Fast bottle scanning",
     description: "Move through inventory sessions in minutes, not hours.",
     icon: "◌",
+    featured: true,
   },
   {
     title: "Guided exception review",
@@ -36,10 +37,8 @@ const features = [
 export default function FeatureHighlightsSection() {
   return (
     <div>
+      {/* header */}
       <div className="mb-14 max-w-2xl">
-        <p className="mb-4 text-xs uppercase tracking-[0.35em] text-blue-300">
-          Feature Highlights
-        </p>
         <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
           Built for faster counts and better visibility.
         </h2>
@@ -49,25 +48,43 @@ export default function FeatureHighlightsSection() {
         </p>
       </div>
 
+      {/* grid */}
       <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-        {features.map((feature) => (
-          <div
-            key={feature.title}
-            className="rounded-[1.75rem] border border-white/10 bg-white/3 p-6 transition hover:border-white/20 hover:bg-white/5"
-          >
-            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/4 text-lg text-blue-300">
-              {feature.icon}
+        {features.map((feature) => {
+          const isFeatured = feature.featured;
+
+          return (
+            <div
+              key={feature.title}
+              className={`
+                group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.03] p-6
+                transition-all duration-300
+                hover:border-white/20
+                ${isFeatured ? "sm:col-span-2 xl:col-span-2" : ""}
+              `}
+            >
+              {/* subtle blue glow */}
+              <div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                <div className="absolute inset-0 rounded-[1.75rem] bg-blue-500/5 blur-[20px]" />
+              </div>
+
+              {/* icon */}
+              <div className="relative mb-6 flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-lg text-blue-300">
+                {feature.icon}
+              </div>
+
+              {/* title */}
+              <h3 className="relative text-xl font-medium tracking-tight">
+                {feature.title}
+              </h3>
+
+              {/* description */}
+              <p className="relative mt-3 text-sm leading-7 text-white/55 md:text-base">
+                {feature.description}
+              </p>
             </div>
-
-            <h3 className="text-xl font-medium tracking-tight">
-              {feature.title}
-            </h3>
-
-            <p className="mt-3 text-sm leading-7 text-white/55 md:text-base">
-              {feature.description}
-            </p>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
