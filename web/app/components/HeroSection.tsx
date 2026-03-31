@@ -22,7 +22,7 @@ export default function HeroSection() {
           Faster counts. Less shrinkage. Cleaner visibility for bar managers.
         </p>
 
-        <div className="mt-10 flex flex-wrap items-center gap-2 md:gap-3">
+        <div className="mt-10 flex flex-wrap items-center gap-4">
           <a
             href="#"
             className="inline-flex items-center rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-7 py-4 text-base font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01]"
@@ -44,23 +44,25 @@ export default function HeroSection() {
         <div className="h-115 w-65 rounded-[3rem] border border-white/10 bg-white/3 shadow-[0_0_80px_rgba(59,130,246,0.08)] backdrop-blur-sm" />
       </div>
 
-      {/* right side — supporting copy & stat */}
-      <div className="flex flex-col justify-between self-stretch py-8">
+      {/* right side — supporting copy & actions */}
+      <div className="flex flex-col justify-center gap-6 py-8 lg:max-w-xs">
         <div className="max-w-52 text-sm leading-7 text-white/55">
           Bottle-level visibility for faster counts, cleaner reporting, and less
           manual inventory work.
         </div>
 
-        <button className="rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10">
-          See Pricing
-        </button>
+        <div className="flex flex-col gap-3">
+          <button className="w-full rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10">
+            See Pricing
+          </button>
 
-        <a
-          href="#testimonials"
-          className="rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10"
-        >
-          See Testimonials
-        </a>
+          <a
+            href="#testimonials"
+            className="w-full rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-center text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10"
+          >
+            See Testimonials
+          </a>
+        </div>
       </div>
     </div>
   );
