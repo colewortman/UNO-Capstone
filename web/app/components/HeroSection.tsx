@@ -22,7 +22,7 @@ export default function HeroSection() {
           Faster counts. Less shrinkage. Cleaner visibility for bar managers.
         </p>
 
-        <div className="mt-10 flex flex-wrap items-center gap-4">
+        <div className="mt-10 flex flex-wrap items-center gap-2 md:gap-3">
           <a
             href="#"
             className="inline-flex items-center rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-7 py-4 text-base font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01]"
@@ -51,17 +51,17 @@ export default function HeroSection() {
           manual inventory work.
         </div>
 
-          <button className="rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10">
-            See Pricing
-          </button>
+        <button className="rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10">
+          See Pricing
+        </button>
 
-          <a
-            href="#testimonials"
-            className="rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10"
-          >
-            See Testimonials
-          </a>
-        </div>
+        <a
+          href="#testimonials"
+          className="rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10"
+        >
+          See Testimonials
+        </a>
       </div>
+    </div>
   );
 }
