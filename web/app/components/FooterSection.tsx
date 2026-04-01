@@ -6,6 +6,8 @@
 
 "use client";
 
+import LiquidMetalLogo from "./ui/liquid-metal-hero";
+
 export default function FooterSection() {
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-black px-6 pb-10 pt-20 text-white md:px-10 lg:px-16">
@@ -17,23 +19,12 @@ export default function FooterSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl">
-        {/* top liquid droplet */}
+        {/* top liquid metal logo */}
         <div className="mb-16 flex justify-center md:mb-20">
           <div className="relative h-[220px] w-[220px] md:h-[320px] md:w-[320px]">
             {/* outer glow */}
             <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[70px] md:blur-[90px]" />
-
-            {/* droplet blob */}
-            <div className="liquid-drop absolute inset-0 rounded-[42%_58%_55%_45%/42%_40%_60%_58%] border border-white/15 bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.95),rgba(255,255,255,0.22)_26%,rgba(96,165,250,0.22)_48%,rgba(15,23,42,0.85)_72%,rgba(2,6,23,0.98)_100%)] shadow-[inset_0_1px_0_rgba(255,255,255,0.32),0_30px_90px_rgba(59,130,246,0.18)] backdrop-blur-md">
-              {/* reflective highlight */}
-              <div className="absolute left-[18%] top-[14%] h-[30%] w-[48%] rotate-[-18deg] rounded-full bg-white/45 blur-2xl" />
-
-              {/* inner blue flare */}
-              <div className="absolute bottom-[14%] right-[12%] h-[34%] w-[34%] rounded-full bg-blue-400/20 blur-2xl" />
-
-              {/* tiny orbit dot */}
-              <div className="absolute left-1/2 top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-white/85 shadow-[0_0_18px_rgba(255,255,255,0.7)]" />
-            </div>
+            <LiquidMetalLogo />
           </div>
         </div>
 
