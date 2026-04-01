@@ -1,7 +1,9 @@
 "use client";
 
 import { useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import logoWhite from "@/public/lv-logo-white-v2.svg";
 import {
   NavigationMenu,
   NavigationMenuList,
@@ -41,8 +43,16 @@ export default function NavigationBar() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-center px-4 sm:px-6 lg:px-8">
+      <div className="flex h-16 items-center justify-between px-6 lg:px-10">
         {/* Logo / Brand */}
+        <Link href="/" className="shrink-0">
+          <Image
+            src={logoWhite}
+            alt="Liquor Vision logo"
+            width={160}
+            height={53}
+          />
+        </Link>
 
         {/* Navigation */}
         <NavigationMenu>
@@ -64,7 +74,15 @@ export default function NavigationBar() {
                         </NavigationMenuLink>
                       </li>
                       <li>
-                        <NavigationMenuLink href="/#roi-calculator" render={<Link href="/#roi-calculator" onClick={scrollToHash} />}>
+                        <NavigationMenuLink
+                          href="/#roi-calculator"
+                          render={
+                            <Link
+                              href="/#roi-calculator"
+                              onClick={scrollToHash}
+                            />
+                          }
+                        >
                           <span className="font-medium">ROI Calculator</span>
                           <span className="text-muted-foreground text-xs">
                             See how much Bar IQ can save your business
@@ -127,6 +145,9 @@ export default function NavigationBar() {
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
+
+        {/* Spacer to keep nav centered */}
+        <div className="w-[160px] shrink-0" />
       </div>
     </header>
   );
