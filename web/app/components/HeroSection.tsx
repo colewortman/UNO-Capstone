@@ -1,13 +1,11 @@
 /**
  * @file HeroSection.tsx
- * @description Renders the main hero content for the Bar-IQ landing page.
- * Designed to sit inside a Section wrapper that provides the full-viewport
- * background and centering.
+ * @description Responsive hero section for the Bar-IQ landing page.
  */
 
 export default function HeroSection() {
   return (
-    <div className="grid w-full items-center gap-8 lg:grid-cols-[1fr_auto_auto] lg:gap-12">
+    <div className="grid w-full items-center gap-12 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,260px)] lg:gap-10 xl:gap-12">
       {/* left side — text + CTA */}
       <div className="mx-auto max-w-lg text-center lg:mx-0 lg:text-left">
         <p className="mb-5 text-xs uppercase tracking-[0.35em] text-blue-300">
@@ -52,13 +50,13 @@ export default function HeroSection() {
         </div>
 
         <div className="flex flex-col gap-3">
-          <button className="w-full rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10">
+          <button className="w-full rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10 sm:px-8 sm:text-lg">
             See Pricing
           </button>
 
           <a
             href="#testimonials"
-            className="w-full rounded-xl border border-white/15 bg-white/5 px-8 py-4 text-center text-lg font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10"
+            className="w-full rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-center text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10 sm:px-8 sm:text-lg"
           >
             See Testimonials
           </a>

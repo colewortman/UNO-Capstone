@@ -5,6 +5,7 @@ const features = [
     title: "Fast bottle scanning",
     description: "Move through inventory sessions in minutes, not hours.",
     icon: "◌",
+    featured: true,
   },
   {
     title: "Guided exception review",
