@@ -149,7 +149,7 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-[#111113] text-white">
-      <div className="mx-auto max-w-7xl px-6 py-24">
+      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
 
         {/* ── Back link ── */}
         <div className="mb-4 text-center">
@@ -163,7 +163,7 @@ export default function PricingPage() {
 
         {/* ── Page heading + subtitle ── */}
         <div className="mb-12 text-center">
-          <h1 className="mb-4 text-4xl font-bold tracking-tight md:text-5xl">
+          <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
             From concept to launch — all in one place.
           </h1>
           <p className="mx-auto max-w-2xl text-white/55 text-lg">
@@ -175,39 +175,40 @@ export default function PricingPage() {
         {/* ── Billing toggle: monthly / yearly ──
             Active selection gets a white pill background.
             The yearly savings badge is always visible to encourage upgrades. */}
-        <div className="mb-14 flex items-center justify-center gap-4">
-          <button
-            onClick={() => setIsYearly(false)}
-            className={`rounded-full px-5 py-2 text-sm font-medium transition ${
-              !isYearly
-                ? "bg-white text-black"
-                : "text-white/60 hover:text-white"
-            }`}
-          >
-            Pay monthly
-          </button>
-          <button
-            onClick={() => setIsYearly(true)}
-            className={`rounded-full px-5 py-2 text-sm font-medium transition ${
-              isYearly
-                ? "bg-white text-black"
-                : "text-white/60 hover:text-white"
-            }`}
-          >
-            Pay yearly
-          </button>
+        <div className="mb-14 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setIsYearly(false)}
+              className={`rounded-full px-5 py-2.5 text-sm font-medium transition ${
+                !isYearly
+                  ? "bg-white text-black"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Pay monthly
+            </button>
+            <button
+              onClick={() => setIsYearly(true)}
+              className={`rounded-full px-5 py-2.5 text-sm font-medium transition ${
+                isYearly
+                  ? "bg-white text-black"
+                  : "text-white/60 hover:text-white"
+              }`}
+            >
+              Pay yearly
+            </button>
+          </div>
           <span className="text-sm text-blue-400">Save up to 20% with yearly</span>
         </div>
 
         {/* ── Pricing cards grid ──
             Responsive: 1 col on mobile → 2 on sm → 3 on lg → 5 on xl (one per tier).
             Each card uses flex-col so the CTA button is always pinned to the bottom. */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-5">
           {tiers.map((tier) => (
             <div
               key={tier.name}
-              className={`relative flex flex-col rounded-2xl border p-6 transition-all ${
-                // Recommended tier gets a blue tinted background + glow shadow
+              className={`relative flex flex-col rounded-xl border p-3 transition-all sm:rounded-2xl sm:p-6 ${
                 tier.recommended
                   ? "border-blue-500/50 bg-[#1a1f2e] shadow-[0_0_40px_rgba(59,130,246,0.15)]"
                   : "border-white/10 bg-[#18181b]"
@@ -216,48 +217,45 @@ export default function PricingPage() {
               {/* Glowing border effect — tracks pointer position on hover */}
               <GlowingEffect disabled={false} spread={30} proximity={60} borderWidth={1.5} />
 
-              {/* "Recommended" badge — only rendered for the highlighted tier */}
+              {/* "Recommended" badge */}
               {tier.recommended && (
-                <span className="absolute right-4 top-4 rounded-full border border-blue-400/30 bg-blue-500/20 px-3 py-0.5 text-xs font-medium text-blue-300">
+                <span className="absolute right-2 top-2 rounded-full border border-blue-400/30 bg-blue-500/20 px-2 py-0.5 text-[10px] font-medium text-blue-300 sm:right-4 sm:top-4 sm:px-3 sm:text-xs">
                   Recommended
                 </span>
               )}
 
               {/* Tier icon */}
-              <div className={`mb-4 w-fit rounded-xl p-2.5 ${tier.recommended ? "bg-blue-500/15 text-blue-300" : "bg-white/8 text-white/60"}`}>
-                {tier.icon}
+              <div className={`mb-2 w-fit rounded-lg p-1.5 sm:mb-4 sm:rounded-xl sm:p-2.5 ${tier.recommended ? "bg-blue-500/15 text-blue-300" : "bg-white/8 text-white/60"}`}>
+                <div className="h-5 w-5 sm:h-7 sm:w-7 [&>svg]:h-full [&>svg]:w-full">
+                  {tier.icon}
+                </div>
               </div>
 
-              {/* Tier name + short description */}
-              <h2 className="mb-1.5 text-xl font-semibold">{tier.name}</h2>
-              <p className="mb-6 text-sm leading-relaxed text-white/50">{tier.description}</p>
+              {/* Tier name + description (description hidden on mobile) */}
+              <h2 className="mb-1 text-sm font-semibold sm:mb-1.5 sm:text-xl">{tier.name}</h2>
+              <p className="mb-3 hidden text-sm leading-relaxed text-white/50 sm:mb-6 sm:block">{tier.description}</p>
 
-              {/* Price display — updates when toggle switches between monthly/yearly */}
-              <div className="mb-1 flex items-end gap-1">
-                <span className="text-4xl font-bold">${getPrice(tier.monthly)}</span>
-                <span className="mb-1 text-sm text-white/50">/month</span>
+              {/* Price */}
+              <div className="mb-1 flex items-end gap-0.5 sm:gap-1">
+                <span className="text-2xl font-bold sm:text-4xl">${getPrice(tier.monthly)}</span>
+                <span className="mb-0.5 text-[10px] text-white/50 sm:mb-1 sm:text-sm">/mo</span>
               </div>
-              {/* Show annual billed amount only in yearly mode */}
               {isYearly && (
-                <p className="mb-6 text-xs text-white/35">
-                  Billed as ${getPrice(tier.monthly) * 12}/year
+                <p className="mb-3 text-[10px] text-white/35 sm:mb-6 sm:text-xs">
+                  Billed as ${getPrice(tier.monthly) * 12}/yr
                 </p>
               )}
-              {/* Spacer maintains consistent layout in monthly mode */}
-              {!isYearly && <div className="mb-6" />}
+              {!isYearly && <div className="mb-3 sm:mb-6" />}
 
               {/* Divider */}
-              <div className="mb-5 h-px bg-white/10" />
+              <div className="mb-3 h-px bg-white/10 sm:mb-5" />
 
-              {/* Feature list section label (e.g. "Basic Features:" or "Everything in X plus:") */}
-              <p className="mb-3 text-xs font-medium uppercase tracking-widest text-white/35">
+              {/* Feature list (hidden on mobile, shown sm+) */}
+              <p className="mb-2 hidden text-xs font-medium uppercase tracking-widest text-white/35 sm:mb-3 sm:block">
                 {tier.prefix}
               </p>
 
-              {/* Feature bullets
-                  The filter removes the "Everything in X plus:" string if it was
-                  accidentally included as a feature item — keeping the list clean. */}
-              <ul className="mb-8 flex-1 space-y-2.5">
+              <ul className="mb-4 hidden flex-1 space-y-2.5 sm:mb-8 sm:block">
                 {tier.features
                   .filter((f) => !f.endsWith("plus:"))
                   .map((feature) => (
@@ -272,9 +270,14 @@ export default function PricingPage() {
                   ))}
               </ul>
 
-              {/* CTA button — style is customised per tier via ctaStyle */}
+              {/* Mobile: compact feature count */}
+              <p className="mb-3 flex-1 text-[10px] text-white/40 sm:hidden">
+                {tier.features.filter((f) => !f.endsWith("plus:")).length} features included
+              </p>
+
+              {/* CTA button */}
               <button
-                className={`w-full rounded-xl py-2.5 text-sm font-medium transition ${tier.ctaStyle}`}
+                className={`w-full rounded-lg py-2 text-xs font-medium transition sm:rounded-xl sm:py-2.5 sm:text-sm ${tier.ctaStyle}`}
               >
                 {tier.cta}
               </button>

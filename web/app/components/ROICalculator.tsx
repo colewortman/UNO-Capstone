@@ -31,6 +31,7 @@ export default function ROICalculator() {
   ];
   const [selectedTier, setSelectedTier] = useState(0); // default to Starter
   const [isValueFading, setIsValueFading] = useState(false);
+  const [showResults, setShowResults] = useState(false);
 
   const getTierIndexFromSales = (sales: number) => {
     if (sales < 250000) return 0;
@@ -98,7 +99,7 @@ export default function ROICalculator() {
   };
 
   const sliderBaseClass =
-    "h-3 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-white";
+    "h-3 w-full cursor-pointer appearance-none rounded-full bg-white/10 accent-white touch-none md:h-3";
 
   const resultRows = [
     {
@@ -132,36 +133,37 @@ export default function ROICalculator() {
   const highlightRows = resultRows.slice(3);
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-6 py-10">
-      <div className="space-y-8">
-        <div className="space-y-3 text-center">
-          <h2 className="text-4xl font-bold text-white md:text-5xl">
+    <div className="mx-auto w-full max-w-7xl px-4 py-6 sm:px-6 sm:py-10">
+      <div className="space-y-4 sm:space-y-8">
+        <div className="space-y-2 text-center sm:space-y-3">
+          <h2 className="text-2xl font-bold text-white sm:text-4xl md:text-5xl">
             ROI Calculator
           </h2>
-          <p className="text-base text-white/65 md:text-lg">
+          <p className="text-sm text-white/65 sm:text-base md:text-lg">
             Enter the inputs and see how BarIQ changes your annual results.
           </p>
         </div>
 
         <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
-          <div className="rounded-[28px] border border-white/10 bg-black px-6 py-7 text-white shadow-[0_20px_60px_rgba(0,0,0,0.35)] sm:px-8 sm:py-8">
-            <div className="mb-8 flex items-start justify-between gap-4">
+          {/* ── INPUT PANEL ── */}
+          <div className={`rounded-2xl border border-white/10 bg-black px-4 py-5 text-white shadow-[0_20px_60px_rgba(0,0,0,0.35)] sm:rounded-[28px] sm:px-8 sm:py-8 ${showResults ? "hidden xl:block" : ""}`}>
+            <div className="mb-4 flex items-start justify-between gap-4 sm:mb-8">
               <div>
-                <p className="text-sm uppercase tracking-[0.2em] text-white/45">
+                <p className="text-xs uppercase tracking-[0.2em] text-white/45 sm:text-sm">
                   Your current process
                 </p>
-                <h3 className="mt-2 text-2xl font-semibold">
+                <h3 className="mt-1 text-lg font-semibold sm:mt-2 sm:text-2xl">
                   Auto-matched to pricing tier
                 </h3>
               </div>
             </div>
 
-            <div className="mb-8 flex flex-wrap gap-2 overflow-x-auto">
+            <div className="mb-4 flex flex-wrap gap-1.5 overflow-x-auto sm:mb-8 sm:gap-2">
               {tiers.map((tier, idx) => (
                 <button
                   key={tier.name}
                   type="button"
-                  className={`rounded-full border px-4 py-2 text-sm font-medium whitespace-nowrap transition ${
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium whitespace-nowrap transition sm:px-4 sm:py-2 sm:text-sm ${
                     idx === selectedTier
                       ? "border-white bg-white text-black"
                       : "border-white/10 bg-white/5 text-white/70 hover:bg-white/10"
@@ -173,13 +175,13 @@ export default function ROICalculator() {
               ))}
             </div>
 
-            <div className="space-y-7">
-              <div className="space-y-3">
-                <div className="flex items-end justify-between gap-4">
-                  <label className="text-sm font-medium text-white/70">
+            <div className="space-y-3 sm:space-y-7">
+              <div className="space-y-1.5 sm:space-y-3">
+                <div className="flex items-end justify-between gap-2">
+                  <label className="text-xs font-medium text-white/70 sm:text-sm">
                     Annual Liquor Sales
                   </label>
-                  <span className="text-3xl font-semibold text-white">
+                  <span className="text-lg font-semibold text-white sm:text-2xl md:text-3xl">
                     {formatCurrency(annualSales)}
                   </span>
                 </div>
@@ -192,18 +194,14 @@ export default function ROICalculator() {
                   onChange={(e) => setAnnualSales(Number(e.target.value))}
                   className={sliderBaseClass}
                 />
-                <div className="flex justify-between text-xs text-white/40">
-                  <span>$10k</span>
-                  <span>$10M</span>
-                </div>
               </div>
 
-              <div className="space-y-3">
-                <div className="flex items-end justify-between gap-4">
-                  <label className="text-sm font-medium text-white/70">
+              <div className="space-y-1.5 sm:space-y-3">
+                <div className="flex items-end justify-between gap-2">
+                  <label className="text-xs font-medium text-white/70 sm:text-sm">
                     Current Pour Cost
                   </label>
-                  <span className="text-3xl font-semibold text-white">
+                  <span className="text-lg font-semibold text-white sm:text-2xl md:text-3xl">
                     {pourCostPercentage.toFixed(1)}%
                   </span>
                 </div>
@@ -218,18 +216,14 @@ export default function ROICalculator() {
                   }
                   className={sliderBaseClass}
                 />
-                <div className="flex justify-between text-xs text-white/40">
-                  <span>5%</span>
-                  <span>30%</span>
-                </div>
               </div>
 
-              <div className="space-y-3">
-                <div className="flex items-end justify-between gap-4">
-                  <label className="text-sm font-medium text-white/70">
+              <div className="space-y-1.5 sm:space-y-3">
+                <div className="flex items-end justify-between gap-2">
+                  <label className="text-xs font-medium text-white/70 sm:text-sm">
                     Expected Pour Cost Improvement
                   </label>
-                  <span className="text-3xl font-semibold text-white">
+                  <span className="text-lg font-semibold text-white sm:text-2xl md:text-3xl">
                     {expectPourImprov.toFixed(1)}%
                   </span>
                 </div>
@@ -242,18 +236,14 @@ export default function ROICalculator() {
                   onChange={(e) => setExpectPourImprov(Number(e.target.value))}
                   className={sliderBaseClass}
                 />
-                <div className="flex justify-between text-xs text-white/40">
-                  <span>60%</span>
-                  <span>80%</span>
-                </div>
               </div>
 
-              <div className="space-y-3">
-                <div className="flex items-end justify-between gap-4">
-                  <label className="text-sm font-medium text-white/70">
+              <div className="space-y-1.5 sm:space-y-3">
+                <div className="flex items-end justify-between gap-2">
+                  <label className="text-xs font-medium text-white/70 sm:text-sm">
                     Monthly Hours Counting Bottles
                   </label>
-                  <span className="text-3xl font-semibold text-white">
+                  <span className="text-lg font-semibold text-white sm:text-2xl md:text-3xl">
                     {hoursCountingBottles.toFixed(0)} hrs/mo
                   </span>
                 </div>
@@ -268,18 +258,14 @@ export default function ROICalculator() {
                   }
                   className={sliderBaseClass}
                 />
-                <div className="flex justify-between text-xs text-white/40">
-                  <span>0 hrs/mo</span>
-                  <span>160 hrs/mo</span>
-                </div>
               </div>
 
-              <div className="space-y-3">
-                <div className="flex items-end justify-between gap-4">
-                  <label className="text-sm font-medium text-white/70">
+              <div className="space-y-1.5 sm:space-y-3">
+                <div className="flex items-end justify-between gap-2">
+                  <label className="text-xs font-medium text-white/70 sm:text-sm">
                     Average Hourly Wage
                   </label>
-                  <span className="text-3xl font-semibold text-white">
+                  <span className="text-lg font-semibold text-white sm:text-2xl md:text-3xl">
                     {formatCurrency(hourlyWage)}/hr
                   </span>
                 </div>
@@ -292,45 +278,54 @@ export default function ROICalculator() {
                   onChange={(e) => setHourlyWage(Number(e.target.value))}
                   className={sliderBaseClass}
                 />
-                <div className="flex justify-between text-xs text-white/40">
-                  <span>$10/hr</span>
-                  <span>$100/hr</span>
-                </div>
               </div>
             </div>
+
+            {/* Mobile: Calculate button */}
+            <button
+              type="button"
+              onClick={() => {
+                setDisplayMetrics(buildMetrics());
+                setShowResults(true);
+              }}
+              className="mt-5 w-full rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 px-6 py-3.5 text-sm font-semibold text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:brightness-110 sm:mt-8 sm:rounded-2xl sm:py-4 xl:hidden"
+            >
+              Calculate ROI
+            </button>
           </div>
 
-          <div className="rounded-[28px] bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 px-6 py-7 text-white shadow-[0_30px_80px_rgba(37,99,235,0.45)] sm:px-8 sm:py-8">
-            <div className="mb-8 flex items-start justify-between gap-4">
+          {/* ── RESULTS PANEL ── */}
+          <div className={`rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 px-4 py-5 text-white shadow-[0_30px_80px_rgba(37,99,235,0.45)] sm:rounded-[28px] sm:px-8 sm:py-8 ${showResults ? "" : "hidden xl:block"}`}>
+            <div className="mb-4 flex items-start justify-between gap-3 sm:mb-8 sm:gap-4">
               <div>
-                <p className="text-sm uppercase tracking-[0.2em] text-blue-100/70">
+                <p className="text-xs uppercase tracking-[0.2em] text-blue-100/70 sm:text-sm">
                   ROI calculation results
                 </p>
-                <h3 className="mt-2 text-2xl font-semibold md:text-3xl">
+                <h3 className="mt-1 text-lg font-semibold sm:mt-2 sm:text-2xl md:text-3xl">
                   What BarIQ could return each year
                 </h3>
               </div>
-              <div className="rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white/80">
+              <div className="hidden shrink-0 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white/80 sm:block">
                 {tiers[selectedTier].name} tier selected
               </div>
             </div>
 
-            <div className="space-y-5">
+            <div className="space-y-2.5 sm:space-y-5">
               {summaryRows.map((row) => (
                 <div
                   key={row.label}
-                  className="rounded-2xl border border-white/15 bg-white/8 px-5 py-4 backdrop-blur-sm"
+                  className="rounded-xl border border-white/15 bg-white/8 px-3 py-2.5 backdrop-blur-sm sm:rounded-2xl sm:px-5 sm:py-4"
                 >
-                  <div className="flex items-start justify-between gap-4">
-                    <div className="space-y-1">
-                      <p className="text-sm font-medium text-blue-100/85">
+                  <div className="flex items-center justify-between gap-3 sm:items-start sm:gap-4">
+                    <div className="min-w-0 space-y-0.5 sm:space-y-1">
+                      <p className="text-xs font-medium text-blue-100/85 sm:text-sm">
                         {row.label}
                       </p>
-                      <p className="text-xs leading-5 text-blue-100/65">
+                      <p className="hidden text-xs leading-5 text-blue-100/65 sm:block">
                         {row.detail}
                       </p>
                     </div>
-                    <p className={`text-2xl font-semibold text-white sm:text-3xl ${valueFadeClass}`}>
+                    <p className={`shrink-0 text-xl font-semibold text-white sm:text-2xl md:text-3xl ${valueFadeClass}`}>
                       {row.value}
                     </p>
                   </div>
@@ -338,20 +333,20 @@ export default function ROICalculator() {
               ))}
             </div>
 
-            <div className="mt-6 grid gap-4 md:grid-cols-2">
+            <div className="mt-3 grid grid-cols-2 gap-2.5 sm:mt-6 sm:grid-cols-1 sm:gap-4 md:grid-cols-2">
               {highlightRows.map((row) => (
                 <div
                   key={row.label}
-                  className="rounded-2xl border border-white/15 bg-white/10 px-5 py-4 backdrop-blur-sm"
+                  className="rounded-xl border border-white/15 bg-white/10 px-3 py-2.5 backdrop-blur-sm sm:rounded-2xl sm:px-5 sm:py-4"
                 >
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-blue-100/90">
+                  <div className="space-y-1 sm:space-y-2">
+                    <p className="text-xs font-medium text-blue-100/90 sm:text-sm">
                       {row.label}
                     </p>
-                    <p className={`text-3xl font-semibold text-white ${valueFadeClass}`}>
+                    <p className={`text-xl font-semibold text-white sm:text-3xl ${valueFadeClass}`}>
                       {row.value}
                     </p>
-                    <p className="text-xs leading-5 text-blue-100/65">
+                    <p className="hidden text-xs leading-5 text-blue-100/65 sm:block">
                       {row.detail}
                     </p>
                   </div>
@@ -359,10 +354,19 @@ export default function ROICalculator() {
               ))}
             </div>
 
-            <div className="mt-6">
+            {/* Mobile: Edit Inputs button */}
+            <button
+              type="button"
+              onClick={() => setShowResults(false)}
+              className="mt-3 w-full rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15 sm:mt-6 sm:rounded-2xl sm:py-4 xl:hidden"
+            >
+              Edit Inputs
+            </button>
+
+            <div className="mt-2.5 sm:mt-4 xl:mt-6">
               <Link
                 href="/pricing"
-                className="inline-flex w-full items-center justify-center rounded-2xl bg-black px-6 py-4 text-sm font-semibold text-white transition hover:bg-black/85"
+                className="inline-flex w-full items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/85 sm:rounded-2xl sm:py-4"
               >
                 See Pricing
               </Link>
