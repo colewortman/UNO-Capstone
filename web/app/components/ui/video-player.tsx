@@ -46,14 +46,31 @@ const CustomSlider = ({
     document.addEventListener("mouseup", handleMouseUp);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    onChange(getPercentage(e.touches[0].clientX));
+
+    const handleTouchMove = (e: TouchEvent) => {
+      onChange(getPercentage(e.touches[0].clientX));
+    };
+
+    const handleTouchEnd = () => {
+      document.removeEventListener("touchmove", handleTouchMove);
+      document.removeEventListener("touchend", handleTouchEnd);
+    };
+
+    document.addEventListener("touchmove", handleTouchMove);
+    document.addEventListener("touchend", handleTouchEnd);
+  };
+
   return (
     <motion.div
       ref={sliderRef}
       className={cn(
-        "relative w-full h-1 bg-white/20 rounded-full cursor-pointer",
+        "relative w-full h-2 bg-white/20 rounded-full cursor-pointer touch-none",
         className,
       )}
       onMouseDown={handleMouseDown}
+      onTouchStart={handleTouchStart}
     >
       <div
         className="absolute top-0 left-0 h-full bg-white rounded-full"
@@ -134,6 +151,10 @@ const VideoPlayer = ({ src }: { src: string }) => {
     }
   };
 
+  const toggleControls = () => {
+    setShowControls((prev) => !prev);
+  };
+
   return (
     <motion.div
       className="relative w-full max-w-4xl mx-auto rounded-xl overflow-hidden bg-[#11111198] shadow-[0_0_20px_rgba(0,0,0,0.2)] backdrop-blur-sm"
@@ -149,6 +170,11 @@ const VideoPlayer = ({ src }: { src: string }) => {
         onTimeUpdate={handleTimeUpdate}
         src={src}
         onClick={togglePlay}
+        onTouchEnd={(e) => {
+          e.preventDefault();
+          toggleControls();
+        }}
+        playsInline
       />
 
       <AnimatePresence>
@@ -191,7 +217,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
                     )}
                   </Button>
                 </motion.div>
-                <div className="flex items-center gap-x-1">
+                <div className="hidden items-center gap-x-1 md:flex">
                   <motion.div
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.9 }}
@@ -221,7 +247,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="hidden items-center gap-2 md:flex">
                 {[0.5, 1, 1.5, 2].map((speed) => (
                   <motion.div
                     whileHover={{ scale: 1.1 }}

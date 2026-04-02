@@ -5,14 +5,19 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { FeatureCarousel } from "./ui/feature-carousel";
+import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function ProblemSolutionSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery("(max-width: 767px)");
 
   useGSAP(
     () => {
+      // Skip GSAP animations on mobile — stacked layout shown via CSS instead
+      if (isMobile) return;
+
       // Hide solution panels initially so they don't flash
       gsap.set(".ps-solution .fc-blue-panel", { xPercent: 100, opacity: 0 });
       gsap.set(".ps-solution .fc-image-panel", {
@@ -110,21 +115,43 @@ export default function ProblemSolutionSection() {
         "-=0.35",
       );
     },
-    { scope: sectionRef },
+    { scope: sectionRef, dependencies: [isMobile] },
   );
 
   return (
     <div ref={sectionRef}>
-      <section className="ps-section relative h-screen overflow-hidden">
+      {/* Mobile: stacked layout without GSAP pinning */}
+      <div className={isMobile ? "space-y-12 py-8" : "hidden"}>
+        <div>
+          <h2 className="mb-6 text-center text-3xl font-semibold sm:text-4xl">
+            The Problem
+          </h2>
+          <div className="p-2 sm:p-4">
+            <FeatureCarousel />
+          </div>
+        </div>
+
+        <div>
+          <h2 className="mb-6 text-center text-3xl font-semibold sm:text-4xl">
+            The Solution
+          </h2>
+          <div className="p-2 sm:p-4">
+            <FeatureCarousel inverted />
+          </div>
+        </div>
+      </div>
+
+      {/* Desktop: GSAP pinned scroll animation */}
+      <section className={isMobile ? "hidden" : "ps-section relative h-screen overflow-hidden"}>
         {/* Title with line-masked swap animation */}
-        <div className="relative z-10 pt-42 flex justify-center">
+        <div className="relative z-10 flex justify-center pt-20 md:pt-32 lg:pt-42">
           <div className="relative">
             <div className="ps-title-problem overflow-hidden">
               <h2 className="ps-title-problem-text text-center text-4xl font-semibold md:text-5xl">
                 The Problem
               </h2>
             </div>
-            <div className="ps-title-solution overflow-hidden absolute inset-0">
+            <div className="ps-title-solution absolute inset-0 overflow-hidden">
               <h2 className="ps-title-solution-text text-center text-4xl font-semibold md:text-5xl">
                 The Solution
               </h2>
@@ -133,12 +160,12 @@ export default function ProblemSolutionSection() {
         </div>
 
         {/* Problem carousel — normal layout (blue left, images right) */}
-        <div className="ps-problem absolute inset-x-0 top-20 bottom-0 flex items-center justify-center p-8">
+        <div className="ps-problem absolute inset-x-0 top-20 bottom-0 flex items-center justify-center p-4 md:p-8">
           <FeatureCarousel />
         </div>
 
         {/* Solution carousel — inverted layout (images left, blue right) */}
-        <div className="ps-solution absolute inset-x-0 top-20 bottom-0 flex items-center justify-center p-8">
+        <div className="ps-solution absolute inset-x-0 top-20 bottom-0 flex items-center justify-center p-4 md:p-8">
           <FeatureCarousel inverted />
         </div>
       </section>

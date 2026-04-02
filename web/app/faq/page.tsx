@@ -34,13 +34,13 @@ export default function FAQSection() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <section className="bg-black px-6 py-24 text-white md:px-10 lg:px-16">
+    <section className="bg-black px-4 py-16 text-white sm:px-6 md:px-10 md:py-24 lg:px-16">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 max-w-2xl">
           <p className="mb-4 text-xs uppercase tracking-[0.35em] text-blue-300">
             FAQ
           </p>
-          <h2 className="text-4xl font-semibold tracking-tight md:text-5xl">
+          <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl md:text-5xl">
             Questions, answered simply.
           </h2>
         </div>
@@ -66,7 +66,7 @@ export default function FAQSection() {
                   </span>
 
                   <span
-                    className={`ml-6 text-xl transition ${
+                    className={`ml-3 text-xl transition md:ml-6 ${
                       isActive ? "text-blue-300" : "text-white/30"
                     }`}
                   >
@@ -78,7 +78,7 @@ export default function FAQSection() {
           </div>
 
           {/* Right side */}
-          <div className="rounded-4x1 border border-white/10 bg-white/3 p-8 shadow-[0_0_40px_rgba(255,255,255,0.03)] backdrop-blur-sm md:p-10">
+          <div className="rounded-4x1 border border-white/10 bg-white/3 p-6 shadow-[0_0_40px_rgba(255,255,255,0.03)] backdrop-blur-sm sm:p-8 md:p-10">
             <div className="mb-6 inline-flex rounded-full border border-white/10 bg-white/4 px-4 py-2 text-sm text-blue-300">
               {activeIndex + 1} / {faqItems.length}
             </div>

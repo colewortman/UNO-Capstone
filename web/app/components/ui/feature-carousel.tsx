@@ -163,13 +163,13 @@ export function FeatureCarousel({
     <div className={cn("w-full max-w-7xl mx-auto md:p-8", className)}>
       <div
         className={cn(
-          "relative overflow-hidden rounded-[2.5rem] lg:rounded-[4rem] flex flex-col min-h-150 lg:aspect-video border border-border/40",
+          "relative overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] lg:rounded-[4rem] flex flex-col min-h-100 sm:min-h-125 lg:min-h-150 lg:aspect-video border border-border/40",
           inverted ? "lg:flex-row-reverse" : "lg:flex-row",
         )}
       >
         <div
           className={cn(
-            "fc-blue-panel w-full lg:w-[40%] min-h-87.5 md:min-h-112.5 lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-8 md:px-16 lg:pl-16",
+            "fc-blue-panel w-full lg:w-[40%] min-h-62.5 sm:min-h-87.5 md:min-h-112.5 lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-4 sm:px-8 md:px-16 lg:pl-16",
             inverted
               ? "bg-linear-to-b from-[#3478F7] to-[#3B81F7]"
               : "bg-linear-to-b from-[#EA4E3E] to-[#EB5445]",
@@ -261,7 +261,7 @@ export function FeatureCarousel({
 
         <div
           className={cn(
-            "fc-image-panel flex-1 min-h-125 md:min-h-150 lg:h-full relative bg-secondary/30 flex items-center justify-center py-16 md:py-24 lg:py-16 px-6 md:px-12 lg:px-10 overflow-hidden border-t lg:border-t-0 border-border/20",
+            "fc-image-panel flex-1 min-h-80 sm:min-h-100 md:min-h-150 lg:h-full relative bg-secondary/30 flex items-center justify-center py-10 sm:py-16 md:py-24 lg:py-16 px-4 sm:px-6 md:px-12 lg:px-10 overflow-hidden border-t lg:border-t-0 border-border/20",
             inverted ? "lg:border-r lg:border-l-0" : "lg:border-l",
           )}
         >

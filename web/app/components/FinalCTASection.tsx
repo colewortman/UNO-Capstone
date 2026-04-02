@@ -10,7 +10,7 @@ export default function FinalCTASection() {
       <div className="grid items-center gap-14 lg:grid-cols-[1fr_1fr] lg:gap-16">
         {/* LEFT SIDE */}
         <div className="max-w-xl">
-          <h2 className="text-4xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
+          <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
             Inventory complete.
             <br />
             Revenue recovered.
@@ -21,17 +21,17 @@ export default function FinalCTASection() {
             revenue between sessions.
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <div className="mt-8 flex flex-wrap items-center gap-4 sm:mt-10">
             <a
               href="#"
-              className="inline-flex items-center rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-7 py-4 text-base font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01]"
+              className="inline-flex items-center rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-5 py-3 text-sm font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01] sm:px-7 sm:py-4 sm:text-base"
             >
               Book a Demo
             </a>
 
             <a
               href="#pricing"
-              className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.02] px-7 py-4 text-base font-medium text-white/90 backdrop-blur-sm transition hover:border-white/30 hover:bg-white/[0.05]"
+              className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.02] px-5 py-3 text-sm font-medium text-white/90 backdrop-blur-sm transition hover:border-white/30 hover:bg-white/[0.05] sm:px-7 sm:py-4 sm:text-base"
             >
               See Pricing
             </a>

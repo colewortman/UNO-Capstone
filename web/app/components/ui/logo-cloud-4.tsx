@@ -45,7 +45,7 @@ export function LogoCloud({ logos, perPage = 4 }: LogoCloudProps) {
         <button
           onClick={() => advance(-1)}
           aria-label="Previous logos"
-          className="shrink-0 text-white/50 transition hover:text-white"
+          className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center text-white/50 transition hover:text-white"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path
@@ -66,7 +66,7 @@ export function LogoCloud({ logos, perPage = 4 }: LogoCloudProps) {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="flex items-center justify-center gap-10 md:gap-14"
+              className="flex items-center justify-center gap-6 sm:gap-10 md:gap-14"
             >
               {visible.map((logo) => (
                 <img
@@ -86,7 +86,7 @@ export function LogoCloud({ logos, perPage = 4 }: LogoCloudProps) {
         <button
           onClick={() => advance(1)}
           aria-label="Next logos"
-          className="shrink-0 text-white/50 transition hover:text-white"
+          className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center text-white/50 transition hover:text-white"
         >
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
             <path
