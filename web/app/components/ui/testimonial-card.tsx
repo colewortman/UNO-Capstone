@@ -10,7 +10,8 @@ export interface TestimonialAuthor {
 export interface TestimonialCardProps {
   author: TestimonialAuthor
   text: string
-  videoSrc: string
+  videoSrc?: string
+  thumbnailSrc?: string
   href?: string
   className?: string
 }
@@ -19,10 +20,12 @@ export function TestimonialCard({
   author,
   text,
   videoSrc,
+  thumbnailSrc,
   href,
   className
 }: TestimonialCardProps) {
-  const Card = href ? 'a' : 'div'
+  const isLinkedCard = Boolean(href && href !== "#")
+  const Card = isLinkedCard ? 'a' : 'div'
   const initials = author.name
     .split(" ")
     .map((part) => part[0])
@@ -31,7 +34,7 @@ export function TestimonialCard({
   
   return (
     <Card
-      {...(href ? { href } : {})}
+      {...(isLinkedCard ? { href } : {})}
       className={cn(
         "flex flex-col rounded-lg border-t",
         "bg-gradient-to-b from-muted/50 to-muted/10",
@@ -59,15 +62,18 @@ export function TestimonialCard({
       <p className="sm:text-md mt-4 text-sm text-muted-foreground">
         {text}
       </p>
-      <video
-        className="mt-4 h-auto w-full rounded-md border"
-        controls
-        preload="metadata"
-        playsInline
-      >
-        <source src={videoSrc} type="video/mp4" />
-        Your browser does not support the video tag.
-      </video>
+      {videoSrc && (
+        <video
+          className="mt-4 h-auto w-full rounded-md border"
+          controls
+          preload="metadata"
+          playsInline
+          poster={thumbnailSrc ?? author.avatar}
+        >
+          <source src={videoSrc} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      )}
     </Card>
   )
 }

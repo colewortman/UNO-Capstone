@@ -108,12 +108,12 @@ export default function ROICalculator() {
       detail: "Estimated yearly losses at your current pour cost.",
     },
     {
-      label: "Pour Cost Savings with BarIQ",
+      label: "Pour Cost Savings with LiqrVision",
       value: formatCurrency(displayMetrics.annualRevenueBoosted),
       detail: `Projected pour cost improvement from ${pourCostPercentage.toFixed(1)}% to ${displayMetrics.projectedPourCostPercentage.toFixed(1)}%.`,
     },
     {
-      label: "Annual Cost Reduction with BarIQ",
+      label: "Annual Cost Reduction with LiqrVision",
       value: formatCurrency(displayMetrics.annualCostReductionWithBarIq),
       detail: "Estimated labor savings from reducing manual bottle counts.",
     },
@@ -123,7 +123,7 @@ export default function ROICalculator() {
       detail: "Return after subscription costs are factored in.",
     },
     {
-      label: "Annual Savings with a BarIQ Subscription",
+      label: "Annual Savings with a LiqrVision Subscription",
       value: formatCurrency(displayMetrics.netAnnualSavings),
       detail: `Based on the ${tiers[selectedTier].name} plan at $${tiers[selectedTier].monthly}/mo.`,
     },
@@ -140,7 +140,7 @@ export default function ROICalculator() {
             ROI Calculator
           </h2>
           <p className="text-sm text-white/65 sm:text-base md:text-lg">
-            Enter the inputs and see how BarIQ changes your annual results.
+            Enter the inputs and see how LiqrVision changes your annual results.
           </p>
         </div>
 
@@ -302,7 +302,7 @@ export default function ROICalculator() {
                   ROI calculation results
                 </p>
                 <h3 className="mt-1 text-lg font-semibold sm:mt-2 sm:text-2xl md:text-3xl">
-                  What BarIQ could return each year
+                  What LiqrVision could return each year
                 </h3>
               </div>
               <div className="hidden shrink-0 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm text-white/80 sm:block">

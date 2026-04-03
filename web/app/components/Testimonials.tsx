@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import {
   TestimonialCard,
@@ -15,47 +15,92 @@ interface TestimonialsSectionProps {
     author: TestimonialAuthor;
     text: string;
     videoSrc: string;
+    thumbnailSrc?: string;
     href?: string;
   }>;
   className?: string;
 }
 
-type TestimonialItem = NonNullable<
-  TestimonialsSectionProps["testimonials"]
->[number];
-
-const defaultTestimonials = [
+const defaultTestimonials: NonNullable<TestimonialsSectionProps["testimonials"]> = [
   {
     author: {
       name: "John Doe",
       handle: "Bar Manager",
-      avatar: "/testimonial1.jpg",
+      avatar: "/UNO-Capstone/testimonial2.jpg",
     },
     text: "BarIq has revolutionized our inventory management!",
-    videoSrc: "/videos/testimonials/john-doe.mp4",
-    href: "#",
+    videoSrc: "/UNO-Capstone/videos/testimonials/johndoe.mp4",
+    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
   },
   {
     author: {
       name: "Jane Smith",
       handle: "Owner",
-      avatar: "/testimonial1.jpg",
+      avatar: "/UNO-Capstone/testimonial3.jpg",
     },
     text: "We've seen a significant increase in efficiency since using BarIq.",
-    videoSrc: "/videos/testimonials/jane-smith.mp4",
-    href: "#",
+    videoSrc: "/UNO-Capstone/videos/testimonials/janedoe.mp4",
+    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
   },
   {
-    author: { name: "Jane Doe", handle: "Worker", avatar: "/testimonial1.jpg" },
-    text: "We love this product!.",
-    videoSrc: "/videos/testimonials/jane-doe.mp4",
-    href: "#",
+    author: {
+      name: "Jane Doe",
+      handle: "Operations Lead",
+      avatar: "/UNO-Capstone/testimonial2.jpg",
+    },
+    text: "BarIq helps our team move faster with fewer inventory mistakes.",
+    videoSrc: "/UNO-Capstone/videos/testimonials/janedoe.mp4",
+    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
   },
   {
-    author: { name: "John Smith", handle: "CEO", avatar: "/testimonial1.jpg" },
-    text: "We love this product!.",
-    videoSrc: "/videos/testimonials/john-smith.mp4",
-    href: "#",
+    author: {
+      name: "John Smith",
+      handle: "CEO",
+      avatar: "/UNO-Capstone/testimonial3.jpg",
+    },
+    text: "Implementation was smooth and the ROI showed up quickly.",
+    videoSrc: "/UNO-Capstone/videos/testimonials/johndoe.mp4",
+    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
+  },
+  {
+    author: {
+      name: "Mia Torres",
+      handle: "General Manager",
+      avatar: "/UNO-Capstone/testimonial3.jpg",
+    },
+    text: "Ordering is cleaner and our weekly counts now take half the time.",
+    videoSrc: "/UNO-Capstone/videos/testimonials/johndoe.mp4",
+    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
+  },
+  {
+    author: {
+      name: "Liam Carter",
+      handle: "Owner",
+      avatar: "/UNO-Capstone/testimonial3.jpg",
+    },
+    text: "The dashboards made it easy to spot waste and fix margin leaks fast.",
+    videoSrc: "/UNO-Capstone/videos/testimonials/janedoe.mp4",
+    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
+  },
+  {
+    author: {
+      name: "Ava Brooks",
+      handle: "Operations Director",
+      avatar: "/UNO-Capstone/testimonial2.jpg",
+    },
+    text: "Our team adopted it quickly, and training new staff is much easier now.",
+    videoSrc: "/UNO-Capstone/videos/testimonials/janedoe.mp4",
+    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
+  },
+  {
+    author: {
+      name: "Noah Bell",
+      handle: "Regional Lead",
+      avatar: "/UNO-Capstone/testimonial3.jpg",
+    },
+    text: "We rolled this out across locations and saw immediate process consistency.",
+    videoSrc: "/UNO-Capstone/videos/testimonials/johndoe.mp4",
+    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
   },
 ];
 
@@ -65,32 +110,36 @@ export function TestimonialsSection({
   testimonials = defaultTestimonials,
   className,
 }: TestimonialsSectionProps) {
-  const isMobile = useMediaQuery("(max-width: 767px)");
-  const cardsPerSlide = isMobile ? 1 : 2;
-  const slides = testimonials.reduce<TestimonialItem[][]>(
-    (acc, testimonial, index) => {
-      const slideIndex = Math.floor(index / cardsPerSlide);
-      if (!acc[slideIndex]) {
-        acc[slideIndex] = [];
-      }
-      acc[slideIndex].push(testimonial);
-      return acc;
-    },
-    [],
-  );
+  const isDesktop = useMediaQuery("(min-width: 1280px)");
+  const isTablet = useMediaQuery("(min-width: 768px)");
+  const cardsPerPage = isDesktop ? 4 : isTablet ? 2 : 1;
 
-  const [activeIndex, setActiveIndex] = useState(0);
-  const hasTestimonials = testimonials.length > 0;
-  const hasMultipleSlides = slides.length > 1;
+  const pages = useMemo(() => {
+    const result: typeof testimonials[] = [];
+    for (let i = 0; i < testimonials.length; i += cardsPerPage) {
+      result.push(testimonials.slice(i, i + cardsPerPage));
+    }
+    return result;
+  }, [cardsPerPage, testimonials]);
 
-  const goPrev = () => {
-    if (!hasTestimonials) return;
-    setActiveIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
+  const [activePage, setActivePage] = useState(0);
+  const pageCount = pages.length;
+  const hasMultiplePages = pageCount > 1;
+
+  useEffect(() => {
+    if (activePage >= pageCount) {
+      setActivePage(Math.max(0, pageCount - 1));
+    }
+  }, [activePage, pageCount]);
+
+  const goToPrev = () => {
+    if (!hasMultiplePages) return;
+    setActivePage((prev) => (prev === 0 ? pageCount - 1 : prev - 1));
   };
 
-  const goNext = () => {
-    if (!hasTestimonials) return;
-    setActiveIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
+  const goToNext = () => {
+    if (!hasMultiplePages) return;
+    setActivePage((prev) => (prev === pageCount - 1 ? 0 : prev + 1));
   };
 
   return (
@@ -111,76 +160,78 @@ export function TestimonialsSection({
           </p>
         </div>
 
-        <div className="relative flex w-full max-w-4xl flex-col items-center justify-center px-4">
-          <div className="relative flex w-full items-center justify-center">
-            <button
-              type="button"
-              onClick={goPrev}
-              className="absolute left-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-border bg-background/90 p-3 text-xl leading-none shadow-sm transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-40"
-              aria-label="Previous testimonial"
-              disabled={!hasMultipleSlides}
-            >
-              {"<"}
-            </button>
+        <div className="relative flex w-full flex-col items-center justify-center overflow-hidden px-2 sm:px-4">
+          <button
+            type="button"
+            aria-label="Previous testimonials"
+            onClick={goToPrev}
+            disabled={!hasMultiplePages}
+            className="absolute left-1 top-1/2 z-20 -translate-y-1/2 rounded-full border border-border bg-background/90 p-2 text-lg shadow-sm transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-40 sm:left-3"
+          >
+            {"<"}
+          </button>
 
-            <div className="w-full overflow-hidden px-8 sm:px-12">
-              {hasTestimonials ? (
+          <div className="w-full overflow-hidden px-8 sm:px-12 lg:px-14">
+            <div
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${activePage * 100}%)` }}
+            >
+              {pages.map((page, pageIndex) => (
                 <div
-                  className="flex transition-transform duration-500 ease-out"
-                  style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+                  key={`page-${pageIndex}`}
+                  className={cn(
+                    "grid min-w-full gap-4",
+                    cardsPerPage === 4
+                      ? "grid-cols-4"
+                      : cardsPerPage === 2
+                        ? "grid-cols-2"
+                        : "grid-cols-1",
+                  )}
                 >
-                  {slides.map((slide, slideIndex) => (
-                    <div
-                      key={slideIndex}
-                      className="grid min-w-full grid-cols-1 gap-6 md:grid-cols-2"
-                    >
-                      {slide.map((testimonial, testimonialIndex) => (
-                        <TestimonialCard
-                          key={`${slideIndex}-${testimonial.author.name}-${testimonialIndex}`}
-                          {...testimonial}
-                          className="mx-auto w-full max-w-full sm:max-w-[420px]"
-                        />
-                      ))}
-                    </div>
+                  {page.map((testimonial, i) => (
+                    <TestimonialCard
+                      key={`${pageIndex}-${i}-${testimonial.author.name}`}
+                      {...testimonial}
+                      className="h-full max-w-none"
+                    />
                   ))}
                 </div>
-              ) : (
-                <div className="rounded-lg border bg-muted/30 p-8 text-center text-sm text-muted-foreground">
-                  No testimonials available yet.
-                </div>
-              )}
-            </div>
-
-            <button
-              type="button"
-              onClick={goNext}
-              className="absolute right-0 top-1/2 z-10 -translate-y-1/2 rounded-full border border-border bg-background/90 p-3 text-xl leading-none shadow-sm transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-40"
-              aria-label="Next testimonial"
-              disabled={!hasMultipleSlides}
-            >
-              {">"}
-            </button>
-          </div>
-
-          {hasTestimonials && (
-            <div className="mt-6 flex items-center justify-center gap-2">
-              {slides.map((slide, index) => (
-                <button
-                  key={`${slide[0]?.author.name ?? "slide"}-${index}`}
-                  type="button"
-                  onClick={() => setActiveIndex(index)}
-                  aria-label={`Go to testimonial slide ${index + 1}`}
-                  className={cn(
-                    "h-2.5 w-2.5 rounded-full border transition",
-                    activeIndex === index
-                      ? "scale-110 border-foreground bg-foreground"
-                      : "border-muted-foreground/40 bg-muted-foreground/20 hover:bg-muted-foreground/40",
-                  )}
-                />
               ))}
             </div>
-          )}
+          </div>
+
+          <button
+            type="button"
+            aria-label="Next testimonials"
+            onClick={goToNext}
+            disabled={!hasMultiplePages}
+            className="absolute right-1 top-1/2 z-20 -translate-y-1/2 rounded-full border border-border bg-background/90 p-2 text-lg shadow-sm transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-40 sm:right-3"
+          >
+            {">"}
+          </button>
+
+          <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/3 bg-gradient-to-r from-background sm:block" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-l from-background sm:block" />
         </div>
+
+        {pageCount > 0 && (
+          <div className="mt-6 flex items-center justify-center gap-2">
+            {pages.map((_, index) => (
+              <button
+                key={`dot-${index}`}
+                type="button"
+                aria-label={`Go to testimonials page ${index + 1}`}
+                onClick={() => setActivePage(index)}
+                className={cn(
+                  "h-2.5 w-2.5 rounded-full border transition",
+                  activePage === index
+                    ? "scale-110 border-foreground bg-foreground"
+                    : "border-muted-foreground/40 bg-muted-foreground/20 hover:bg-muted-foreground/40",
+                )}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
