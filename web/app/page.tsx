@@ -8,6 +8,7 @@ import FeatureHighlightsSection from "./components/FeatureHighlights";
 import SocialProofSection from "./components/SocialProofSection";
 import ROICalculator from "./components/ROICalculator";
 import { TestimonialsSection } from "./components/Testimonials";
+import Comparisons from "./components/ComparisonSection";
 
 function Section({
   children,
@@ -64,7 +65,7 @@ export default function Home() {
 
       {/* Comparisons (differentiator) */}
       <Section>
-        <Placeholder label="Comparisons" />
+        <Comparisons />
       </Section>
 
       {/* ROI Calculator */}
