@@ -230,6 +230,7 @@
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
+
   .carousel-inner {
     display: flex;
     flex-direction: column;
@@ -253,6 +254,7 @@
     inset: 0;
     z-index: 0;
     opacity: 0.25;
+    pointer-events: none; /* FIX */
   }
 
   .carousel-image-frame {
@@ -264,9 +266,15 @@
 
   .carousel-content,
   .carousel-progress-bar {
-    flex-direction: row;
+    position: relative;
+    z-index: 2;
+  }
+
+  .carousel-progress-bar {
+    flex-direction: row-reverse;
     justify-content: center;
     height: auto;
+    gap: 10px;
   }
 
   .carousel-progress-item {
