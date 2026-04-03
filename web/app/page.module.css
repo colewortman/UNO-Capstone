@@ -45,6 +45,10 @@
   margin: 0 auto;
 }
 
+.sectionFull {
+  padding: 0;
+}
+
 .sectionFull .sectionInner {
   max-width: none;
 }

@@ -8,6 +8,7 @@ import FeatureHighlightsSection from "./components/FeatureHighlights";
 import SocialProofSection from "./components/SocialProofSection";
 import ROICalculator from "./components/ROICalculator";
 import { TestimonialsSection } from "./components/Testimonials";
+import Comparisons from "./components/ComparisonSection";
 
 function Section({
   children,
@@ -23,10 +24,6 @@ function Section({
       <div className={styles.sectionInner}>{children}</div>
     </section>
   );
-}
-
-function Placeholder({ label }: { label: string }) {
-  return <div className={styles.placeholder}>{label}</div>;
 }
 
 export default function Home() {
@@ -63,8 +60,8 @@ export default function Home() {
       </Section>
 
       {/* Comparisons (differentiator) */}
-      <Section>
-        <Placeholder label="Comparisons" />
+      <Section className={styles.sectionFull}>
+        <Comparisons />
       </Section>
 
       {/* ROI Calculator */}
