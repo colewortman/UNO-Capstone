@@ -26,10 +26,6 @@ function Section({
   );
 }
 
-function Placeholder({ label }: { label: string }) {
-  return <div className={styles.placeholder}>{label}</div>;
-}
-
 export default function Home() {
   return (
     <main className={styles.page}>
@@ -64,7 +60,7 @@ export default function Home() {
       </Section>
 
       {/* Comparisons (differentiator) */}
-      <Section>
+      <Section className={styles.sectionFull}>
         <Comparisons />
       </Section>
 

@@ -52,14 +52,14 @@ const slides: SlideData[] = [
 ];
 
 export default function ElegantCarousel() {
-  const [resetLevel, setResetLevel] = useState(slides.length);
-  const [previousIndex, setPreviousIndex] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState<'next' | 'prev'>('next');
   const [progress, setProgress] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [lightPosition, setLightPosition] = useState({ x: 50, y: 50 });
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const progressRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const touchStartX = useRef(0);
@@ -76,25 +76,27 @@ export default function ElegantCarousel() {
   }, []);
 
   useEffect(() => {
-  setProgress(0);
-  }, [currentIndex]);
+    const el = wrapperRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.3 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
-    if (previousIndex === currentIndex) return;
+    const mq = window.matchMedia('(max-width: 640px)');
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
+  }, []);
 
-    let level = previousIndex;
-
-    const interval = setInterval(() => {
-      level--;
-
-      setResetLevel(level);
-
-      if (level <= currentIndex) {
-        clearInterval(interval);
-      }
-    }, 140); // speed of cascade
-
-    return () => clearInterval(interval);
+  useEffect(() => {
+    setProgress(0);
   }, [currentIndex]);
 
 
@@ -127,7 +129,6 @@ export default function ElegantCarousel() {
 
   const handleMouseLeave = () => {
     if (frame.current) cancelAnimationFrame(frame.current);
-    setIsPaused(false);
     setTilt({ x: 0, y: 0 });
   };
 
@@ -135,7 +136,6 @@ export default function ElegantCarousel() {
     (index: number, dir?: 'next' | 'prev') => {
       if (index === currentIndex) return;
 
-      setPreviousIndex(currentIndex);
       setDirection(dir || (index > currentIndex ? 'next' : 'prev'));
       setProgress(0);
 
@@ -155,7 +155,7 @@ export default function ElegantCarousel() {
   }, [currentIndex, goToSlide]);
 
   useEffect(() => {
-    if (isPaused) return;
+    if (!isInView || isMobile) return;
 
     progressRef.current = setInterval(() => {
       setProgress((prev) => {
@@ -172,10 +172,11 @@ export default function ElegantCarousel() {
       if (intervalRef.current) clearInterval(intervalRef.current);
       if (progressRef.current) clearInterval(progressRef.current);
     };
-  }, [currentIndex, isPaused, goNext]);
+  }, [currentIndex, isInView, isMobile, goNext]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.targetTouches[0].clientX;
+    touchEndX.current = e.targetTouches[0].clientX;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
@@ -194,10 +195,10 @@ export default function ElegantCarousel() {
 
   return (
     <div
+      ref={wrapperRef}
       className="carousel-wrapper"
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onMouseEnter={() => setIsPaused(true)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -273,12 +274,49 @@ export default function ElegantCarousel() {
           </div>
         </div>
 
-        {/* Progress Indicators */}
-        <div className="carousel-progress-bar">
-          {[...slides].reverse().map((slide, reversedIndex) => {
-            const index = slides.length - 1 - reversedIndex;
+        {/* Right: Image + Progress */}
+        <div className="carousel-right">
+          <div className="carousel-image-container">
+            <div
+              className={`carousel-image-frame visible`}
+              style={{
+                transform: `
+                  perspective(1200px)
+                  rotateX(${tilt.x}deg)
+                  rotateY(${tilt.y}deg)
+                  scale(1)
+                `,
+                '--mouse-x': `${lightPosition.x}%`,
+                '--mouse-y': `${lightPosition.y}%`
+              } as React.CSSProperties}
+            >
 
-            return (
+              {slides.map((slide, index) => (
+                <Image
+                  key={index}
+                  src={slide.imageUrl}
+                  alt={slide.title}
+                  fill
+                  priority={index === currentIndex}
+                  className={`carousel-image ${
+                    index === currentIndex ? 'active' : ''
+                  }`}
+                />
+              ))}
+              <div
+                className="carousel-image-overlay"
+                style={{
+                  background: direction === 'next'
+                  ? `linear-gradient(135deg, ${currentSlide.accent}22 0%, transparent 50%)`
+                  : `linear-gradient(-135deg, ${currentSlide.accent}22 0%, transparent 50%)`,
+                }}
+              />
+            </div>
+          </div>
+
+          {/* Progress Indicators */}
+          <div className="carousel-progress-bar">
+            {slides.map((slide, index) => (
               <button
                 key={index}
                 onClick={() => goToSlide(index)}
@@ -291,7 +329,7 @@ export default function ElegantCarousel() {
                   <div
                     className="carousel-progress-fill"
                     style={{
-                      height:
+                      width:
                         index === currentIndex
                           ? `${progress}%`
                           : index < currentIndex
@@ -310,47 +348,7 @@ export default function ElegantCarousel() {
                   {index === 3 && 'Competitor 3'}
                 </span>
               </button>
-            );
-          })}
-        </div>
-
-
-        {/* Right: Image */}
-        <div className="carousel-image-container">
-          <div
-            className={`carousel-image-frame visible`}
-            style={{
-              transform: `
-                perspective(1200px)
-                rotateX(${tilt.x}deg)
-                rotateY(${tilt.y}deg)
-                scale(1)
-              `,
-              '--mouse-x': `${lightPosition.x}%`,
-              '--mouse-y': `${lightPosition.y}%`
-            } as React.CSSProperties}
-          >
-
-            {slides.map((slide, index) => (
-              <Image
-                key={index}
-                src={slide.imageUrl}
-                alt={slide.title}
-                fill
-                priority={index === currentIndex}
-                className={`carousel-image ${
-                  index === currentIndex ? 'active' : ''
-                }`}
-              />
             ))}
-            <div
-              className="carousel-image-overlay"
-              style={{
-                background: direction === 'next'
-                ? `linear-gradient(135deg, ${currentSlide.accent}22 0%, transparent 50%)`
-                : `linear-gradient(-135deg, ${currentSlide.accent}22 0%, transparent 50%)`,
-              }}
-            />
           </div>
         </div>
       </div>
