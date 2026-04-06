@@ -160,16 +160,16 @@ export function FeatureCarousel({
   };
 
   return (
-    <div className={cn("w-full max-w-7xl mx-auto md:p-8", className)}>
+    <div className={cn("w-full lg:h-full max-w-7xl mx-auto md:p-4 lg:p-6", className)}>
       <div
         className={cn(
-          "relative overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] lg:rounded-[4rem] flex flex-col min-h-100 sm:min-h-125 lg:min-h-150 lg:aspect-video border border-border/40",
+          "relative overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] lg:rounded-[3rem] flex flex-col min-h-80 sm:min-h-96 lg:min-h-0 lg:h-full lg:max-h-[calc(100vh-14rem)] border border-border/40",
           inverted ? "lg:flex-row-reverse" : "lg:flex-row",
         )}
       >
         <div
           className={cn(
-            "fc-blue-panel w-full lg:w-[40%] min-h-62.5 sm:min-h-87.5 md:min-h-112.5 lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-4 sm:px-8 md:px-16 lg:pl-16",
+            "fc-blue-panel w-full lg:w-[40%] min-h-48 sm:min-h-56 md:min-h-64 lg:min-h-0 lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-4 sm:px-8 md:px-12 lg:pl-12",
             inverted
               ? "bg-linear-to-b from-[#3478F7] to-[#3B81F7]"
               : "bg-linear-to-b from-[#EA4E3E] to-[#EB5445]",
@@ -261,11 +261,11 @@ export function FeatureCarousel({
 
         <div
           className={cn(
-            "fc-image-panel flex-1 min-h-80 sm:min-h-100 md:min-h-150 lg:h-full relative bg-secondary/30 flex items-center justify-center py-10 sm:py-16 md:py-24 lg:py-16 px-4 sm:px-6 md:px-12 lg:px-10 overflow-hidden border-t lg:border-t-0 border-border/20",
+            "fc-image-panel flex-1 min-h-56 sm:min-h-64 md:min-h-72 lg:min-h-0 lg:h-full relative bg-secondary/30 flex items-center justify-center py-6 sm:py-10 md:py-12 lg:py-8 px-4 sm:px-6 md:px-8 lg:px-10 overflow-hidden border-t lg:border-t-0 border-border/20",
             inverted ? "lg:border-r lg:border-l-0" : "lg:border-l",
           )}
         >
-          <div className="relative w-full max-w-105 aspect-4/5 flex items-center justify-center">
+          <div className="relative w-full max-w-72 md:max-w-80 lg:max-w-96 aspect-4/5 flex items-center justify-center">
             {FEATURES.map((feature, index) => {
               const status = getCardStatus(index);
               const isActive = status === "active";
