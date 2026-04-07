@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Check } from "lucide-react";
 import { GlowingEffect } from "@/app/components/ui/glowing-effect";
+import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
 /**
  * Pricing tiers for BarIQ subscriptions.
@@ -147,6 +148,85 @@ export default function PricingPage() {
   const getPrice = (monthly: number) =>
     isYearly ? Math.round(monthly * 0.8) : monthly;
 
+  // ── Carousel state (mobile / tablet) ──
+  const cardsPerSlide = 1;
+
+  const carouselPages = useMemo(() => {
+    const pages: (typeof tiers)[] = [];
+    for (let i = 0; i < tiers.length; i += cardsPerSlide) {
+      pages.push(tiers.slice(i, i + cardsPerSlide));
+    }
+    return pages;
+  }, [cardsPerSlide]);
+
+  const [activeSlide, setActiveSlide] = useState(0);
+  const slideCount = carouselPages.length;
+
+  useEffect(() => {
+    if (activeSlide >= slideCount) setActiveSlide(Math.max(0, slideCount - 1));
+  }, [activeSlide, slideCount]);
+
+  const renderCard = (tier: (typeof tiers)[0]) => (
+    <div
+      key={tier.name}
+      className={`relative flex flex-col rounded-xl border p-3 transition-all sm:rounded-2xl sm:p-6 ${
+        tier.recommended
+          ? "border-blue-500/50 bg-[#1a1f2e] shadow-[0_0_40px_rgba(59,130,246,0.15)]"
+          : "border-white/10 bg-[#18181b]"
+      }`}
+    >
+      <GlowingEffect disabled={false} spread={30} proximity={60} borderWidth={1.5} />
+      {tier.recommended && (
+        <span className="absolute right-2 top-2 rounded-full border border-blue-400/30 bg-blue-500/20 px-2 py-0.5 text-[10px] font-medium text-blue-300 sm:right-4 sm:top-4 sm:px-3 sm:text-xs">
+          Recommended
+        </span>
+      )}
+      <div className={`mb-2 w-fit rounded-lg p-1.5 sm:mb-4 sm:rounded-xl sm:p-2.5 ${tier.recommended ? "bg-blue-500/15 text-blue-300" : "bg-white/8 text-white/60"}`}>
+        <div className="h-5 w-5 sm:h-7 sm:w-7 [&>svg]:h-full [&>svg]:w-full">
+          {tier.icon}
+        </div>
+      </div>
+      <h2 className="mb-1 text-sm font-semibold sm:mb-1.5 sm:text-xl">{tier.name}</h2>
+      <p className="mb-3 hidden text-sm leading-relaxed text-white/50 sm:mb-6 sm:block">{tier.description}</p>
+      <div className="mb-1 flex items-end gap-0.5 sm:gap-1">
+        <span className="text-2xl font-bold sm:text-4xl">${getPrice(tier.monthly)}</span>
+        <span className="mb-0.5 text-[10px] text-white/50 sm:mb-1 sm:text-sm">/mo</span>
+      </div>
+      {isYearly && (
+        <p className="mb-3 text-[10px] text-white/35 sm:mb-6 sm:text-xs">
+          Billed as ${getPrice(tier.monthly) * 12}/yr
+        </p>
+      )}
+      {!isYearly && <div className="mb-3 sm:mb-6" />}
+      <div className="mb-3 h-px bg-white/10 sm:mb-5" />
+      <p className="mb-2 hidden text-xs font-medium uppercase tracking-widest text-white/35 sm:mb-3 sm:block">
+        {tier.prefix}
+      </p>
+      <ul className="mb-4 hidden flex-1 space-y-2.5 sm:mb-8 sm:block">
+        {tier.features
+          .filter((f) => !f.endsWith("plus:"))
+          .map((feature) => (
+            <li key={feature} className="flex items-start gap-2.5 text-sm text-white/70">
+              <Check
+                className={`mt-0.5 h-4 w-4 shrink-0 ${
+                  tier.recommended ? "text-blue-400" : "text-white/40"
+                }`}
+              />
+              {feature}
+            </li>
+          ))}
+      </ul>
+      <p className="mb-3 flex-1 text-[10px] text-white/40 sm:hidden">
+        {tier.features.filter((f) => !f.endsWith("plus:")).length} features included
+      </p>
+      <button
+        className={`w-full rounded-lg py-2 text-xs font-medium transition sm:rounded-xl sm:py-2.5 sm:text-sm ${tier.ctaStyle}`}
+      >
+        {tier.cta}
+      </button>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-[#111113] text-white">
       <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
@@ -201,88 +281,42 @@ export default function PricingPage() {
           <span className="text-sm text-blue-400">Save up to 20% with yearly</span>
         </div>
 
-        {/* ── Pricing cards grid ──
-            Responsive: 1 col on mobile → 2 on sm → 3 on lg → 5 on xl (one per tier).
-            Each card uses flex-col so the CTA button is always pinned to the bottom. */}
-        <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 xl:grid-cols-5">
-          {tiers.map((tier) => (
+        {/* ── Mobile / tablet carousel (hidden on lg+) ── */}
+        <div className="relative lg:hidden">
+          <div className="overflow-hidden">
             <div
-              key={tier.name}
-              className={`relative flex flex-col rounded-xl border p-3 transition-all sm:rounded-2xl sm:p-6 ${
-                tier.recommended
-                  ? "border-blue-500/50 bg-[#1a1f2e] shadow-[0_0_40px_rgba(59,130,246,0.15)]"
-                  : "border-white/10 bg-[#18181b]"
-              }`}
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${activeSlide * 100}%)` }}
             >
-              {/* Glowing border effect — tracks pointer position on hover */}
-              <GlowingEffect disabled={false} spread={30} proximity={60} borderWidth={1.5} />
-
-              {/* "Recommended" badge */}
-              {tier.recommended && (
-                <span className="absolute right-2 top-2 rounded-full border border-blue-400/30 bg-blue-500/20 px-2 py-0.5 text-[10px] font-medium text-blue-300 sm:right-4 sm:top-4 sm:px-3 sm:text-xs">
-                  Recommended
-                </span>
-              )}
-
-              {/* Tier icon */}
-              <div className={`mb-2 w-fit rounded-lg p-1.5 sm:mb-4 sm:rounded-xl sm:p-2.5 ${tier.recommended ? "bg-blue-500/15 text-blue-300" : "bg-white/8 text-white/60"}`}>
-                <div className="h-5 w-5 sm:h-7 sm:w-7 [&>svg]:h-full [&>svg]:w-full">
-                  {tier.icon}
+              {carouselPages.map((page, pageIdx) => (
+                <div
+                  key={pageIdx}
+                  className="grid min-w-full grid-cols-1 gap-3 sm:gap-5"
+                >
+                  {page.map((tier) => renderCard(tier))}
                 </div>
-              </div>
-
-              {/* Tier name + description (description hidden on mobile) */}
-              <h2 className="mb-1 text-sm font-semibold sm:mb-1.5 sm:text-xl">{tier.name}</h2>
-              <p className="mb-3 hidden text-sm leading-relaxed text-white/50 sm:mb-6 sm:block">{tier.description}</p>
-
-              {/* Price */}
-              <div className="mb-1 flex items-end gap-0.5 sm:gap-1">
-                <span className="text-2xl font-bold sm:text-4xl">${getPrice(tier.monthly)}</span>
-                <span className="mb-0.5 text-[10px] text-white/50 sm:mb-1 sm:text-sm">/mo</span>
-              </div>
-              {isYearly && (
-                <p className="mb-3 text-[10px] text-white/35 sm:mb-6 sm:text-xs">
-                  Billed as ${getPrice(tier.monthly) * 12}/yr
-                </p>
-              )}
-              {!isYearly && <div className="mb-3 sm:mb-6" />}
-
-              {/* Divider */}
-              <div className="mb-3 h-px bg-white/10 sm:mb-5" />
-
-              {/* Feature list (hidden on mobile, shown sm+) */}
-              <p className="mb-2 hidden text-xs font-medium uppercase tracking-widest text-white/35 sm:mb-3 sm:block">
-                {tier.prefix}
-              </p>
-
-              <ul className="mb-4 hidden flex-1 space-y-2.5 sm:mb-8 sm:block">
-                {tier.features
-                  .filter((f) => !f.endsWith("plus:"))
-                  .map((feature) => (
-                    <li key={feature} className="flex items-start gap-2.5 text-sm text-white/70">
-                      <Check
-                        className={`mt-0.5 h-4 w-4 shrink-0 ${
-                          tier.recommended ? "text-blue-400" : "text-white/40"
-                        }`}
-                      />
-                      {feature}
-                    </li>
-                  ))}
-              </ul>
-
-              {/* Mobile: compact feature count */}
-              <p className="mb-3 flex-1 text-[10px] text-white/40 sm:hidden">
-                {tier.features.filter((f) => !f.endsWith("plus:")).length} features included
-              </p>
-
-              {/* CTA button */}
-              <button
-                className={`w-full rounded-lg py-2 text-xs font-medium transition sm:rounded-xl sm:py-2.5 sm:text-sm ${tier.ctaStyle}`}
-              >
-                {tier.cta}
-              </button>
+              ))}
             </div>
-          ))}
+          </div>
+
+          <div className="mt-6 flex justify-center gap-2">
+            {carouselPages.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                aria-label={`Go to plan ${idx + 1}`}
+                onClick={() => setActiveSlide(idx)}
+                className={`h-2 w-2 rounded-full transition ${
+                  activeSlide === idx ? "scale-125 bg-white" : "bg-white/30 hover:bg-white/50"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* ── Desktop pricing grid (lg+) ── */}
+        <div className="hidden lg:grid lg:grid-cols-3 xl:grid-cols-5 gap-5">
+          {tiers.map((tier) => renderCard(tier))}
         </div>
       </div>
     </div>
