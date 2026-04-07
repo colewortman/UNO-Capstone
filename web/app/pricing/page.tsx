@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { Check } from "lucide-react";
 import { GlowingEffect } from "@/app/components/ui/glowing-effect";
-import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
 /**
  * Pricing tiers for BarIQ subscriptions.
