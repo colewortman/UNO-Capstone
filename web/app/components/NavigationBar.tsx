@@ -200,8 +200,24 @@ export default function NavigationBar() {
             </NavigationMenu>
           </div>
 
-          {/* Spacer to keep nav centered (desktop only) */}
-          <div className="hidden w-[160px] shrink-0 lg:block" />
+          {/* Desktop CTA — right side */}
+          <div className="hidden items-center gap-3 lg:flex">
+            <span className="text-sm text-muted-foreground whitespace-nowrap">
+              Try your first month free
+            </span>
+            <Link
+              href="/signup"
+              className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+            >
+              Sign Up
+            </Link>
+            <Link
+              href="/signin"
+              className="rounded-md border border-border px-4 py-2 text-sm font-medium text-foreground transition-colors hover:bg-accent"
+            >
+              Sign In
+            </Link>
+          </div>
 
           {/* Mobile hamburger button */}
           <button
@@ -234,6 +250,22 @@ export default function NavigationBar() {
                 {link.label}
               </Link>
             ))}
+            <div className="mt-6 flex flex-col gap-3">
+              <Link
+                href="/signup"
+                onClick={() => setMobileMenuOpen(false)}
+                className="rounded-md bg-primary px-4 py-3 text-center text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90"
+              >
+                Sign Up
+              </Link>
+              <Link
+                href="/signin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="rounded-md border border-white/20 px-4 py-3 text-center text-base font-medium text-white transition-colors hover:bg-white/10"
+              >
+                Sign In
+              </Link>
+            </div>
           </nav>
         </div>
       )}
