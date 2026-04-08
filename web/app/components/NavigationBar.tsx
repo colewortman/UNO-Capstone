@@ -94,9 +94,9 @@ export default function NavigationBar() {
   return (
     <>
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
-        <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:px-10">
+        <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:justify-normal lg:px-10">
           {/* Logo / Brand */}
-          <Link href="/" className="shrink-0">
+          <Link href="/" className="shrink-0 justify-self-start">
             <Image
               src={logoWhite}
               alt="Liquor Vision logo"
@@ -107,7 +107,7 @@ export default function NavigationBar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:block">
+          <div className="hidden lg:flex lg:justify-center">
             <NavigationMenu>
               <NavigationMenuList>
                 {/* Services dropdown */}
@@ -201,7 +201,7 @@ export default function NavigationBar() {
           </div>
 
           {/* Desktop CTA — right side */}
-          <div className="hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-3 justify-self-end lg:flex">
             <span className="text-sm text-muted-foreground whitespace-nowrap">
               Try your first month free
             </span>
