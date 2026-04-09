@@ -37,7 +37,7 @@ const features = [
 export default function FeatureHighlightsSection() {
   return (
     <div>
-      <div className="mb-8 max-w-2xl md:mb-14">
+      <div className="mb-6 max-w-2xl md:mb-10">
         <p className="mb-4 text-xs uppercase tracking-[0.35em] text-blue-300">
           Feature Highlights
         </p>

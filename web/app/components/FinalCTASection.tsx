@@ -7,7 +7,7 @@
 export default function FinalCTASection() {
   return (
     <div className="relative">
-      <div className="grid items-center gap-14 lg:grid-cols-[1fr_1fr] lg:gap-16">
+      <div className="grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-12">
         {/* LEFT SIDE */}
         <div className="max-w-xl">
           <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
@@ -42,7 +42,7 @@ export default function FinalCTASection() {
         <div className="relative flex justify-center">
           <div className="relative w-full max-w-[620px]">
             {/* Desktop / tablet composition */}
-            <div className="relative hidden min-h-[620px] md:block">
+            <div className="relative hidden min-h-[540px] md:block">
               {/* Soft glow */}
               <div className="absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[100px]" />
 
@@ -81,7 +81,7 @@ export default function FinalCTASection() {
               </div>
 
               {/* Phone */}
-              <div className="absolute left-1/2 top-1/2 h-[540px] w-[270px] -translate-x-1/2 -translate-y-1/2 rounded-[2.7rem] border border-white/10 bg-white/[0.03] p-3 shadow-[0_0_80px_rgba(59,130,246,0.08)]">
+              <div className="absolute left-1/2 top-1/2 h-[470px] w-[235px] -translate-x-1/2 -translate-y-1/2 rounded-[2.7rem] border border-white/10 bg-white/[0.03] p-3 shadow-[0_0_80px_rgba(59,130,246,0.08)]">
                 <div className="flex h-full w-full flex-col rounded-[2.15rem] border border-white/10 bg-black p-6">
                   <div className="text-xs text-white/50">Bar-IQ • Completed</div>
 
