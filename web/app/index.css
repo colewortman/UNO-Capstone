@@ -7,6 +7,7 @@
 
   display: flex;
   align-items: center;
+  padding: 3rem 0;
 
   background: radial-gradient(circle at 20% 40%, #0b2a4a 0%, #05080f 40%, #02040a 100%);
   color: #e6edf3;
@@ -186,6 +187,7 @@
   align-items: center;
   gap: 12px;
   padding-top: 20px;
+  padding-bottom: 1rem;
 }
 
 
