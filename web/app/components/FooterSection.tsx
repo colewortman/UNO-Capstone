@@ -19,10 +19,9 @@ export default function FooterSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl">
-        {/* top liquid metal logo */}
-        <div className="mb-8 flex justify-center sm:mb-16 md:mb-20">
-          <div className="relative h-[140px] w-[140px] sm:h-[220px] sm:w-[220px] md:h-[320px] md:w-[320px]">
-            {/* outer glow */}
+        {/* liquid metal logo — positioned behind content */}
+        <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[30%] opacity-30 sm:-translate-y-[25%]">
+          <div className="relative h-[200px] w-[200px] sm:h-[280px] sm:w-[280px] md:h-[360px] md:w-[360px]">
             <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[50px] sm:blur-[70px] md:blur-[90px]" />
             <LiquidMetalLogo />
           </div>
@@ -32,7 +31,9 @@ export default function FooterSection() {
         <div className="grid grid-cols-[1fr_auto_auto] gap-x-6 gap-y-6 sm:gap-x-8 sm:gap-y-12 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr]">
           {/* brand — full width on mobile, then normal grid placement */}
           <div className="col-span-3 max-w-sm md:col-span-1">
-            <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">Bar-IQ</h3>
+            <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">
+              Bar-IQ
+            </h3>
             <p className="mt-2 text-xs leading-5 text-white/55 sm:mt-4 sm:text-sm sm:leading-7">
               Real-time bar inventory intelligence with faster counts, better
               visibility, and less revenue leakage between sessions.
@@ -46,17 +47,26 @@ export default function FooterSection() {
             </p>
             <ul className="mt-2 space-y-1.5 text-xs text-white/70 sm:mt-5 sm:space-y-3 sm:text-sm">
               <li>
-                <a href="#" className="inline-block py-0.5 transition hover:text-white sm:py-1">
+                <a
+                  href="#"
+                  className="inline-block py-0.5 transition hover:text-white sm:py-1"
+                >
                   Platform overview
                 </a>
               </li>
               <li>
-                <a href="#" className="inline-block py-0.5 transition hover:text-white sm:py-1">
+                <a
+                  href="#"
+                  className="inline-block py-0.5 transition hover:text-white sm:py-1"
+                >
                   Inventory workflows
                 </a>
               </li>
               <li>
-                <a href="#pricing" className="inline-block py-0.5 transition hover:text-white sm:py-1">
+                <a
+                  href="#pricing"
+                  className="inline-block py-0.5 transition hover:text-white sm:py-1"
+                >
                   Pricing
                 </a>
               </li>
@@ -70,17 +80,26 @@ export default function FooterSection() {
             </p>
             <ul className="mt-2 space-y-1.5 text-xs text-white/70 sm:mt-5 sm:space-y-3 sm:text-sm">
               <li>
-                <a href="#" className="inline-block py-0.5 transition hover:text-white sm:py-1">
+                <a
+                  href="#"
+                  className="inline-block py-0.5 transition hover:text-white sm:py-1"
+                >
                   Case studies
                 </a>
               </li>
               <li>
-                <a href="#testimonials" className="inline-block py-0.5 transition hover:text-white sm:py-1">
+                <a
+                  href="#testimonials"
+                  className="inline-block py-0.5 transition hover:text-white sm:py-1"
+                >
                   Testimonials
                 </a>
               </li>
               <li>
-                <a href="#" className="inline-block py-0.5 transition hover:text-white sm:py-1">
+                <a
+                  href="#"
+                  className="inline-block py-0.5 transition hover:text-white sm:py-1"
+                >
                   FAQ
                 </a>
               </li>
@@ -94,7 +113,10 @@ export default function FooterSection() {
             </p>
             <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-white/70 sm:mt-5 sm:flex-col sm:gap-x-0 sm:space-y-3 sm:text-sm">
               <li>
-                <a href="#" className="inline-block py-0.5 transition hover:text-white sm:py-1">
+                <a
+                  href="#"
+                  className="inline-block py-0.5 transition hover:text-white sm:py-1"
+                >
                   Book a Demo
                 </a>
               </li>
@@ -107,7 +129,10 @@ export default function FooterSection() {
                 </a>
               </li>
               <li>
-                <a href="#" className="inline-block py-0.5 transition hover:text-white sm:py-1">
+                <a
+                  href="#"
+                  className="inline-block py-0.5 transition hover:text-white sm:py-1"
+                >
                   Support
                 </a>
               </li>
@@ -154,13 +179,22 @@ export default function FooterSection() {
           <p>© 2026 Bar-IQ. All rights reserved.</p>
 
           <div className="flex flex-wrap gap-5">
-            <a href="#" className="inline-block py-1 transition hover:text-white">
+            <a
+              href="#"
+              className="inline-block py-1 transition hover:text-white"
+            >
               Privacy
             </a>
-            <a href="#" className="inline-block py-1 transition hover:text-white">
+            <a
+              href="#"
+              className="inline-block py-1 transition hover:text-white"
+            >
               Terms
             </a>
-            <a href="#" className="inline-block py-1 transition hover:text-white">
+            <a
+              href="#"
+              className="inline-block py-1 transition hover:text-white"
+            >
               Cookies
             </a>
           </div>
