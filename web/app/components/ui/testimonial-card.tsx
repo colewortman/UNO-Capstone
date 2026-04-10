@@ -36,7 +36,7 @@ export function TestimonialCard({
     <Card
       {...(isLinkedCard ? { href } : {})}
       className={cn(
-        "flex flex-col rounded-lg border-t",
+        "flex h-full flex-col rounded-lg border-t",
         "bg-gradient-to-b from-muted/50 to-muted/10",
         "p-4 text-start sm:p-6",
         "hover:from-muted/60 hover:to-muted/20",
@@ -59,20 +59,24 @@ export function TestimonialCard({
           </p>
         </div>
       </div>
-      <p className="sm:text-md mt-4 text-sm text-muted-foreground">
-        {text}
-      </p>
+      <div className="mt-4 min-h-[4.5rem]">
+        <p className="sm:text-md line-clamp-3 text-sm text-muted-foreground">
+          {text}
+        </p>
+      </div>
       {videoSrc && (
-        <video
-          className="mt-4 h-auto w-full rounded-md border"
-          controls
-          preload="metadata"
-          playsInline
-          poster={thumbnailSrc ?? author.avatar}
-        >
-          <source src={videoSrc} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <div className="mt-4 aspect-video w-full overflow-hidden rounded-md border bg-black">
+          <video
+            className="h-full w-full object-cover"
+            controls
+            preload="metadata"
+            playsInline
+            poster={thumbnailSrc ?? author.avatar}
+          >
+            <source src={videoSrc} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </div>
       )}
     </Card>
   )

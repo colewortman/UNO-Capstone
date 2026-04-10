@@ -166,9 +166,17 @@ export function TestimonialsSection({
             aria-label="Previous testimonials"
             onClick={goToPrev}
             disabled={!hasMultiplePages}
-            className="absolute left-1 top-1/2 z-20 -translate-y-1/2 rounded-full border border-border bg-background/90 p-2 text-lg shadow-sm transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-40 sm:left-3"
+            className="absolute left-1 top-1/2 z-20 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center text-white/50 transition hover:text-white disabled:cursor-not-allowed disabled:opacity-40 sm:left-3"
           >
-            {"<"}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M12.5 15L7.5 10L12.5 5"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </button>
 
           <div className="w-full overflow-hidden px-8 sm:px-12 lg:px-14">
@@ -205,13 +213,21 @@ export function TestimonialsSection({
             aria-label="Next testimonials"
             onClick={goToNext}
             disabled={!hasMultiplePages}
-            className="absolute right-1 top-1/2 z-20 -translate-y-1/2 rounded-full border border-border bg-background/90 p-2 text-lg shadow-sm transition hover:bg-muted disabled:cursor-not-allowed disabled:opacity-40 sm:right-3"
+            className="absolute right-1 top-1/2 z-20 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center text-white/50 transition hover:text-white disabled:cursor-not-allowed disabled:opacity-40 sm:right-3"
           >
-            {">"}
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <path
+                d="M7.5 5L12.5 10L7.5 15"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
           </button>
 
-          <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/3 bg-gradient-to-r from-background sm:block" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-l from-background sm:block" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background sm:w-1/3" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background sm:w-1/3" />
         </div>
 
         {pageCount > 0 && (
