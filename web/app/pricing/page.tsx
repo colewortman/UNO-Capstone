@@ -186,7 +186,7 @@ export default function PricingPage() {
   const renderCard = (tier: (typeof tiers)[0]) => (
     <div
       key={tier.name}
-      className={`relative flex flex-col rounded-xl border p-3 transition-all sm:rounded-2xl sm:p-6 ${
+      className={`relative flex h-full flex-col rounded-xl border p-3 transition-all sm:rounded-2xl sm:p-6 ${
         tier.recommended
           ? "border-blue-500/50 bg-[#1a1f2e] shadow-[0_0_40px_rgba(59,130,246,0.15)]"
           : "border-white/10 bg-[#18181b]"
@@ -303,10 +303,10 @@ export default function PricingPage() {
           <div
             ref={carouselRef}
             onScroll={handleCarouselScroll}
-            className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            className="flex items-stretch snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth [touch-action:pan-x] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
           >
             {tiers.map((tier) => (
-              <div key={tier.name} className="min-w-full snap-center px-0">
+              <div key={tier.name} className="grid min-w-full snap-center px-0">
                 {renderCard(tier)}
               </div>
             ))}
