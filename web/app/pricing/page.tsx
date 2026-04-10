@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Check } from "lucide-react";
 import { GlowingEffect } from "@/app/components/ui/glowing-effect";
 
@@ -32,7 +32,7 @@ const tiers = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M9.75 3.104v5.714a2.25 2.25 0 0 1-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.3 24.3 0 0 1 4.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0 1 12 15a9.065 9.065 0 0 0-6.23-.693L5 14.5m14.8.8 1.402 1.402c1 1 .03 2.798-1.442 2.798H4.24c-1.47 0-2.441-1.798-1.442-2.798L4.2 15.8" />
       </svg>
     ),
-    cta: "Get started for free",
+    cta: "Start with Starter",
     ctaStyle: "border border-white/20 bg-white/5 text-white hover:bg-white/10",
     recommended: false,
     features: [
@@ -53,7 +53,7 @@ const tiers = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z" />
       </svg>
     ),
-    cta: "Level Up with Essential",
+    cta: "Start with Essential",
     ctaStyle: "border border-white/20 bg-white/5 text-white hover:bg-white/10",
     recommended: false,
     features: [
@@ -100,7 +100,7 @@ const tiers = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0-1 3m8.5-3 1 3m0 0 .5 1.5m-.5-1.5h-9.5m0 0-.5 1.5M9 11.25v1.5M12 9v3.75m3-6v6" />
       </svg>
     ),
-    cta: "Get Advanced",
+    cta: "Start with Advanced",
     ctaStyle: "border border-white/20 bg-white/5 text-white hover:bg-white/10",
     recommended: false,
     features: [
@@ -122,7 +122,7 @@ const tiers = [
         <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Zm0 3h.008v.008h-.008v-.008Z" />
       </svg>
     ),
-    cta: "Go Top Shelf",
+    cta: "Start with Top Shelf",
     ctaStyle: "border border-white/20 bg-white/5 text-white hover:bg-white/10",
     recommended: false,
     features: [
@@ -148,22 +148,40 @@ export default function PricingPage() {
     isYearly ? Math.round(monthly * 0.8) : monthly;
 
   // ── Carousel state (mobile / tablet) ──
-  const cardsPerSlide = 1;
-
-  const carouselPages = useMemo(() => {
-    const pages: (typeof tiers)[] = [];
-    for (let i = 0; i < tiers.length; i += cardsPerSlide) {
-      pages.push(tiers.slice(i, i + cardsPerSlide));
-    }
-    return pages;
-  }, [cardsPerSlide]);
-
   const [activeSlide, setActiveSlide] = useState(0);
-  const slideCount = carouselPages.length;
+  const slideCount = tiers.length;
+  const carouselRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     if (activeSlide >= slideCount) setActiveSlide(Math.max(0, slideCount - 1));
   }, [activeSlide, slideCount]);
+
+  const goToSlide = (slideIndex: number) => {
+    const carouselEl = carouselRef.current;
+    if (!carouselEl) {
+      setActiveSlide(slideIndex);
+      return;
+    }
+
+    const boundedSlide = Math.min(Math.max(slideIndex, 0), slideCount - 1);
+    carouselEl.scrollTo({
+      left: boundedSlide * carouselEl.clientWidth,
+      behavior: "smooth",
+    });
+    setActiveSlide(boundedSlide);
+  };
+
+  const handleCarouselScroll = () => {
+    const carouselEl = carouselRef.current;
+    if (!carouselEl) return;
+
+    const nextSlide = Math.round(carouselEl.scrollLeft / carouselEl.clientWidth);
+    const boundedSlide = Math.min(Math.max(nextSlide, 0), slideCount - 1);
+
+    if (boundedSlide !== activeSlide) {
+      setActiveSlide(boundedSlide);
+    }
+  };
 
   const renderCard = (tier: (typeof tiers)[0]) => (
     <div
@@ -282,29 +300,25 @@ export default function PricingPage() {
 
         {/* ── Mobile / tablet carousel (hidden on lg+) ── */}
         <div className="relative lg:hidden">
-          <div className="overflow-hidden">
-            <div
-              className="flex transition-transform duration-500 ease-out"
-              style={{ transform: `translateX(-${activeSlide * 100}%)` }}
-            >
-              {carouselPages.map((page, pageIdx) => (
-                <div
-                  key={pageIdx}
-                  className="grid min-w-full grid-cols-1 gap-3 sm:gap-5"
-                >
-                  {page.map((tier) => renderCard(tier))}
-                </div>
-              ))}
-            </div>
+          <div
+            ref={carouselRef}
+            onScroll={handleCarouselScroll}
+            className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+          >
+            {tiers.map((tier) => (
+              <div key={tier.name} className="min-w-full snap-center px-0">
+                {renderCard(tier)}
+              </div>
+            ))}
           </div>
 
           <div className="mt-6 flex justify-center gap-2">
-            {carouselPages.map((_, idx) => (
+            {tiers.map((_, idx) => (
               <button
                 key={idx}
                 type="button"
                 aria-label={`Go to plan ${idx + 1}`}
-                onClick={() => setActiveSlide(idx)}
+                onClick={() => goToSlide(idx)}
                 className={`h-2 w-2 rounded-full transition ${
                   activeSlide === idx ? "scale-125 bg-white" : "bg-white/30 hover:bg-white/50"
                 }`}
