@@ -4,6 +4,8 @@
  * subtle glass metric cards, and a centered phone composition.
  */
 
+"use client";
+
 export default function FinalCTASection() {
   return (
     <div className="relative">
@@ -41,21 +43,20 @@ export default function FinalCTASection() {
         {/* RIGHT SIDE */}
         <div className="relative flex justify-center">
           <div className="relative w-full max-w-[620px]">
-            {/* Desktop / tablet composition */}
             <div className="relative hidden min-h-[540px] md:block">
-              {/* Soft glow */}
+              {/* Glow */}
               <div className="absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[100px]" />
 
               {/* Left stat cards */}
               <div className="absolute left-6 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-4 lg:left-2">
-                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.035] px-5 py-4 opacity-100 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.22)]">
                   <p className="text-sm text-white/50">Session</p>
                   <p className="mt-1 text-2xl font-semibold tracking-tight text-white">
                     15m 9s
                   </p>
                 </div>
 
-                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.03] px-5 py-4 opacity-85 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
                   <p className="text-sm text-white/50">Recovered</p>
                   <p className="mt-1 text-2xl font-semibold tracking-tight text-white">
                     $1,240
@@ -65,14 +66,14 @@ export default function FinalCTASection() {
 
               {/* Right stat cards */}
               <div className="absolute right-6 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-4 lg:right-2">
-                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.04] px-5 py-4 text-right backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.035] px-5 py-4 opacity-100 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.22)]">
                   <p className="text-sm text-white/50">Speed</p>
                   <p className="mt-1 text-2xl font-semibold tracking-tight text-green-400">
                     +42%
                   </p>
                 </div>
 
-                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.04] px-5 py-4 text-right backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.03] px-5 py-4 opacity-85 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.18)]">
                   <p className="text-sm text-white/50">Variance</p>
                   <p className="mt-1 text-2xl font-semibold tracking-tight text-blue-300">
                     Low
