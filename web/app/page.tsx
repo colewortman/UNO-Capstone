@@ -30,22 +30,22 @@ export default function Home() {
   return (
     <main className={styles.page}>
       {/* Hero */}
-      <Section className={styles.heroSection}>
+      <Section id="hero" className={`${styles.heroSection} scroll-mt-20`}>
         <HeroSection />
       </Section>
 
       {/* Social Proof Logos */}
-      <Section className={styles.socialProofSection}>
+      <Section id="social-proof" className={`${styles.socialProofSection} scroll-mt-20`}>
         <SocialProofSection />
       </Section>
 
       {/* Problem / Solution */}
-      <Section>
+      <Section id="problem-solution" className="scroll-mt-20">
         <ProblemSolutionSection />
       </Section>
 
       {/* Product Demo */}
-      <Section>
+      <Section id="product-demo" className="scroll-mt-20">
         <ProductDemoSection />
       </Section>
 
@@ -55,12 +55,12 @@ export default function Home() {
       </Section>
 
       {/* Feature Highlights */}
-      <Section>
+      <Section id="feature-highlights" className="scroll-mt-20">
         <FeatureHighlightsSection />
       </Section>
 
       {/* Comparisons (differentiator) */}
-      <Section className={styles.sectionFull}>
+      <Section id="comparisons" className={`${styles.sectionFull} scroll-mt-20`}>
         <Comparisons />
       </Section>
 
@@ -70,7 +70,7 @@ export default function Home() {
       </Section>
 
       {/* CTA */}
-      <Section>
+      <Section id="final-cta" className="scroll-mt-20">
         <FinalCTASection />
       </Section>
 
