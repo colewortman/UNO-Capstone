@@ -41,11 +41,17 @@ function HamburgerIcon({ open }: { open: boolean }) {
 }
 
 const mobileLinks = [
-  { href: "/", label: "Home" },
+  { href: "/#hero", label: "Home" },
+  { href: "/#social-proof", label: "Social Proof" },
+  { href: "/#problem-solution", label: "Problem & Solution" },
+  { href: "/#product-demo", label: "Product Demo" },
+  { href: "/#testimonials", label: "Testimonials" },
+  { href: "/#feature-highlights", label: "Feature Highlights" },
+  { href: "/#comparisons", label: "Competitor Comparisons" },
   { href: "/#roi-calculator", label: "ROI Calculator" },
+  { href: "/#final-cta", label: "Get Started" },
   { href: "/pricing", label: "Pricing" },
   { href: "/faq", label: "FAQ" },
-  { href: "/faq", label: "Contact" },
 ];
 
 export default function NavigationBar() {
@@ -119,10 +125,120 @@ export default function NavigationBar() {
                       <NavigationMenuContent>
                         <ul className="grid w-100 gap-1 p-2 md:w-125 md:grid-cols-2">
                           <li>
-                            <NavigationMenuLink href="/" render={<Link href="/" />}>
-                              <span className="font-medium">All Services</span>
+                            <NavigationMenuLink
+                              href="/#hero"
+                              render={
+                                <Link
+                                  href="/#hero"
+                                  onClick={scrollToHash}
+                                />
+                              }
+                            >
+                              <span className="font-medium">Home</span>
                               <span className="text-muted-foreground text-xs">
-                                View our full range of offerings
+                                Back to the top
+                              </span>
+                            </NavigationMenuLink>
+                          </li>
+                          <li>
+                            <NavigationMenuLink
+                              href="/#social-proof"
+                              render={
+                                <Link
+                                  href="/#social-proof"
+                                  onClick={scrollToHash}
+                                />
+                              }
+                            >
+                              <span className="font-medium">Social Proof</span>
+                              <span className="text-muted-foreground text-xs">
+                                Trusted by top establishments
+                              </span>
+                            </NavigationMenuLink>
+                          </li>
+                          <li>
+                            <NavigationMenuLink
+                              href="/#problem-solution"
+                              render={
+                                <Link
+                                  href="/#problem-solution"
+                                  onClick={scrollToHash}
+                                />
+                              }
+                            >
+                              <span className="font-medium">
+                                Problem & Solution
+                              </span>
+                              <span className="text-muted-foreground text-xs">
+                                The challenges we solve
+                              </span>
+                            </NavigationMenuLink>
+                          </li>
+                          <li>
+                            <NavigationMenuLink
+                              href="/#product-demo"
+                              render={
+                                <Link
+                                  href="/#product-demo"
+                                  onClick={scrollToHash}
+                                />
+                              }
+                            >
+                              <span className="font-medium">Product Demo</span>
+                              <span className="text-muted-foreground text-xs">
+                                See Bar IQ in action
+                              </span>
+                            </NavigationMenuLink>
+                          </li>
+                          <li>
+                            <NavigationMenuLink
+                              href="/#testimonials"
+                              render={
+                                <Link
+                                  href="/#testimonials"
+                                  onClick={scrollToHash}
+                                />
+                              }
+                            >
+                              <span className="font-medium">Testimonials</span>
+                              <span className="text-muted-foreground text-xs">
+                                What our customers say
+                              </span>
+                            </NavigationMenuLink>
+                          </li>
+                          <li>
+                            <NavigationMenuLink
+                              href="/#feature-highlights"
+                              render={
+                                <Link
+                                  href="/#feature-highlights"
+                                  onClick={scrollToHash}
+                                />
+                              }
+                            >
+                              <span className="font-medium">
+                                Feature Highlights
+                              </span>
+                              <span className="text-muted-foreground text-xs">
+                                Key capabilities at a glance
+                              </span>
+                            </NavigationMenuLink>
+                          </li>
+                          <li>
+                            <NavigationMenuLink
+                              href="/#comparisons"
+                              render={
+                                <Link
+                                  href="/#comparisons"
+                                  onClick={scrollToHash}
+                                />
+                              }
+                            >
+                              <span className="font-medium">
+                                Competitor Comparisons
+                              </span>
+                              <span className="text-muted-foreground text-xs">
+                                See how we stack up
                               </span>
                             </NavigationMenuLink>
                           </li>
@@ -136,9 +252,27 @@ export default function NavigationBar() {
                                 />
                               }
                             >
-                              <span className="font-medium">ROI Calculator</span>
+                              <span className="font-medium">
+                                ROI Calculator
+                              </span>
                               <span className="text-muted-foreground text-xs">
                                 See how much Bar IQ can save your business
+                              </span>
+                            </NavigationMenuLink>
+                          </li>
+                          <li>
+                            <NavigationMenuLink
+                              href="/#final-cta"
+                              render={
+                                <Link
+                                  href="/#final-cta"
+                                  onClick={scrollToHash}
+                                />
+                              }
+                            >
+                              <span className="font-medium">Get Started</span>
+                              <span className="text-muted-foreground text-xs">
+                                Ready to transform your bar?
                               </span>
                             </NavigationMenuLink>
                           </li>
@@ -159,42 +293,37 @@ export default function NavigationBar() {
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
+                {/* Premium link */}
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    href="/premium"
+                    render={<Link href="/premium" />}
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    Premium
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+
+                {/* Integration link */}
+                <NavigationMenuItem>
+                  <NavigationMenuLink
+                    href="/integration"
+                    render={<Link href="/integration" />}
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    Integration
+                  </NavigationMenuLink>
+                </NavigationMenuItem>
+
                 {/* FAQ link */}
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger>FAQ</NavigationMenuTrigger>
-                  <NavigationMenuPositioner>
-                    <NavigationMenuPopup>
-                      <NavigationMenuArrow />
-                      <NavigationMenuContent>
-                        <ul className="grid w-100 gap-1 p-2 md:w-125 md:grid-cols-2">
-                          <li>
-                            <NavigationMenuLink
-                              href="/faq"
-                              render={<Link href="/faq" />}
-                            >
-                              <span className="font-medium">
-                                Frequently Asked Questions
-                              </span>
-                              <span className="text-muted-foreground text-xs">
-                                View answers to our most frequently asked questions
-                              </span>
-                            </NavigationMenuLink>
-                          </li>
-                          <li>
-                            <NavigationMenuLink
-                              href="/faq"
-                              render={<Link href="/faq" />}
-                            >
-                              <span className="font-medium">Contact</span>
-                              <span className="text-muted-foreground text-xs">
-                                View our contact information
-                              </span>
-                            </NavigationMenuLink>
-                          </li>
-                        </ul>
-                      </NavigationMenuContent>
-                    </NavigationMenuPopup>
-                  </NavigationMenuPositioner>
+                  <NavigationMenuLink
+                    href="/faq"
+                    render={<Link href="/faq" />}
+                    className={navigationMenuTriggerStyle()}
+                  >
+                    FAQ
+                  </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
             </NavigationMenu>
@@ -209,7 +338,7 @@ export default function NavigationBar() {
               href="/signup"
               className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              Sign Up
+              Get Started
             </Link>
             <Link
               href="/signin"
