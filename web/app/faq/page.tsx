@@ -47,21 +47,21 @@ export default function FAQSection() {
   }, [query]);
 
   return (
-    <section id="faq" className="bg-[#f5f5f7] text-[#111111]">
-      {/* Top help-center style header */}
-      <div className="bg-[#201c5a] px-4 py-12 sm:px-6 sm:py-14 md:px-10 md:py-16 lg:px-16 lg:py-20">
+    <section id="faq" className="bg-black text-white">
+      {/* Header */}
+      <div className="px-4 py-10 sm:px-6 sm:py-12 md:px-10 md:py-14 lg:px-16 lg:py-16">
         <div className="mx-auto max-w-7xl">
-          <div className="max-w-4xl">
-            <p className="mb-4 text-xs uppercase tracking-[0.3em] text-white/70">
+          <div className="max-w-5xl">
+            <p className="mb-3 text-[11px] uppercase tracking-[0.35em] text-blue-300 sm:text-xs">
               FAQ
             </p>
 
-            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl">
+            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:whitespace-nowrap">
               Advice and answers from the Bar-IQ team
             </h2>
           </div>
 
-          <div className="mt-8 sm:mt-10">
+          <div className="mt-6 sm:mt-8">
             <div className="relative">
               <input
                 type="text"
@@ -71,10 +71,9 @@ export default function FAQSection() {
                   setOpenIndex(0);
                 }}
                 placeholder="Search for questions..."
-                className="w-full rounded-2xl border border-white/10 bg-white/20 px-5 py-4 pl-14 text-base text-white outline-none backdrop-blur-sm placeholder:text-white/70 focus:border-white/25 focus:bg-white/25 sm:py-5 sm:text-lg"
+                className="w-full rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-4 pl-14 text-base text-white outline-none transition placeholder:text-white/45 focus:border-blue-300/50 focus:bg-white/[0.08] sm:text-lg"
               />
-
-              <span className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-2xl text-white/85">
+              <span className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-xl text-white/50">
                 ⌕
               </span>
             </div>
@@ -82,43 +81,43 @@ export default function FAQSection() {
         </div>
       </div>
 
-      {/* FAQ cards */}
-      <div className="px-4 py-10 sm:px-6 sm:py-12 md:px-10 md:py-14 lg:px-16 lg:py-16">
+      {/* FAQ Cards */}
+      <div className="px-4 pb-10 sm:px-6 sm:pb-12 md:px-10 md:pb-14 lg:px-16 lg:pb-16">
         <div className="mx-auto max-w-7xl">
           {filteredFaqs.length === 0 ? (
-            <div className="rounded-2xl border border-black/8 bg-white px-6 py-8 text-base text-black/60 shadow-sm">
+            <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-white/60">
               No matching questions found.
             </div>
           ) : (
-            <div className="space-y-5">
+            <div className="space-y-4">
               {filteredFaqs.map((item, index) => {
                 const isOpen = openIndex === index;
 
                 return (
                   <div
                     key={`${item.question}-${index}`}
-                    className="overflow-hidden rounded-2xl border border-black/8 bg-white shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition"
+                    className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] shadow-[0_0_30px_rgba(59,130,246,0.03)]"
                   >
                     <button
                       onClick={() =>
                         setOpenIndex((prev) => (prev === index ? null : index))
                       }
-                      className="flex w-full items-start justify-between gap-4 px-5 py-5 text-left sm:px-6 sm:py-6 md:px-8"
+                      className="flex w-full items-start justify-between gap-4 px-5 py-5 text-left transition hover:bg-white/[0.02] sm:px-6 sm:py-6 md:px-8"
                     >
                       <div className="min-w-0">
-                        <h3 className="text-xl font-semibold tracking-tight text-[#1a1a1a] sm:text-2xl">
+                        <h3 className="text-lg font-semibold tracking-tight text-white sm:text-xl">
                           {item.question}
                         </h3>
 
                         {!isOpen && (
-                          <p className="mt-3 max-w-4xl text-sm leading-7 text-black/60 sm:text-base">
+                          <p className="mt-3 max-w-4xl text-sm leading-7 text-white/55 sm:text-base">
                             {item.answer}
                           </p>
                         )}
                       </div>
 
                       <span
-                        className={`mt-1 shrink-0 text-xl text-[#201c5a] transition-transform duration-300 ${
+                        className={`mt-1 shrink-0 text-xl text-blue-300 transition-transform duration-300 ${
                           isOpen ? "rotate-45" : "rotate-0"
                         }`}
                       >
@@ -129,12 +128,12 @@ export default function FAQSection() {
                     <div
                       className={`overflow-hidden transition-all duration-300 ${
                         isOpen
-                          ? "max-h-96 border-t border-black/8 opacity-100"
+                          ? "max-h-96 border-t border-white/10 opacity-100"
                           : "max-h-0 opacity-0"
                       }`}
                     >
                       <div className="px-5 py-5 sm:px-6 sm:py-6 md:px-8">
-                        <p className="max-w-4xl text-sm leading-7 text-black/65 sm:text-base sm:leading-8">
+                        <p className="max-w-4xl text-sm leading-7 text-white/65 sm:text-base sm:leading-8">
                           {item.answer}
                         </p>
                       </div>
@@ -145,14 +144,14 @@ export default function FAQSection() {
             </div>
           )}
 
-          {/* Keep your bottom banner */}
+          {/* Bottom banner */}
           <div className="mt-10 sm:mt-12 md:mt-14">
-            <div className="flex flex-col gap-5 rounded-3xl border border-black/8 bg-white px-5 py-5 shadow-[0_1px_2px_rgba(0,0,0,0.03)] sm:px-6 sm:py-6 md:flex-row md:items-center md:justify-between md:px-8 md:py-7">
+            <div className="flex flex-col gap-5 rounded-3xl border border-white/10 bg-white/[0.04] px-5 py-5 shadow-[0_0_40px_rgba(255,255,255,0.03)] backdrop-blur-sm sm:px-6 sm:py-6 md:flex-row md:items-center md:justify-between md:px-8 md:py-7">
               <div>
-                <h3 className="text-xl font-semibold tracking-tight text-[#111111] sm:text-2xl">
+                <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
                   Have more questions?
                 </h3>
-                <p className="mt-2 max-w-2xl text-sm leading-7 text-black/60 sm:text-base">
+                <p className="mt-2 max-w-2xl text-sm leading-7 text-white/60 sm:text-base">
                   Our team can help you understand setup, pricing, and how
                   Bar-IQ fits into your workflow.
                 </p>
@@ -160,7 +159,7 @@ export default function FAQSection() {
 
               <a
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-full bg-[#201c5a] px-6 py-3 text-sm font-medium text-white transition hover:opacity-95 sm:px-7 sm:text-base"
+                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-blue-400 px-6 py-3 text-sm font-medium text-white shadow-[0_0_30px_rgba(59,130,246,0.25)] transition hover:scale-[1.01] sm:px-7 sm:text-base"
               >
                 Contact Us
               </a>
