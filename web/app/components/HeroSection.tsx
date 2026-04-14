@@ -9,7 +9,7 @@ export default function HeroSection() {
       {/* left side — text + CTA */}
       <div className="mx-auto max-w-lg text-center lg:mx-0 lg:text-left">
         <p className="mb-5 text-xs uppercase tracking-[0.35em] text-blue-300">
-          Battery-free RFID inventory intelligence
+          Camera-based Mobile App
         </p>
 
         <h1 className="text-4xl font-semibold leading-[0.95] tracking-tight text-white sm:text-5xl md:text-6xl xl:text-7xl">
