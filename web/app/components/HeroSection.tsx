@@ -65,7 +65,8 @@ export default function HeroSection() {
 
       {/* right side — supporting copy & actions (desktop only) */}
       <div className="hidden flex-col justify-center gap-6 py-8 lg:flex lg:max-w-[300px]">
-        <div className="max-w-[260px] text-sm leading-7 text-white/55 xl:text-base">
+        {/* centered relative to buttons */}
+        <div className="mx-auto max-w-[260px] text-center text-sm leading-7 text-white/55 xl:text-base">
           Bottle-level visibility for faster counts, cleaner reporting, and less
           manual inventory work.
         </div>
