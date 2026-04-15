@@ -30,10 +30,18 @@ export default function FooterSection() {
           </p>
         </div>
 
+        {/* liquid metal logo — own row on mobile/tablet, hidden here on desktop */}
+        <div className="mb-8 flex justify-center sm:mb-12 lg:hidden">
+          <div className="relative h-[140px] w-full max-w-[180px] sm:h-[160px] sm:max-w-[200px]">
+            <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[60px]" />
+            <LiquidMetalLogo scale={1} />
+          </div>
+        </div>
+
         {/* main footer grid */}
-        <div className="grid grid-cols-[1fr_auto_auto] justify-items-start gap-x-6 gap-y-6 sm:gap-x-8 sm:gap-y-12 md:grid-cols-2 md:justify-items-center lg:grid-cols-4">
-          {/* liquid metal logo — in brand spot of main grid */}
-          <div className="col-span-3 flex h-full items-stretch justify-center md:col-span-1 md:w-full md:justify-center">
+        <div className="grid grid-cols-3 justify-items-center gap-x-3 gap-y-8 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-4">
+          {/* liquid metal logo — only shown inline on lg+ */}
+          <div className="hidden lg:flex lg:h-full lg:w-full lg:items-stretch lg:justify-center">
             <div className="relative h-full min-h-[160px] w-full max-w-[200px]">
               <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[60px]" />
               <LiquidMetalLogo scale={1} />
@@ -107,11 +115,11 @@ export default function FooterSection() {
           </div>
 
           {/* contact — sits in the brand row on md, own column on lg */}
-          <div className="col-span-3 md:col-span-1">
+          <div className="lg:col-span-1">
             <p className="text-[10px] uppercase tracking-[0.24em] text-white/35 sm:text-xs">
               Contact
             </p>
-            <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-white/70 sm:mt-5 sm:flex-col sm:gap-x-0 sm:space-y-3 sm:text-sm">
+            <ul className="mt-2 flex flex-col gap-y-1 text-xs text-white/70 sm:mt-5 sm:gap-y-0 sm:space-y-3 sm:text-sm">
               <li>
                 <a
                   href="#"
