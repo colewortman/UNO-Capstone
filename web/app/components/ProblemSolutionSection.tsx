@@ -148,12 +148,12 @@ export default function ProblemSolutionSection() {
   return (
     <div ref={sectionRef}>
       {/* Mobile: stacked layout without GSAP pinning */}
-      <div className={isMobile ? "space-y-12 py-8" : "hidden"}>
+      <div className={isMobile ? "space-y-12 px-4 py-8" : "hidden"}>
         <div>
           <h2 className="mb-6 text-center text-3xl font-semibold sm:text-4xl">
             The Problem
           </h2>
-          <div className="p-2 sm:p-4">
+          <div className="mx-auto h-[420px] w-full max-w-5xl sm:aspect-[16/9] sm:h-auto">
             <FeatureCarousel />
           </div>
         </div>
@@ -162,16 +162,16 @@ export default function ProblemSolutionSection() {
           <h2 className="mb-6 text-center text-3xl font-semibold sm:text-4xl">
             The Solution
           </h2>
-          <div className="p-2 sm:p-4">
+          <div className="mx-auto h-[420px] w-full max-w-5xl sm:aspect-[16/9] sm:h-auto">
             <FeatureCarousel inverted />
           </div>
         </div>
       </div>
 
       {/* Desktop: GSAP pinned scroll animation */}
-      <section className={isMobile ? "hidden" : "ps-section relative h-screen overflow-hidden"}>
-        {/* Title with line-masked swap animation — pushed below sticky navbar (h-16) */}
-        <div className="relative z-10 flex justify-center pt-20 md:pt-22 lg:pt-24">
+      <section className={isMobile ? "hidden" : "ps-section relative flex h-screen flex-col overflow-hidden"}>
+        {/* Top spacer — contains the title, centered between section top and carousel */}
+        <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center pt-16">
           <div className="relative">
             <div className="ps-title-problem overflow-hidden">
               <h2 className="ps-title-problem-text text-center text-4xl font-semibold md:text-5xl">
@@ -186,15 +186,23 @@ export default function ProblemSolutionSection() {
           </div>
         </div>
 
-        {/* Problem carousel — normal layout (blue left, images right) */}
-        <div className="ps-problem absolute inset-x-0 top-32 md:top-36 lg:top-40 bottom-4 md:bottom-6 lg:bottom-8 flex items-center justify-center p-4 md:p-6 lg:p-8">
-          <FeatureCarousel />
+        {/* Carousel row — centered in section with fixed aspect ratio */}
+        <div className="relative flex w-full justify-center px-4 md:px-6 lg:px-8">
+          <div className="relative w-full max-w-6xl aspect-[16/9]">
+            {/* Problem carousel — normal layout (blue left, images right) */}
+            <div className="ps-problem absolute inset-0">
+              <FeatureCarousel />
+            </div>
+
+            {/* Solution carousel — inverted layout (images left, blue right) */}
+            <div className="ps-solution absolute inset-0">
+              <FeatureCarousel inverted />
+            </div>
+          </div>
         </div>
 
-        {/* Solution carousel — inverted layout (images left, blue right) */}
-        <div className="ps-solution absolute inset-x-0 top-32 md:top-36 lg:top-40 bottom-4 md:bottom-6 lg:bottom-8 flex items-center justify-center p-4 md:p-6 lg:p-8">
-          <FeatureCarousel inverted />
-        </div>
+        {/* Bottom spacer — equal to top spacer so carousel stays vertically centered */}
+        <div className="min-h-0 flex-1" aria-hidden="true" />
       </section>
     </div>
   );
