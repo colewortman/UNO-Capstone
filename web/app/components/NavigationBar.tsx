@@ -99,6 +99,9 @@ export default function NavigationBar() {
 
   return (
     <>
+      <div className="w-full bg-linear-to-r from-blue-500 to-blue-400 px-4 py-2 text-center text-xs font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] sm:text-sm">
+        Try a 1-month Free Trial
+      </div>
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
         <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:justify-normal lg:px-10">
           {/* Logo / Brand */}
@@ -128,10 +131,7 @@ export default function NavigationBar() {
                             <NavigationMenuLink
                               href="/#hero"
                               render={
-                                <Link
-                                  href="/#hero"
-                                  onClick={scrollToHash}
-                                />
+                                <Link href="/#hero" onClick={scrollToHash} />
                               }
                             >
                               <span className="font-medium">Home</span>
@@ -331,9 +331,6 @@ export default function NavigationBar() {
 
           {/* Desktop CTA — right side */}
           <div className="hidden items-center gap-3 justify-self-end lg:flex">
-            <span className="text-sm text-muted-foreground whitespace-nowrap">
-              Try your first month free
-            </span>
             <Link
               href="/signup"
               className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"

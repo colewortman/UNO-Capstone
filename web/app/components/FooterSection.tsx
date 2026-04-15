@@ -19,25 +19,25 @@ export default function FooterSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl">
-        {/* liquid metal logo — positioned behind content */}
-        <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[30%] opacity-30 sm:-translate-y-[25%]">
-          <div className="relative h-[200px] w-[200px] sm:h-[280px] sm:w-[280px] md:h-[360px] md:w-[360px]">
-            <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[50px] sm:blur-[70px] md:blur-[90px]" />
-            <LiquidMetalLogo />
-          </div>
+        {/* brand header — above main footer grid */}
+        <div className="mx-auto mb-8 max-w-sm text-center sm:mb-12">
+          <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">
+            Bar-IQ
+          </h3>
+          <p className="mt-2 text-xs leading-5 text-white/55 sm:mt-4 sm:text-sm sm:leading-7">
+            Real-time bar inventory intelligence with faster counts, better
+            visibility, and less revenue leakage between sessions.
+          </p>
         </div>
 
         {/* main footer grid */}
-        <div className="grid grid-cols-[1fr_auto_auto] gap-x-6 gap-y-6 sm:gap-x-8 sm:gap-y-12 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr]">
-          {/* brand — full width on mobile, then normal grid placement */}
-          <div className="col-span-3 max-w-sm md:col-span-1">
-            <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">
-              Bar-IQ
-            </h3>
-            <p className="mt-2 text-xs leading-5 text-white/55 sm:mt-4 sm:text-sm sm:leading-7">
-              Real-time bar inventory intelligence with faster counts, better
-              visibility, and less revenue leakage between sessions.
-            </p>
+        <div className="grid grid-cols-[1fr_auto_auto] justify-items-start gap-x-6 gap-y-6 sm:gap-x-8 sm:gap-y-12 md:grid-cols-2 md:justify-items-center lg:grid-cols-4">
+          {/* liquid metal logo — in brand spot of main grid */}
+          <div className="col-span-3 flex h-full items-stretch justify-center md:col-span-1 md:w-full md:justify-center">
+            <div className="relative h-full min-h-[160px] w-full max-w-[200px]">
+              <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[60px]" />
+              <LiquidMetalLogo scale={1} />
+            </div>
           </div>
 
           {/* product */}
