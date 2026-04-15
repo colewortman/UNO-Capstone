@@ -29,7 +29,7 @@ describe('Pricing Page', () => {
 describe('FAQ Page', () => {
   it('renders the heading', () => {
     render(<FAQPage />)
-    expect(screen.getByRole('heading', { name: 'Questions, answered simply.' })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: /Advice and answers from the Bar-IQ team/i })).toBeInTheDocument()
   })
 
   it('renders FAQ questions as interactive buttons', () => {
@@ -41,6 +41,17 @@ describe('FAQ Page', () => {
 
   it('displays the first FAQ answer by default', () => {
     render(<FAQPage />)
-    expect(screen.getByText(/Most bar teams can complete a session/)).toBeInTheDocument()
+    expect(screen.getAllByText(/Most bar teams can complete a session/).length).toBeGreaterThanOrEqual(1)
+  })
+
+  it('renders the search input', () => {
+    render(<FAQPage />)
+    expect(screen.getByPlaceholderText(/Search for questions/i)).toBeInTheDocument()
+  })
+
+  it('renders a Contact Us link in the bottom banner', () => {
+    render(<FAQPage />)
+    const link = screen.getByRole('link', { name: /Contact Us/i })
+    expect(link).toHaveAttribute('href', '/contact')
   })
 })
