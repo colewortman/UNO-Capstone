@@ -5,8 +5,10 @@ import logoSrc from "@/public/lv-logo-icon.svg";
 
 export default function LiquidMetalLogo({
   className = "",
+  scale = 0.6,
 }: {
   className?: string;
+  scale?: number;
 }) {
   return (
     <LiquidMetal
@@ -14,7 +16,7 @@ export default function LiquidMetalLogo({
       style={{ width: "100%", height: "100%" }}
       image={logoSrc.src}
       speed={1}
-      scale={0.6}
+      scale={scale}
       colorBack="rgba(0,0,0,0)"
       colorTint="#ffffff"
       softness={0.1}
