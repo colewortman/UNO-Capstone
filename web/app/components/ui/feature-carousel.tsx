@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Pizza04Icon,
@@ -116,7 +116,20 @@ export function FeatureCarousel({
 }) {
   const [step, setStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const itemHeight = ITEM_HEIGHT;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.1 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const currentIndex =
     ((step % FEATURES.length) + FEATURES.length) % FEATURES.length;
@@ -141,10 +154,10 @@ export function FeatureCarousel({
   };
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !isInView) return;
     const interval = setInterval(nextStep, AUTO_PLAY_INTERVAL);
     return () => clearInterval(interval);
-  }, [nextStep, isPaused]);
+  }, [nextStep, isPaused, isInView]);
 
   const getCardStatus = (index: number) => {
     const diff = index - currentIndex;
@@ -161,7 +174,7 @@ export function FeatureCarousel({
   };
 
   return (
-    <div className={cn("w-full h-full max-w-7xl mx-auto p-2 sm:p-4 lg:p-6", className)}>
+    <div ref={containerRef} className={cn("w-full h-full max-w-7xl mx-auto p-2 sm:p-4 lg:p-6", className)}>
       <div
         className={cn(
           "relative overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] lg:rounded-[3rem] flex flex-col h-full w-full border border-border/40",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 type Logo = {
@@ -22,6 +22,8 @@ export function LogoCloud({ logos, perPage = 4 }: LogoCloudProps) {
   const totalPages = Math.ceil(logos.length / perPage);
   const [page, setPage] = useState(0);
   const [barKey, setBarKey] = useState(0);
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const start = page * perPage;
   const visible = logos.slice(start, start + perPage);
@@ -35,12 +37,24 @@ export function LogoCloud({ logos, perPage = 4 }: LogoCloudProps) {
   );
 
   useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.1 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isInView) return;
     const timer = setTimeout(() => advance(1), DURATION * 1000);
     return () => clearTimeout(timer);
-  }, [page, barKey, advance]);
+  }, [page, barKey, advance, isInView]);
 
   return (
-    <div className="relative mx-auto max-w-3xl py-6">
+    <div ref={containerRef} className="relative mx-auto max-w-3xl py-6">
       <div className="flex items-center gap-4">
         <button
           onClick={() => advance(-1)}
