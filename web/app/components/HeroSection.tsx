@@ -16,6 +16,11 @@ export default function HeroSection() {
           Take bar inventory in minutes, not hours.
         </h1>
 
+        {/* mobile/tablet-only phone placeholder, sits between header and tagline */}
+        <div className="mt-8 flex justify-center lg:hidden">
+          <div className="h-80 w-48 rounded-[2rem] border border-white/10 bg-white/3 shadow-[0_0_80px_rgba(59,130,246,0.08)] backdrop-blur-sm sm:h-96 sm:w-56 sm:rounded-[2.5rem]" />
+        </div>
+
         <p className="mt-6 max-w-xl text-base leading-7 text-white/65 sm:text-lg sm:leading-8">
           Faster counts. Less shrinkage. Cleaner visibility for bar managers.
         </p>
@@ -37,9 +42,9 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* center — phone placeholder */}
+      {/* center — phone placeholder (desktop); on mobile the phone is rendered inside the left column */}
       <div className="flex flex-col items-center justify-center">
-        <div className="h-80 w-48 rounded-[2rem] border border-white/10 bg-white/3 shadow-[0_0_80px_rgba(59,130,246,0.08)] backdrop-blur-sm sm:h-96 sm:w-56 sm:rounded-[2.5rem] lg:h-115 lg:w-65 lg:rounded-[3rem]" />
+        <div className="hidden lg:block lg:h-115 lg:w-65 lg:rounded-[3rem] border border-white/10 bg-white/3 shadow-[0_0_80px_rgba(59,130,246,0.08)] backdrop-blur-sm" />
 
         {/* mobile / tablet supporting copy + actions */}
         <div className="mt-6 flex w-full max-w-[320px] flex-col items-center gap-4 text-center lg:hidden">

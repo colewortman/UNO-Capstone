@@ -38,10 +38,10 @@ const logos = [
 export default function SocialProofSection() {
   return (
     <div className="w-full">
-      <h2 className="mb-5 text-center text-xl font-semibold tracking-tight text-white md:text-2xl">
+      <h2 className="mb-1 text-center text-xl font-semibold tracking-tight text-white md:text-2xl">
         These companies increase their profit by 5% with Liqr Vision
       </h2>
-      <h3 className="mb-5 text-center text-lg font-medium tracking-tight text-white/60 md:text-xl">
+      <h3 className="mb-5 text-center text-sm font-medium tracking-tight text-white/60 md:text-base">
         Stop losing your profit!
       </h3>
 

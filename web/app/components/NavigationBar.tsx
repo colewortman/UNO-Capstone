@@ -42,15 +42,9 @@ function HamburgerIcon({ open }: { open: boolean }) {
 
 const mobileLinks = [
   { href: "/#hero", label: "Home" },
-  { href: "/#social-proof", label: "Social Proof" },
-  { href: "/#problem-solution", label: "Problem & Solution" },
-  { href: "/#product-demo", label: "Product Demo" },
-  { href: "/#testimonials", label: "Testimonials" },
-  { href: "/#feature-highlights", label: "Feature Highlights" },
-  { href: "/#comparisons", label: "Competitor Comparisons" },
-  { href: "/#roi-calculator", label: "ROI Calculator" },
-  { href: "/#final-cta", label: "Get Started" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/premium", label: "Premium" },
+  { href: "/integration", label: "Integration" },
   { href: "/faq", label: "FAQ" },
 ];
 
@@ -99,7 +93,11 @@ export default function NavigationBar() {
 
   return (
     <>
-      <div className="w-full bg-linear-to-r from-blue-500 to-blue-400 px-4 py-2 text-center text-xs font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] sm:text-sm">
+      <div
+        className={`w-full bg-linear-to-r from-blue-500 to-blue-400 px-4 py-2 text-center text-xs font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] sm:text-sm ${
+          mobileMenuOpen ? "hidden lg:block" : ""
+        }`}
+      >
         Try a 1-month Free Trial
       </div>
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
@@ -382,7 +380,7 @@ export default function NavigationBar() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="rounded-md bg-primary px-4 py-3 text-center text-base font-medium text-primary-foreground transition-colors hover:bg-primary/90"
               >
-                Sign Up
+                Get Started
               </Link>
               <Link
                 href="/signin"
