@@ -110,9 +110,13 @@ const wrap = (min: number, max: number, v: number) => {
 export function FeatureCarousel({
   inverted = false,
   className = "",
+  title,
+  paused = false,
 }: {
   inverted?: boolean;
   className?: string;
+  title?: string;
+  paused?: boolean;
 }) {
   const [step, setStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -154,10 +158,10 @@ export function FeatureCarousel({
   };
 
   useEffect(() => {
-    if (isPaused || !isInView) return;
+    if (isPaused || !isInView || paused) return;
     const interval = setInterval(nextStep, AUTO_PLAY_INTERVAL);
     return () => clearInterval(interval);
-  }, [nextStep, isPaused, isInView]);
+  }, [nextStep, isPaused, isInView, paused]);
 
   const getCardStatus = (index: number) => {
     const diff = index - currentIndex;
@@ -183,7 +187,8 @@ export function FeatureCarousel({
       >
         <div
           className={cn(
-            "fc-blue-panel w-full h-[40%] sm:w-[40%] sm:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-4 sm:px-8 md:px-12 lg:pl-12",
+            "fc-blue-panel w-full h-[40%] sm:w-[40%] sm:h-full relative z-30 flex flex-col overflow-hidden px-4 sm:px-8 md:px-12",
+            title ? "" : "items-start justify-center lg:pl-12",
             inverted
               ? "bg-linear-to-b from-[#3478F7] to-[#3B81F7]"
               : "bg-linear-to-b from-[#EA4E3E] to-[#EB5445]",
@@ -205,7 +210,19 @@ export function FeatureCarousel({
                 : "from-[#EB5445] via-[#EB5445]/80",
             )}
           />
-          <div className="relative w-full h-full flex items-center justify-center lg:justify-start z-20">
+          {title && (
+            <h2 className="hidden md:block relative z-50 w-full text-center text-white font-semibold text-3xl lg:text-4xl pt-6 md:pt-8 lg:pt-10 px-2">
+              {title}
+            </h2>
+          )}
+          <div
+            className={cn(
+              "relative w-full flex items-center z-20",
+              title
+                ? "flex-1 justify-center"
+                : "h-full justify-center lg:justify-start",
+            )}
+          >
             {FEATURES.map((feature, index) => {
               const isActive = index === currentIndex;
               const distance = index - currentIndex;

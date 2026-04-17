@@ -19,17 +19,6 @@ export default function FooterSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl">
-        {/* brand header — above main footer grid */}
-        <div className="mx-auto mb-8 max-w-sm text-center sm:mb-12">
-          <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">
-            Bar-IQ
-          </h3>
-          <p className="mt-2 text-xs leading-5 text-white/55 sm:mt-4 sm:text-sm sm:leading-7">
-            Real-time bar inventory intelligence with faster counts, better
-            visibility, and less revenue leakage between sessions.
-          </p>
-        </div>
-
         {/* liquid metal logo — own row on mobile/tablet, hidden here on desktop */}
         <div className="mb-8 flex justify-center sm:mb-12 lg:hidden">
           <div className="relative h-[140px] w-full max-w-[180px] sm:h-[160px] sm:max-w-[200px]">
