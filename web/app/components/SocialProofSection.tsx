@@ -38,11 +38,12 @@ const logos = [
 export default function SocialProofSection() {
   return (
     <div className="w-full">
-      <h2 className="mb-5 text-center">
-        <span className="font-black text-xl tracking-tight text-white/80 md:text-2xl">
-          These companies increase their profit by 5% with Liqr Vision
-        </span>
+      <h2 className="mb-5 text-center text-xl font-semibold tracking-tight text-white md:text-2xl">
+        These companies increase their profit by 5% with Liqr Vision
       </h2>
+      <h3 className="mb-5 text-center text-lg font-medium tracking-tight text-white/60 md:text-xl">
+        Stop losing your profit!
+      </h3>
 
       <LogoCloud logos={logos} />
     </div>

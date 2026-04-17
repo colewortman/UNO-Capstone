@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   Pizza04Icon,
@@ -116,6 +116,20 @@ export function FeatureCarousel({
 }) {
   const [step, setStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const itemHeight = ITEM_HEIGHT;
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.1 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   const currentIndex =
     ((step % FEATURES.length) + FEATURES.length) % FEATURES.length;
@@ -140,10 +154,10 @@ export function FeatureCarousel({
   };
 
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || !isInView) return;
     const interval = setInterval(nextStep, AUTO_PLAY_INTERVAL);
     return () => clearInterval(interval);
-  }, [nextStep, isPaused]);
+  }, [nextStep, isPaused, isInView]);
 
   const getCardStatus = (index: number) => {
     const diff = index - currentIndex;
@@ -160,16 +174,16 @@ export function FeatureCarousel({
   };
 
   return (
-    <div className={cn("w-full lg:h-full max-w-7xl mx-auto md:p-4 lg:p-6", className)}>
+    <div ref={containerRef} className={cn("w-full h-full max-w-7xl mx-auto p-2 sm:p-4 lg:p-6", className)}>
       <div
         className={cn(
-          "relative overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] lg:rounded-[3rem] flex flex-col min-h-80 sm:min-h-96 lg:min-h-0 lg:h-full lg:max-h-[calc(100vh-14rem)] border border-border/40",
-          inverted ? "lg:flex-row-reverse" : "lg:flex-row",
+          "relative overflow-hidden rounded-[1.5rem] sm:rounded-[2.5rem] lg:rounded-[3rem] flex flex-col h-full w-full border border-border/40",
+          inverted ? "sm:flex-row-reverse" : "sm:flex-row",
         )}
       >
         <div
           className={cn(
-            "fc-blue-panel w-full lg:w-[40%] min-h-48 sm:min-h-56 md:min-h-64 lg:min-h-0 lg:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-4 sm:px-8 md:px-12 lg:pl-12",
+            "fc-blue-panel w-full h-[40%] sm:w-[40%] sm:h-full relative z-30 flex flex-col items-start justify-center overflow-hidden px-4 sm:px-8 md:px-12 lg:pl-12",
             inverted
               ? "bg-linear-to-b from-[#3478F7] to-[#3B81F7]"
               : "bg-linear-to-b from-[#EA4E3E] to-[#EB5445]",
@@ -177,7 +191,7 @@ export function FeatureCarousel({
         >
           <div
             className={cn(
-              "absolute inset-x-0 top-0 h-12 md:h-20 lg:h-16 bg-linear-to-b to-transparent z-40",
+              "pointer-events-none absolute inset-x-0 top-0 h-10 sm:h-16 lg:h-16 bg-linear-to-b to-transparent z-40",
               inverted
                 ? "from-[#3478F7] via-[#3478F7]/80"
                 : "from-[#EA4E3E] via-[#EA4E3E]/80",
@@ -185,7 +199,7 @@ export function FeatureCarousel({
           />
           <div
             className={cn(
-              "absolute inset-x-0 bottom-0 h-12 md:h-20 lg:h-16 bg-linear-to-t to-transparent z-40",
+              "pointer-events-none absolute inset-x-0 bottom-0 h-10 sm:h-16 lg:h-16 bg-linear-to-t to-transparent z-40",
               inverted
                 ? "from-[#3B81F7] via-[#3B81F7]/80"
                 : "from-[#EB5445] via-[#EB5445]/80",
@@ -201,15 +215,17 @@ export function FeatureCarousel({
                 distance,
               );
 
+              const isVisible = Math.abs(wrappedDistance) <= 2;
+
               return (
                 <motion.div
                   key={feature.id}
                   style={{
-                    height: ITEM_HEIGHT,
+                    height: itemHeight,
                     width: "fit-content",
                   }}
                   animate={{
-                    y: wrappedDistance * ITEM_HEIGHT,
+                    y: wrappedDistance * itemHeight,
                     opacity: 1 - Math.abs(wrappedDistance) * 0.25,
                   }}
                   transition={{
@@ -218,12 +234,15 @@ export function FeatureCarousel({
                     damping: 22,
                     mass: 1,
                   }}
-                  className="absolute flex items-center justify-start"
+                  className={cn(
+                    "absolute flex items-center justify-start",
+                    isVisible ? "pointer-events-auto" : "pointer-events-none",
+                  )}
                 >
                   <button
                     onClick={() => handleChipClick(index)}
                     className={cn(
-                      "relative flex items-center gap-4 px-6 md:px-10 lg:px-8 py-3.5 md:py-5 lg:py-4 rounded-full transition-all duration-700 text-left group border cursor-pointer",
+                      "relative flex items-center gap-3 sm:gap-3 md:gap-4 px-5 sm:px-6 md:px-8 lg:px-8 py-3 sm:py-3 md:py-4 rounded-full transition-all duration-700 text-left group border cursor-pointer",
                       isActive
                         ? cn(
                             "bg-white border-white z-10",
@@ -249,7 +268,7 @@ export function FeatureCarousel({
                       />
                     </div>
 
-                    <span className="font-normal text-sm md:text-[15px] tracking-tight whitespace-nowrap uppercase">
+                    <span className="font-normal text-xs sm:text-xs md:text-sm lg:text-[15px] tracking-tight whitespace-nowrap uppercase">
                       {feature.label}
                     </span>
                   </button>
@@ -261,11 +280,11 @@ export function FeatureCarousel({
 
         <div
           className={cn(
-            "fc-image-panel flex-1 min-h-56 sm:min-h-64 md:min-h-72 lg:min-h-0 lg:h-full relative bg-secondary/30 flex items-center justify-center py-6 sm:py-10 md:py-12 lg:py-8 px-4 sm:px-6 md:px-8 lg:px-10 overflow-hidden border-t lg:border-t-0 border-border/20",
-            inverted ? "lg:border-r lg:border-l-0" : "lg:border-l",
+            "fc-image-panel flex-1 w-full sm:h-full relative bg-secondary/30 flex items-center justify-center py-8 sm:py-8 md:py-10 lg:py-8 px-4 sm:px-6 md:px-8 lg:px-10 overflow-hidden border-border/20 border-t sm:border-t-0",
+            inverted ? "sm:border-r sm:border-l-0" : "sm:border-l",
           )}
         >
-          <div className="relative w-full max-w-72 md:max-w-80 lg:max-w-96 aspect-4/5 flex items-center justify-center">
+          <div className="relative w-full max-w-44 sm:max-w-64 md:max-w-80 lg:max-w-96 aspect-4/5 flex items-center justify-center">
             {FEATURES.map((feature, index) => {
               const status = getCardStatus(index);
               const isActive = status === "active";
@@ -309,12 +328,12 @@ export function FeatureCarousel({
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: 10 }}
-                        className="absolute inset-x-0 bottom-0 p-10 pt-32 bg-linear-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end pointer-events-none"
+                        className="absolute inset-x-0 bottom-0 p-3 pt-16 sm:p-6 sm:pt-24 md:p-10 md:pt-32 bg-linear-to-t from-black/90 via-black/40 to-transparent flex flex-col justify-end pointer-events-none"
                       >
-                        <div className="bg-background text-foreground px-4 py-1.5 rounded-full text-[11px] font-normal uppercase tracking-[0.2em] w-fit shadow-lg mb-3 border border-border/50">
+                        <div className="bg-background text-foreground px-2 py-1 sm:px-4 sm:py-1.5 rounded-full text-[8px] sm:text-[10px] md:text-[11px] font-normal uppercase tracking-[0.15em] md:tracking-[0.2em] w-fit shadow-lg mb-1.5 sm:mb-3 border border-border/50">
                           {index + 1} • {feature.label}
                         </div>
-                        <p className="text-white font-normal text-xl md:text-2xl leading-tight drop-shadow-md tracking-tight">
+                        <p className="text-white font-normal text-xs sm:text-base md:text-xl lg:text-2xl leading-tight drop-shadow-md tracking-tight">
                           {feature.description}
                         </p>
                       </motion.div>
@@ -323,12 +342,12 @@ export function FeatureCarousel({
 
                   <div
                     className={cn(
-                      "absolute top-8 left-8 flex items-center gap-3 transition-opacity duration-300",
+                      "absolute top-3 left-3 sm:top-5 sm:left-5 md:top-8 md:left-8 flex items-center gap-2 md:gap-3 transition-opacity duration-300",
                       isActive ? "opacity-100" : "opacity-0",
                     )}
                   >
                     <div className="w-2 h-2 rounded-full bg-white shadow-[0_0_10px_white]" />
-                    <span className="text-white/80 text-[10px] font-normal uppercase tracking-[0.3em] font-mono">
+                    <span className="text-white/80 text-[8px] md:text-[10px] font-normal uppercase tracking-[0.2em] md:tracking-[0.3em] font-mono">
                       Live Session
                     </span>
                   </div>

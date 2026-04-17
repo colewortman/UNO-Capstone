@@ -5,83 +5,87 @@
 
 export default function HeroSection() {
   return (
-    <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,300px)] lg:gap-10 xl:gap-12">
-      {/* left side — text + CTA */}
-      <div className="mx-auto max-w-lg text-center lg:mx-0 lg:text-left">
-        <p className="mb-5 text-xs uppercase tracking-[0.35em] text-blue-300">
-          Camera-based mobile app
-        </p>
+    <div className="px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+      <div className="mx-auto max-w-7xl">
+        <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,300px)] lg:gap-10 xl:gap-12">
+          {/* left side — text + CTA */}
+          <div className="mx-auto max-w-lg text-center lg:mx-0 lg:text-left">
+            <p className="mb-5 text-xs uppercase tracking-[0.35em] text-blue-300">
+              Camera-based mobile app
+            </p>
 
-        <h1 className="text-4xl font-semibold leading-[0.95] tracking-tight text-white sm:text-5xl md:text-6xl xl:text-7xl">
-          Take bar inventory in minutes, not hours.
-        </h1>
+            <h1 className="text-4xl font-semibold leading-[0.95] tracking-tight text-white sm:text-5xl md:text-6xl xl:text-7xl">
+              Take bar inventory in minutes, not hours.
+            </h1>
 
-        <p className="mt-6 max-w-xl text-base leading-7 text-white/65 sm:text-lg sm:leading-8">
-          Faster counts. Less shrinkage. Cleaner visibility for bar managers.
-        </p>
+            <p className="mt-6 max-w-xl text-base leading-7 text-white/65 sm:text-lg sm:leading-8">
+              Faster counts. Less shrinkage. Cleaner visibility for bar managers.
+            </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4 sm:mt-10 lg:justify-start">
-          <a
-            href="#"
-            className="inline-flex items-center rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-5 py-3 text-sm font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01] sm:px-7 sm:py-4 sm:text-base"
-          >
-            Download App
-          </a>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4 sm:mt-10 lg:justify-start">
+              <a
+                href="#"
+                className="inline-flex items-center rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-5 py-3 text-sm font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01] sm:px-7 sm:py-4 sm:text-base"
+              >
+                Download App
+              </a>
 
-          <a
-            href="#"
-            className="inline-flex items-center rounded-full border border-white/20 px-5 py-3 text-sm font-medium text-white/90 transition hover:border-white/40 hover:bg-white/5 sm:px-7 sm:py-4 sm:text-base"
-          >
-            Watch Demo
-          </a>
-        </div>
-      </div>
-
-      {/* center — phone placeholder */}
-      <div className="flex flex-col items-center justify-center">
-        <div className="h-80 w-48 rounded-[2rem] border border-white/10 bg-white/3 shadow-[0_0_80px_rgba(59,130,246,0.08)] backdrop-blur-sm sm:h-96 sm:w-56 sm:rounded-[2.5rem] lg:h-115 lg:w-65 lg:rounded-[3rem]" />
-
-        {/* mobile / tablet supporting copy + actions */}
-        <div className="mt-6 flex w-full max-w-[320px] flex-col items-center gap-4 text-center lg:hidden">
-          <div className="max-w-[280px] text-sm leading-7 text-white/55 sm:text-base">
-            Bottle-level visibility for faster counts, cleaner reporting, and
-            less manual inventory work.
+              <a
+                href="#"
+                className="inline-flex items-center rounded-full border border-white/20 px-5 py-3 text-sm font-medium text-white/90 transition hover:border-white/40 hover:bg-white/5 sm:px-7 sm:py-4 sm:text-base"
+              >
+                Watch Demo
+              </a>
+            </div>
           </div>
 
-          <div className="flex w-full flex-col gap-3">
-            <button className="w-full rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10">
-              See Pricing
-            </button>
+          {/* center — phone placeholder */}
+          <div className="flex flex-col items-center justify-center">
+            <div className="h-80 w-48 rounded-[2rem] border border-white/10 bg-white/3 shadow-[0_0_80px_rgba(59,130,246,0.08)] backdrop-blur-sm sm:h-96 sm:w-56 sm:rounded-[2.5rem] lg:h-115 lg:w-65 lg:rounded-[3rem]" />
 
-            <a
-              href="#testimonials"
-              className="w-full whitespace-nowrap rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-center text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10"
-            >
-              See Testimonials
-            </a>
+            {/* mobile / tablet supporting copy + actions */}
+            <div className="mt-6 flex w-full max-w-[320px] flex-col items-center gap-4 text-center lg:hidden">
+              <div className="max-w-[280px] text-sm leading-7 text-white/55 sm:text-base">
+                Bottle-level visibility for faster counts, cleaner reporting,
+                and less manual inventory work.
+              </div>
+
+              <div className="flex w-full flex-col gap-3">
+                <button className="w-full rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10">
+                  See Pricing
+                </button>
+
+                <a
+                  href="#testimonials"
+                  className="w-full whitespace-nowrap rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-center text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10"
+                >
+                  See Testimonials
+                </a>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
 
-      {/* right side — supporting copy & actions (desktop only) */}
-      <div className="hidden flex-col justify-center gap-6 py-8 lg:flex lg:max-w-[300px]">
-        {/* centered relative to buttons */}
-        <div className="mx-auto max-w-[260px] text-center text-sm leading-7 text-white/55 xl:text-base">
-          Bottle-level visibility for faster counts, cleaner reporting, and less
-          manual inventory work.
-        </div>
+          {/* right side — supporting copy & actions (desktop only) */}
+          <div className="hidden flex-col justify-center gap-6 py-8 lg:flex lg:max-w-[300px]">
+            {/* centered relative to buttons */}
+            <div className="mx-auto max-w-[260px] text-center text-sm leading-7 text-white/55 xl:text-base">
+              Bottle-level visibility for faster counts, cleaner reporting, and
+              less manual inventory work.
+            </div>
 
-        <div className="flex flex-col gap-3">
-          <button className="w-full rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10 sm:px-8 sm:text-lg">
-            See Pricing
-          </button>
+            <div className="flex flex-col gap-3">
+              <button className="w-full rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10 sm:px-8 sm:text-lg">
+                See Pricing
+              </button>
 
-          <a
-            href="#testimonials"
-            className="w-full whitespace-nowrap rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-center text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10 sm:px-8 sm:text-lg"
-          >
-            See Testimonials
-          </a>
+              <a
+                href="#testimonials"
+                className="w-full whitespace-nowrap rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-center text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10 sm:px-8 sm:text-lg"
+              >
+                See Testimonials
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -19,25 +19,33 @@ export default function FooterSection() {
       </div>
 
       <div className="relative mx-auto max-w-7xl">
-        {/* liquid metal logo — positioned behind content */}
-        <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[30%] opacity-30 sm:-translate-y-[25%]">
-          <div className="relative h-[200px] w-[200px] sm:h-[280px] sm:w-[280px] md:h-[360px] md:w-[360px]">
-            <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[50px] sm:blur-[70px] md:blur-[90px]" />
-            <LiquidMetalLogo />
+        {/* brand header — above main footer grid */}
+        <div className="mx-auto mb-8 max-w-sm text-center sm:mb-12">
+          <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">
+            Bar-IQ
+          </h3>
+          <p className="mt-2 text-xs leading-5 text-white/55 sm:mt-4 sm:text-sm sm:leading-7">
+            Real-time bar inventory intelligence with faster counts, better
+            visibility, and less revenue leakage between sessions.
+          </p>
+        </div>
+
+        {/* liquid metal logo — own row on mobile/tablet, hidden here on desktop */}
+        <div className="mb-8 flex justify-center sm:mb-12 lg:hidden">
+          <div className="relative h-[140px] w-full max-w-[180px] sm:h-[160px] sm:max-w-[200px]">
+            <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[60px]" />
+            <LiquidMetalLogo scale={1} />
           </div>
         </div>
 
         {/* main footer grid */}
-        <div className="grid grid-cols-[1fr_auto_auto] gap-x-6 gap-y-6 sm:gap-x-8 sm:gap-y-12 md:grid-cols-2 lg:grid-cols-[1.2fr_0.8fr_0.8fr_0.8fr]">
-          {/* brand — full width on mobile, then normal grid placement */}
-          <div className="col-span-3 max-w-sm md:col-span-1">
-            <h3 className="text-xl font-semibold tracking-tight sm:text-2xl">
-              Bar-IQ
-            </h3>
-            <p className="mt-2 text-xs leading-5 text-white/55 sm:mt-4 sm:text-sm sm:leading-7">
-              Real-time bar inventory intelligence with faster counts, better
-              visibility, and less revenue leakage between sessions.
-            </p>
+        <div className="grid grid-cols-3 justify-items-center gap-x-3 gap-y-8 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-4">
+          {/* liquid metal logo — only shown inline on lg+ */}
+          <div className="hidden lg:flex lg:h-full lg:w-full lg:items-stretch lg:justify-center">
+            <div className="relative h-full min-h-[160px] w-full max-w-[200px]">
+              <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[60px]" />
+              <LiquidMetalLogo scale={1} />
+            </div>
           </div>
 
           {/* product */}
@@ -107,11 +115,11 @@ export default function FooterSection() {
           </div>
 
           {/* contact — sits in the brand row on md, own column on lg */}
-          <div className="col-span-3 md:col-span-1">
+          <div className="lg:col-span-1">
             <p className="text-[10px] uppercase tracking-[0.24em] text-white/35 sm:text-xs">
               Contact
             </p>
-            <ul className="mt-2 flex flex-wrap gap-x-5 gap-y-1 text-xs text-white/70 sm:mt-5 sm:flex-col sm:gap-x-0 sm:space-y-3 sm:text-sm">
+            <ul className="mt-2 flex flex-col gap-y-1 text-xs text-white/70 sm:mt-5 sm:gap-y-0 sm:space-y-3 sm:text-sm">
               <li>
                 <a
                   href="#"
