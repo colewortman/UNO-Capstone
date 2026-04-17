@@ -49,7 +49,7 @@ export default function FAQSection() {
   return (
     <section id="faq" className="bg-black text-white">
       {/* Header */}
-      <div className="px-4 py-10 sm:px-6 sm:py-12 md:px-10 md:py-14 lg:px-16 lg:py-16">
+      <div className="px-4 py-10 sm:px-6 sm:py-12 md:px-8 md:py-14 lg:px-12 lg:py-16 xl:px-16">
         <div className="mx-auto max-w-7xl">
           <div className="max-w-5xl">
             <p className="mb-3 text-[11px] uppercase tracking-[0.35em] text-blue-300 sm:text-xs">
@@ -82,7 +82,7 @@ export default function FAQSection() {
       </div>
 
       {/* FAQ Cards */}
-      <div className="px-4 pb-10 sm:px-6 sm:pb-12 md:px-10 md:pb-14 lg:px-16 lg:pb-16">
+      <div className="px-4 pb-10 sm:px-6 sm:pb-12 md:px-8 md:pb-14 lg:px-12 lg:pb-16 xl:px-16">
         <div className="mx-auto max-w-7xl">
           {filteredFaqs.length === 0 ? (
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-white/60">

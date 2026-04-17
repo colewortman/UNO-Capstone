@@ -1,3 +1,6 @@
+"use client"
+
+import { useState } from "react"
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/ui/avatar"
 
@@ -24,6 +27,7 @@ export function TestimonialCard({
   href,
   className
 }: TestimonialCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false)
   const isLinkedCard = Boolean(href && href !== "#")
   const Card = isLinkedCard ? 'a' : 'div'
   const initials = author.name
@@ -31,7 +35,8 @@ export function TestimonialCard({
     .map((part) => part[0])
     .join("")
     .slice(0, 2)
-  
+  const needsToggle = text.length > 120
+
   return (
     <Card
       {...(isLinkedCard ? { href } : {})}
@@ -60,9 +65,23 @@ export function TestimonialCard({
         </div>
       </div>
       <div className="mt-4 min-h-[4.5rem]">
-        <p className="sm:text-md line-clamp-3 text-sm text-muted-foreground">
+        <p
+          className={cn(
+            "sm:text-md text-sm text-muted-foreground",
+            !isExpanded && "line-clamp-3",
+          )}
+        >
           {text}
         </p>
+        {needsToggle && !isLinkedCard && (
+          <button
+            type="button"
+            onClick={() => setIsExpanded((prev) => !prev)}
+            className="mt-1 text-xs font-medium text-white/80 underline underline-offset-2 hover:text-white"
+          >
+            {isExpanded ? "Show less" : "Show more"}
+          </button>
+        )}
       </div>
       {videoSrc && (
         <div className="mt-4 aspect-video w-full overflow-hidden rounded-md border bg-black">
