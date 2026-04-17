@@ -1,10 +1,15 @@
+/**
+ * @file FinalCTASection.tsx
+ * @description Responsive final CTA section with a sleek, minimal layout,
+ * subtle glass metric cards, and a centered phone composition.
+ */
+
 export default function FinalCTASection() {
   return (
     <section className="bg-black text-white">
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="relative">
           <div className="grid items-center gap-14 lg:grid-cols-[1fr_1fr] lg:gap-16">
-
             {/* LEFT SIDE */}
             <div className="max-w-xl">
               <h2 className="text-4xl font-semibold leading-tight tracking-tight text-white md:text-5xl">
@@ -37,16 +42,14 @@ export default function FinalCTASection() {
 
             {/* RIGHT SIDE */}
             <div className="relative flex justify-center">
-              {/* added safe padding wrapper so cards NEVER touch edges */}
-              <div className="relative w-full max-w-[620px] px-2 sm:px-4">
-                
+              <div className="relative w-full max-w-[620px]">
                 {/* Desktop / tablet composition */}
                 <div className="relative hidden min-h-[620px] md:block">
-                  
+                  {/* Soft glow */}
                   <div className="absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[100px]" />
 
                   {/* Left stat cards */}
-                  <div className="absolute left-6 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-4 lg:left-2">
+                  <div className="absolute left-6 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-4 lg:left-6">
                     <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
                       <p className="text-sm text-white/50">Session</p>
                       <p className="mt-1 text-2xl font-semibold tracking-tight text-white">
@@ -63,7 +66,7 @@ export default function FinalCTASection() {
                   </div>
 
                   {/* Right stat cards */}
-                  <div className="absolute right-6 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-4 lg:right-2">
+                  <div className="absolute right-6 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-4 lg:right-6">
                     <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.04] px-5 py-4 text-right backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
                       <p className="text-sm text-white/50">Speed</p>
                       <p className="mt-1 text-2xl font-semibold tracking-tight text-green-400">
@@ -126,7 +129,7 @@ export default function FinalCTASection() {
                   </div>
                 </div>
 
-                {/* Mobile stays untouched */}
+                {/* Mobile layout */}
                 <div className="md:hidden">
                   <div className="relative mx-auto h-[520px] w-[260px]">
                     <div className="absolute inset-0 m-auto h-[300px] w-[300px] rounded-full bg-blue-500/10 blur-[90px]" />
@@ -177,6 +180,7 @@ export default function FinalCTASection() {
                     </div>
                   </div>
 
+                  {/* Mobile stats below phone */}
                   <div className="mt-6 grid grid-cols-2 gap-3">
                     <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl">
                       <p className="text-sm text-white/50">Session</p>
@@ -200,11 +204,9 @@ export default function FinalCTASection() {
                       <p className="mt-1 text-lg font-semibold text-blue-300">Low</p>
                     </div>
                   </div>
-
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
