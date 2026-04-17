@@ -1,6 +1,7 @@
 /**
  * @file FinalCTASection.tsx
- * @description Final CTA section with proper spacing between phone and stat cards
+ * @description Responsive final CTA section with a sleek, minimal layout,
+ * subtle glass metric cards, and a centered phone composition.
  */
 
 "use client";
@@ -11,10 +12,9 @@ export default function FinalCTASection() {
       <div className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
         <div className="relative">
           <div className="grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-12">
-            
             {/* LEFT SIDE */}
             <div className="max-w-xl">
-              <h2 className="text-3xl font-semibold leading-tight tracking-tight sm:text-4xl md:text-5xl">
+              <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
                 Inventory complete.
                 <br />
                 Revenue recovered.
@@ -45,32 +45,30 @@ export default function FinalCTASection() {
             {/* RIGHT SIDE */}
             <div className="relative flex justify-center">
               <div className="relative w-full max-w-[620px]">
-                
-                {/* Desktop */}
+                {/* Desktop / Tablet */}
                 <div className="relative hidden min-h-[540px] md:block">
-                  
                   {/* Glow */}
                   <div className="absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[100px]" />
 
-                  {/* LEFT CARDS (FIXED SPACING) */}
-                  <div className="absolute left-0 top-1/2 z-10 flex -translate-y-1/2 -translate-x-[20%] flex-col gap-4 sm:-translate-x-[25%] lg:-translate-x-[30%]">
+                  {/* Left stat cards */}
+                  <div className="absolute left-0 top-1/2 z-10 flex -translate-y-1/2 -translate-x-[18%] flex-col gap-4 sm:-translate-x-[22%] lg:-translate-x-[28%]">
                     <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.035] px-5 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-xl">
                       <p className="text-sm text-white/50">Session</p>
-                      <p className="mt-1 text-2xl font-semibold tracking-tight">
+                      <p className="mt-1 text-2xl font-semibold tracking-tight text-white">
                         15m 9s
                       </p>
                     </div>
 
                     <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.03] px-5 py-4 opacity-85 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl">
                       <p className="text-sm text-white/50">Recovered</p>
-                      <p className="mt-1 text-2xl font-semibold tracking-tight">
+                      <p className="mt-1 text-2xl font-semibold tracking-tight text-white">
                         $1,240
                       </p>
                     </div>
                   </div>
 
-                  {/* RIGHT CARDS (FIXED SPACING) */}
-                  <div className="absolute right-0 top-1/2 z-10 flex -translate-y-1/2 translate-x-[20%] flex-col gap-4 sm:translate-x-[25%] lg:translate-x-[30%]">
+                  {/* Right stat cards */}
+                  <div className="absolute right-0 top-1/2 z-10 flex -translate-y-1/2 translate-x-[18%] flex-col gap-4 sm:translate-x-[22%] lg:translate-x-[28%]">
                     <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.035] px-5 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-xl">
                       <p className="text-sm text-white/50">Speed</p>
                       <p className="mt-1 text-2xl font-semibold tracking-tight text-green-400">
@@ -86,13 +84,13 @@ export default function FinalCTASection() {
                     </div>
                   </div>
 
-                  {/* PHONE */}
+                  {/* Phone */}
                   <div className="absolute left-1/2 top-1/2 h-[470px] w-[235px] -translate-x-1/2 -translate-y-1/2 rounded-[2.7rem] border border-white/10 bg-white/[0.03] p-3 shadow-[0_0_80px_rgba(59,130,246,0.08)]">
                     <div className="flex h-full w-full flex-col rounded-[2.15rem] border border-white/10 bg-black p-6">
                       <div className="text-xs text-white/50">Bar-IQ • Completed</div>
 
                       <div className="mt-7">
-                        <p className="text-2xl font-semibold tracking-tight">
+                        <p className="text-2xl font-semibold tracking-tight text-white">
                           Session
                           <br />
                           summary
@@ -100,27 +98,27 @@ export default function FinalCTASection() {
                       </div>
 
                       <div className="mt-7 space-y-4 text-sm">
-                        <div className="flex justify-between text-white/65">
+                        <div className="flex items-center justify-between text-white/65">
                           <span>Duration</span>
                           <span className="text-white">15m 9s</span>
                         </div>
 
-                        <div className="flex justify-between text-white/65">
+                        <div className="flex items-center justify-between text-white/65">
                           <span>Top brands</span>
                           <span className="text-white">Tracked</span>
                         </div>
 
-                        <div className="flex justify-between text-white/65">
+                        <div className="flex items-center justify-between text-white/65">
                           <span>Recovered</span>
                           <span className="text-white">$1,240</span>
                         </div>
 
-                        <div className="flex justify-between text-white/65">
+                        <div className="flex items-center justify-between text-white/65">
                           <span>Speed</span>
                           <span className="text-green-400">+42%</span>
                         </div>
 
-                        <div className="flex justify-between text-white/65">
+                        <div className="flex items-center justify-between text-white/65">
                           <span>Variance</span>
                           <span className="text-blue-300">Low</span>
                         </div>
@@ -131,18 +129,94 @@ export default function FinalCTASection() {
                       </div>
                     </div>
                   </div>
-
                 </div>
 
-                {/* MOBILE (unchanged) */}
+                {/* Mobile layout */}
                 <div className="md:hidden">
-                  {/* keep your existing mobile exactly as is */}
-                </div>
+                  <div className="relative mx-auto flex w-full max-w-[320px] flex-col items-center">
+                    <div className="absolute left-1/2 top-[38%] h-[260px] w-[260px] -translate-x-1/2 rounded-full bg-blue-500/10 blur-[85px]" />
 
+                    <div className="relative h-[500px] w-[250px] rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-3 shadow-[0_0_60px_rgba(59,130,246,0.08)]">
+                      <div className="flex h-full w-full flex-col rounded-[2rem] border border-white/10 bg-black p-5">
+                        <div className="text-xs text-white/50">Bar-IQ • Completed</div>
+
+                        <div className="mt-6">
+                          <p className="text-2xl font-semibold tracking-tight text-white">
+                            Session
+                            <br />
+                            summary
+                          </p>
+                        </div>
+
+                        <div className="mt-6 space-y-4 text-sm">
+                          <div className="flex items-center justify-between text-white/65">
+                            <span>Duration</span>
+                            <span className="text-white">15m 9s</span>
+                          </div>
+
+                          <div className="flex items-center justify-between text-white/65">
+                            <span>Top brands</span>
+                            <span className="text-white">Tracked</span>
+                          </div>
+
+                          <div className="flex items-center justify-between text-white/65">
+                            <span>Recovered</span>
+                            <span className="text-white">$1,240</span>
+                          </div>
+
+                          <div className="flex items-center justify-between text-white/65">
+                            <span>Speed</span>
+                            <span className="text-green-400">+42%</span>
+                          </div>
+
+                          <div className="flex items-center justify-between text-white/65">
+                            <span>Variance</span>
+                            <span className="text-blue-300">Low</span>
+                          </div>
+                        </div>
+
+                        <div className="mt-auto rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-center backdrop-blur-sm">
+                          <p className="text-sm text-white/80">Inventory completed</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Mobile stats below phone */}
+                    <div className="mt-5 grid w-full grid-cols-2 gap-3">
+                      <div className="min-h-[116px] rounded-[22px] border border-white/10 bg-white/[0.04] px-4 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+                        <p className="text-sm text-white/50">Session</p>
+                        <p className="mt-3 text-[1.75rem] font-semibold leading-none tracking-tight text-white">
+                          15m 9s
+                        </p>
+                      </div>
+
+                      <div className="min-h-[116px] rounded-[22px] border border-white/10 bg-white/[0.04] px-4 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+                        <p className="text-sm text-white/50">Speed</p>
+                        <p className="mt-3 text-[1.75rem] font-semibold leading-none tracking-tight text-green-400">
+                          +42%
+                        </p>
+                      </div>
+
+                      <div className="min-h-[116px] rounded-[22px] border border-white/10 bg-white/[0.04] px-4 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+                        <p className="text-sm text-white/50">Recovered</p>
+                        <p className="mt-3 text-[1.75rem] font-semibold leading-none tracking-tight text-white">
+                          $1,240
+                        </p>
+                      </div>
+
+                      <div className="min-h-[116px] rounded-[22px] border border-white/10 bg-white/[0.04] px-4 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+                        <p className="text-sm text-white/50">Variance</p>
+                        <p className="mt-3 text-[1.75rem] font-semibold leading-none tracking-tight text-blue-300">
+                          Low
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-
           </div>
+
         </div>
       </div>
     </section>
