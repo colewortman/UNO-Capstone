@@ -66,14 +66,14 @@ export default function FinalCTASection() {
 
                 {/* Right stat cards */}
                 <div className="absolute right-0 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-4">
-                  <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.04] px-5 py-4 text-right backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+                  <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
                     <p className="text-sm text-white/50">Speed</p>
                     <p className="mt-1 text-2xl font-semibold tracking-tight text-green-400">
                       +42%
                     </p>
                   </div>
 
-                  <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.04] px-5 py-4 text-right backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
+                  <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.04] px-5 py-4 backdrop-blur-xl shadow-[0_10px_30px_rgba(0,0,0,0.25)]">
                     <p className="text-sm text-white/50">Variance</p>
                     <p className="mt-1 text-2xl font-semibold tracking-tight text-blue-300">
                       Low
@@ -130,8 +130,8 @@ export default function FinalCTASection() {
 
               {/* Mobile layout */}
               <div className="md:hidden">
-                <div className="relative mx-auto h-[520px] w-[260px]">
-                  <div className="absolute inset-0 m-auto h-[300px] w-[300px] rounded-full bg-blue-500/10 blur-[90px]" />
+                <div className="relative mx-auto h-[500px] w-[250px]">
+                  <div className="absolute inset-0 m-auto h-[280px] w-[280px] rounded-full bg-blue-500/10 blur-[88px]" />
 
                   <div className="absolute inset-0 rounded-[2.5rem] border border-white/10 bg-white/[0.03] p-3 shadow-[0_0_60px_rgba(59,130,246,0.08)]">
                     <div className="flex h-full w-full flex-col rounded-[2rem] border border-white/10 bg-black p-5">
@@ -180,27 +180,33 @@ export default function FinalCTASection() {
                 </div>
 
                 {/* Mobile stats below phone */}
-                <div className="mt-6 grid grid-cols-2 gap-3">
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl">
+                <div className="mt-5 grid grid-cols-2 gap-3">
+                  <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-4 backdrop-blur-xl">
                     <p className="text-sm text-white/50">Session</p>
-                    <p className="mt-1 text-lg font-semibold text-white">15m 9s</p>
+                    <p className="mt-2 text-[1.9rem] font-semibold leading-none tracking-tight text-white">
+                      15m 9s
+                    </p>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl">
+                  <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-4 backdrop-blur-xl">
                     <p className="text-sm text-white/50">Speed</p>
-                    <p className="mt-1 text-lg font-semibold text-green-400">
+                    <p className="mt-2 text-[1.9rem] font-semibold leading-none tracking-tight text-green-400">
                       +42%
                     </p>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl">
+                  <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-4 backdrop-blur-xl">
                     <p className="text-sm text-white/50">Recovered</p>
-                    <p className="mt-1 text-lg font-semibold text-white">$1,240</p>
+                    <p className="mt-2 text-[1.9rem] font-semibold leading-none tracking-tight text-white">
+                      $1,240
+                    </p>
                   </div>
 
-                  <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-xl">
+                  <div className="rounded-[20px] border border-white/10 bg-white/[0.04] px-4 py-4 backdrop-blur-xl">
                     <p className="text-sm text-white/50">Variance</p>
-                    <p className="mt-1 text-lg font-semibold text-blue-300">Low</p>
+                    <p className="mt-2 text-[1.9rem] font-semibold leading-none tracking-tight text-blue-300">
+                      Low
+                    </p>
                   </div>
                 </div>
               </div>
