@@ -48,42 +48,39 @@ export default function FAQSection() {
 
   return (
     <section id="faq" className="bg-black text-white">
-      {/* Header */}
-      <div className="px-4 py-10 sm:px-6 sm:py-12 md:px-10 md:py-14 lg:px-16 lg:py-16">
-        <div className="mx-auto max-w-7xl">
-          <div className="max-w-5xl">
-            <p className="mb-3 text-[11px] uppercase tracking-[0.35em] text-blue-300 sm:text-xs">
-              FAQ
-            </p>
+      <div className="mx-auto w-full max-w-[1200px] px-4 py-12 sm:px-6 sm:py-14 md:px-8 md:py-16 lg:px-12 lg:py-20 xl:px-16">
+        {/* Header */}
+        <div className="max-w-4xl">
+          <p className="mb-3 text-[11px] uppercase tracking-[0.35em] text-blue-300 sm:text-xs">
+            FAQ
+          </p>
 
-            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:whitespace-nowrap">
-              Advice and answers from the Bar-IQ team
-            </h2>
-          </div>
+          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:text-5xl">
+            Advice and answers from the Bar-IQ team
+          </h2>
+        </div>
 
-          <div className="mt-6 sm:mt-8">
-            <div className="relative">
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => {
-                  setQuery(e.target.value);
-                  setOpenIndex(0);
-                }}
-                placeholder="Search for questions..."
-                className="w-full rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-4 pl-14 text-base text-white outline-none transition placeholder:text-white/45 focus:border-blue-300/50 focus:bg-white/[0.08] sm:text-lg"
-              />
-              <span className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-xl text-white/50">
-                ⌕
-              </span>
-            </div>
+        {/* Search */}
+        <div className="mt-8 sm:mt-10">
+          <div className="relative max-w-3xl">
+            <input
+              type="text"
+              value={query}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setOpenIndex(0);
+              }}
+              placeholder="Search for questions..."
+              className="w-full rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-4 pl-14 text-base text-white outline-none transition placeholder:text-white/45 focus:border-blue-300/50 focus:bg-white/[0.08] sm:text-lg"
+            />
+            <span className="pointer-events-none absolute left-5 top-1/2 -translate-y-1/2 text-xl text-white/50">
+              ⌕
+            </span>
           </div>
         </div>
-      </div>
 
-      {/* FAQ Cards */}
-      <div className="px-4 pb-10 sm:px-6 sm:pb-12 md:px-10 md:pb-14 lg:px-16 lg:pb-16">
-        <div className="mx-auto max-w-7xl">
+        {/* FAQ Cards */}
+        <div className="mt-10 sm:mt-12 md:mt-14">
           {filteredFaqs.length === 0 ? (
             <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-white/60">
               No matching questions found.
@@ -143,27 +140,27 @@ export default function FAQSection() {
               })}
             </div>
           )}
+        </div>
 
-          {/* Bottom banner */}
-          <div className="mt-10 sm:mt-12 md:mt-14">
-            <div className="flex flex-col gap-5 rounded-3xl border border-white/10 bg-white/[0.04] px-5 py-5 shadow-[0_0_40px_rgba(255,255,255,0.03)] backdrop-blur-sm sm:px-6 sm:py-6 md:flex-row md:items-center md:justify-between md:px-8 md:py-7">
-              <div>
-                <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
-                  Have more questions?
-                </h3>
-                <p className="mt-2 max-w-2xl text-sm leading-7 text-white/60 sm:text-base">
-                  Our team can help you understand setup, pricing, and how
-                  Bar-IQ fits into your workflow.
-                </p>
-              </div>
-
-              <a
-                href="/contact"
-                className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-blue-400 px-6 py-3 text-sm font-medium text-white shadow-[0_0_30px_rgba(59,130,246,0.25)] transition hover:scale-[1.01] sm:px-7 sm:text-base"
-              >
-                Contact Us
-              </a>
+        {/* Bottom banner */}
+        <div className="mt-10 sm:mt-12 md:mt-14">
+          <div className="flex flex-col gap-5 rounded-3xl border border-white/10 bg-white/[0.04] px-5 py-5 shadow-[0_0_40px_rgba(255,255,255,0.03)] backdrop-blur-sm sm:px-6 sm:py-6 md:flex-row md:items-center md:justify-between md:px-8 md:py-7">
+            <div className="max-w-2xl">
+              <h3 className="text-xl font-semibold tracking-tight text-white sm:text-2xl">
+                Have more questions?
+              </h3>
+              <p className="mt-2 text-sm leading-7 text-white/60 sm:text-base">
+                Our team can help you understand setup, pricing, and how
+                Bar-IQ fits into your workflow.
+              </p>
             </div>
+
+            <a
+              href="/contact"
+              className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-500 to-blue-400 px-6 py-3 text-sm font-medium text-white shadow-[0_0_30px_rgba(59,130,246,0.25)] transition hover:scale-[1.01] sm:px-7 sm:text-base"
+            >
+              Contact Us
+            </a>
           </div>
         </div>
       </div>
