@@ -70,6 +70,22 @@
     #000;
 }
 
+.testimonialsSection {
+  padding-top: 0;
+}
+
+@media (min-width: 640px) {
+  .testimonialsSection {
+    padding-top: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .testimonialsSection {
+    padding-top: 0;
+  }
+}
+
 .placeholder {
   display: flex;
   align-items: center;

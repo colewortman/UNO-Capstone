@@ -110,9 +110,8 @@ export function TestimonialsSection({
   testimonials = defaultTestimonials,
   className,
 }: TestimonialsSectionProps) {
-  const isDesktop = useMediaQuery("(min-width: 1280px)");
   const isTablet = useMediaQuery("(min-width: 768px)");
-  const cardsPerPage = isDesktop ? 4 : isTablet ? 2 : 1;
+  const cardsPerPage = isTablet ? 4 : 1;
 
   const pages = useMemo(() => {
     const result: typeof testimonials[] = [];
@@ -146,16 +145,17 @@ export function TestimonialsSection({
     <section
       className={cn(
         "bg-background text-foreground",
-        "py-8 sm:py-14 md:py-20 px-0",
+        "pt-0 pb-8 sm:pb-14 md:pb-20 px-0",
         className,
       )}
     >
-      <div className="mx-auto flex max-w-container flex-col items-center gap-4 text-center sm:gap-10">
-        <div className="flex flex-col items-center gap-4 px-4 sm:gap-6">
-          <h2 className="max-w-[720px] text-3xl font-semibold leading-tight sm:text-5xl sm:leading-tight">
+      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
+        <div className="flex flex-col items-center gap-4 text-center sm:gap-10">
+        <div className="space-y-1.5 px-4 text-center sm:space-y-2">
+          <h2 className="mx-auto max-w-[720px] text-3xl font-semibold leading-tight sm:text-5xl sm:leading-tight">
             {title}
           </h2>
-          <p className="text-md max-w-[600px] font-medium text-muted-foreground sm:text-xl">
+          <p className="text-md mx-auto max-w-[600px] font-medium text-muted-foreground sm:text-xl">
             {description}
           </p>
         </div>
@@ -166,20 +166,20 @@ export function TestimonialsSection({
             aria-label="Previous testimonials"
             onClick={goToPrev}
             disabled={!hasMultiplePages}
-            className="absolute left-1 top-1/2 z-20 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center text-white/50 transition hover:text-white disabled:cursor-not-allowed disabled:opacity-40 sm:left-3"
+            className="absolute left-1 top-1/2 z-20 hidden min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center text-white/50 transition hover:text-white disabled:cursor-not-allowed disabled:opacity-40 lg:flex"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path
                 d="M12.5 15L7.5 10L12.5 5"
                 stroke="currentColor"
-                strokeWidth="1.5"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
           </button>
 
-          <div className="w-full overflow-hidden px-8 sm:px-12 lg:px-14">
+          <div className="w-full overflow-hidden px-0 xl:px-14">
             <div
               className="flex transition-transform duration-500 ease-out"
               style={{ transform: `translateX(-${activePage * 100}%)` }}
@@ -189,10 +189,13 @@ export function TestimonialsSection({
                   key={`page-${pageIndex}`}
                   className={cn(
                     "grid min-w-full gap-4",
-                    cardsPerPage === 4
+                    page.length === 2 && "mx-auto max-w-[900px] gap-2 sm:gap-3",
+                    page.length >= 4
                       ? "grid-cols-4"
-                      : cardsPerPage === 2
-                        ? "grid-cols-2"
+                      : page.length === 3
+                        ? "grid-cols-3"
+                        : page.length === 2
+                          ? "grid-cols-2"
                         : "grid-cols-1",
                   )}
                 >
@@ -213,25 +216,42 @@ export function TestimonialsSection({
             aria-label="Next testimonials"
             onClick={goToNext}
             disabled={!hasMultiplePages}
-            className="absolute right-1 top-1/2 z-20 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center text-white/50 transition hover:text-white disabled:cursor-not-allowed disabled:opacity-40 sm:right-3"
+            className="absolute right-1 top-1/2 z-20 hidden min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center text-white/50 transition hover:text-white disabled:cursor-not-allowed disabled:opacity-40 lg:flex"
           >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
               <path
                 d="M7.5 5L12.5 10L7.5 15"
                 stroke="currentColor"
-                strokeWidth="1.5"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
             </svg>
           </button>
 
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background sm:w-1/3" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background sm:w-1/3" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background sm:w-12 md:w-16 lg:w-20 xl:w-1/4" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background sm:w-12 md:w-16 lg:w-20 xl:w-1/4" />
         </div>
 
         {pageCount > 0 && (
-          <div className="mt-6 flex items-center justify-center gap-2">
+          <div className="mt-6 flex items-center justify-center gap-3 lg:gap-2">
+            <button
+              type="button"
+              aria-label="Previous testimonials"
+              onClick={goToPrev}
+              disabled={!hasMultiplePages}
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center text-white/50 transition hover:text-white disabled:cursor-not-allowed disabled:opacity-40 lg:hidden"
+            >
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M12.5 15L7.5 10L12.5 5"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
             {pages.map((_, index) => (
               <button
                 key={`dot-${index}`}
@@ -246,8 +266,26 @@ export function TestimonialsSection({
                 )}
               />
             ))}
+            <button
+              type="button"
+              aria-label="Next testimonials"
+              onClick={goToNext}
+              disabled={!hasMultiplePages}
+              className="flex min-h-[44px] min-w-[44px] items-center justify-center text-white/50 transition hover:text-white disabled:cursor-not-allowed disabled:opacity-40 lg:hidden"
+            >
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path
+                  d="M7.5 5L12.5 10L7.5 15"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
           </div>
         )}
+        </div>
       </div>
     </section>
   );

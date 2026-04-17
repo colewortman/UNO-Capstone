@@ -133,7 +133,7 @@ export default function ROICalculator() {
   const highlightRows = resultRows.slice(3);
 
   return (
-    <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 sm:py-6">
+    <div className="mx-auto max-w-[1200px] px-4 py-4 sm:px-6 sm:py-6 md:px-8 lg:px-12 xl:px-16">
       <div className="space-y-3 sm:space-y-5">
         <div className="space-y-1.5 text-center sm:space-y-2">
           <h2 className="text-2xl font-bold text-white sm:text-3xl md:text-4xl">
@@ -144,9 +144,9 @@ export default function ROICalculator() {
           </p>
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-[1.05fr_0.95fr]">
+        <div className="grid gap-6 [@media(min-width:1133px)]:grid-cols-[1.05fr_0.95fr]">
           {/* ── INPUT PANEL ── */}
-          <div className={`rounded-2xl border border-white/10 bg-black px-4 py-4 text-white shadow-[0_20px_60px_rgba(0,0,0,0.35)] sm:rounded-[28px] sm:px-6 sm:py-5 ${showResults ? "hidden xl:block" : ""}`}>
+          <div className={`rounded-2xl border border-white/10 bg-black px-4 py-4 text-white shadow-[0_20px_60px_rgba(0,0,0,0.35)] sm:rounded-[28px] sm:px-6 sm:py-5 ${showResults ? "hidden [@media(min-width:1133px)]:block" : ""}`}>
             <div className="mb-3 flex items-start justify-between gap-4 sm:mb-5">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-white/45 sm:text-sm">
@@ -288,14 +288,14 @@ export default function ROICalculator() {
                 setDisplayMetrics(buildMetrics());
                 setShowResults(true);
               }}
-              className="mt-4 w-full rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:brightness-110 sm:mt-5 sm:rounded-2xl sm:py-3.5 xl:hidden"
+              className="mt-4 w-full rounded-xl bg-gradient-to-r from-blue-500 to-blue-400 px-6 py-3 text-sm font-semibold text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:brightness-110 sm:mt-5 sm:rounded-2xl sm:py-3.5 [@media(min-width:1133px)]:hidden"
             >
               Calculate ROI
             </button>
           </div>
 
           {/* ── RESULTS PANEL ── */}
-          <div className={`rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 px-4 py-4 text-white shadow-[0_30px_80px_rgba(37,99,235,0.45)] sm:rounded-[28px] sm:px-6 sm:py-5 ${showResults ? "" : "hidden xl:block"}`}>
+          <div className={`rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 px-4 py-4 text-white shadow-[0_30px_80px_rgba(37,99,235,0.45)] sm:rounded-[28px] sm:px-6 sm:py-5 ${showResults ? "" : "hidden [@media(min-width:1133px)]:block"}`}>
             <div className="mb-3 flex items-start justify-between gap-3 sm:mb-5 sm:gap-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-blue-100/70 sm:text-sm">
@@ -358,12 +358,12 @@ export default function ROICalculator() {
             <button
               type="button"
               onClick={() => setShowResults(false)}
-              className="mt-3 w-full rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15 sm:mt-6 sm:rounded-2xl sm:py-4 xl:hidden"
+              className="mt-3 w-full rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/15 sm:mt-6 sm:rounded-2xl sm:py-4 [@media(min-width:1133px)]:hidden"
             >
               Edit Inputs
             </button>
 
-            <div className="mt-2.5 sm:mt-4 xl:mt-6">
+            <div className="mt-2.5 sm:mt-4 [@media(min-width:1133px)]:mt-6">
               <Link
                 href="/pricing"
                 className="inline-flex w-full items-center justify-center rounded-xl bg-black px-6 py-3 text-sm font-semibold text-white transition hover:bg-black/85 sm:rounded-2xl sm:py-4"

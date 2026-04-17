@@ -50,7 +50,7 @@ export default function Home() {
       </Section>
 
       {/* Testimonials */}
-      <Section id="testimonials" className="scroll-mt-20">
+      <Section id="testimonials" className={`${styles.testimonialsSection} scroll-mt-20`}>
         <TestimonialsSection />
       </Section>
 
