@@ -9,7 +9,6 @@ export default function FinalCTASection() {
     <div className="relative px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
       <div className="mx-auto max-w-7xl">
         <div className="relative">
-@@ -41,21 +43,20 @@
           {/* RIGHT SIDE */}
           <div className="relative flex justify-center">
             <div className="relative w-full max-w-[620px]">
@@ -31,7 +30,6 @@ export default function FinalCTASection() {
                     <p className="text-sm text-white/50">Recovered</p>
                     <p className="mt-1 text-2xl font-semibold tracking-tight text-white">
                       $1,240
-@@ -65,147 +66,147 @@
 
                 {/* Right stat cards */}
                 <div className="absolute right-6 top-1/2 z-10 flex -translate-y-1/2 flex-col gap-4 lg:right-2">
