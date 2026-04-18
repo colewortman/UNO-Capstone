@@ -193,8 +193,15 @@ export default function ProblemSolutionSection() {
           </div>
           {/* Problem renders on top and is the only carousel that animates.
               Force the image panel fully opaque so the solution beneath
-              doesn't bleed through the default 30% tint. */}
-          <div className="ps-mobile-problem absolute inset-0 z-20 [&_.fc-image-panel]:bg-secondary">
+              doesn't bleed through the default 30% tint. When split apart to
+              reveal the solution, disable pointer events so clicks fall
+              through to the solution's chips underneath. */}
+          <div
+            className={cn(
+              "ps-mobile-problem absolute inset-0 z-20 [&_.fc-image-panel]:bg-secondary",
+              showSolution && "pointer-events-none",
+            )}
+          >
             <FeatureCarousel paused={showSolution} />
           </div>
         </div>
