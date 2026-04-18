@@ -8,7 +8,7 @@ export default function HeroSection() {
     <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,300px)] lg:gap-12">
       {/* left side — text + CTA */}
       <div className="mx-auto max-w-lg text-center lg:mx-0 lg:text-left">
-        <p className="mb-4 text-xs uppercase tracking-[0.35em] text-blue-300">
+        <p className="mb-3 text-xs uppercase tracking-[0.35em] text-blue-300 lg:mb-4">
           Camera-based mobile app
         </p>
 
@@ -18,15 +18,15 @@ export default function HeroSection() {
 
         {/* mobile/tablet-only phone placeholder, sits between header and tagline.
             Height is viewport-relative so it yields when vertical space is tight. */}
-        <div className="mt-6 flex justify-center lg:hidden [@media(max-height:700px)]:mt-4">
-          <div className="h-[min(34svh,20rem)] aspect-[5/8] rounded-[2rem] border border-white/10 bg-white/3 shadow-[0_0_80px_rgba(59,130,246,0.08)] backdrop-blur-sm sm:rounded-[2.5rem] [@media(max-height:700px)]:h-[min(26svh,14rem)]" />
+        <div className="mt-4 flex justify-center lg:hidden">
+          <div className="h-[min(56svh,34rem,calc(100svh_-_26rem))] aspect-[5/8] rounded-[2rem] border border-white/10 bg-white/3 shadow-[0_0_80px_rgba(59,130,246,0.08)] backdrop-blur-sm sm:rounded-[2.5rem] [@media(min-width:380px)]:h-[min(60svh,36rem,calc(100svh_-_24rem))] [@media(min-width:470px)]:h-[min(64svh,38rem,calc(100svh_-_22rem))] [@media(max-height:700px)]:h-[min(38svh,20rem)]" />
         </div>
 
-        <p className="mt-6 max-w-xl text-base leading-7 text-white/65 sm:text-lg sm:leading-8 [@media(max-height:700px)]:mt-4 [@media(max-height:700px)]:text-sm [@media(max-height:700px)]:leading-6">
+        <p className="mt-4 max-w-xl text-base leading-7 text-white/65 sm:text-lg sm:leading-8 [@media(max-height:700px)]:text-sm [@media(max-height:700px)]:leading-6">
           Faster counts. Less shrinkage. Cleaner visibility for bar managers.
         </p>
 
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-4 lg:mt-10 lg:justify-start [@media(max-height:700px)]:mt-5">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-4 lg:mt-10 lg:justify-start [@media(max-height:700px)]:mt-5">
           <a
             href="#"
             className="inline-flex items-center rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-6 py-3 text-sm font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01] sm:px-8 sm:py-4 sm:text-base"

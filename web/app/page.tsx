@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <main className={styles.page}>
       {/* Hero — viewport-tall; keeps standard vertical padding for breathing room when content exceeds 100vh */}
-      <Section id="hero" flush className={`${styles.heroSection} scroll-mt-20 min-h-[calc(100svh-4rem)] px-4 py-8 sm:px-6 sm:py-10 md:px-8 lg:min-h-svh lg:px-12 lg:py-12 xl:px-16`}>
+      <Section id="hero" flush className={`${styles.heroSection} scroll-mt-20 min-h-[calc(100svh-4rem)] !items-start px-4 py-4 sm:px-6 sm:py-10 md:px-8 lg:!items-center lg:min-h-svh lg:px-12 lg:py-12 xl:px-16`}>
         <HeroSection />
       </Section>
 
