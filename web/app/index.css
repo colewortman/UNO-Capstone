@@ -133,11 +133,14 @@
   max-width: 420px;
 }
 
-/* Phone-like frame */
+/* Phone-like frame — height yields to viewport on shorter screens so the
+   full section (text + phone + progress) still fits in one screen. Aspect
+   ratio keeps the phone proportions (1:2) as height scales. */
 .carousel-image-frame {
   position: relative;
-  width: 320px;
-  height: 640px;
+  width: auto;
+  height: min(640px, calc(100svh - 210px));
+  aspect-ratio: 1 / 2;
   border-radius: 40px;
   background: linear-gradient(180deg, #0a0f1c, #05070d);
   border: 1px solid rgba(255,255,255,0.08);
@@ -248,7 +251,15 @@
    The mobile "image as background" layout is used across all sub-desktop
    widths; the side-by-side phone layout only kicks in at ≥1024px. */
 @media (max-width: 1023.98px) {
+  .carousel-wrapper {
+    min-height: 0;
+    padding: 2rem 0;
+  }
+
   .carousel-inner {
+    /* Single column — the right side is absolute-positioned as a background,
+       so a 420px track would phantom-reserve space and squish the text. */
+    grid-template-columns: 1fr;
     padding: 2rem 1rem;
     position: relative;
   }
@@ -313,6 +324,67 @@
 
   .carousel-progress-bar {
     display: none;
+  }
+}
+
+/* Short desktops — tighten left-side padding so the whole section fits
+   without the phone frame or progress bar getting clipped. */
+@media (min-width: 1024px) and (max-height: 800px) {
+  .carousel-content {
+    padding: 2rem 2rem;
+  }
+
+  .carousel-title {
+    margin-bottom: 16px;
+  }
+
+  .carousel-description {
+    margin-bottom: 24px;
+  }
+}
+
+/* Narrow phones — tighten fonts/spacing so nothing overflows or gets cut. */
+@media (max-width: 600px) {
+  .carousel-wrapper {
+    padding: 1.5rem 0;
+  }
+
+  .carousel-inner {
+    padding: 1.5rem 1rem;
+  }
+
+  .carousel-content {
+    padding: 1rem 0;
+  }
+
+  .carousel-collection-num {
+    font-size: 11px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .carousel-title {
+    font-size: clamp(28px, 8vw, 40px);
+    margin-bottom: 16px;
+  }
+
+  .carousel-subtitle {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .carousel-description {
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .carousel-arrow-btn {
+    padding: 10px 16px;
+  }
+
+  .carousel-nav-arrows {
+    gap: 12px;
   }
 }
 

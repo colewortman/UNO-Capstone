@@ -43,7 +43,7 @@ export default function Home() {
   return (
     <main className={styles.page}>
       {/* Hero — viewport-tall; keeps standard vertical padding for breathing room when content exceeds 100vh */}
-      <Section id="hero" flush className={`${styles.heroSection} scroll-mt-20 min-h-svh px-4 py-8 sm:px-6 sm:py-10 md:px-8 lg:px-12 lg:py-12 xl:px-16`}>
+      <Section id="hero" flush className={`${styles.heroSection} scroll-mt-20 min-h-[calc(100svh-4rem)] px-4 py-8 sm:px-6 sm:py-10 md:px-8 lg:min-h-svh lg:px-12 lg:py-12 xl:px-16`}>
         <HeroSection />
       </Section>
 
@@ -68,7 +68,7 @@ export default function Home() {
       </Section>
 
       {/* Feature Highlights */}
-      <Section id="feature-highlights" className="scroll-mt-20">
+      <Section id="feature-highlights" className="scroll-mt-20 [@media(max-height:880px)]:py-10 md:[@media(max-height:880px)]:py-12">
         <FeatureHighlightsSection />
       </Section>
 
@@ -78,12 +78,12 @@ export default function Home() {
       </Section>
 
       {/* ROI Calculator */}
-      <Section className="scroll-mt-20" id="roi-calculator">
+      <Section className="scroll-mt-20 sm:[@media(max-height:800px)]:py-10 lg:[@media(max-height:800px)]:py-12" id="roi-calculator">
         <ROICalculator />
       </Section>
 
       {/* CTA */}
-      <Section id="final-cta" className="scroll-mt-20">
+      <Section id="final-cta" className="scroll-mt-20 [@media(max-height:880px)]:py-10 md:[@media(max-height:880px)]:py-12">
         <FinalCTASection />
       </Section>
 

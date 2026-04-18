@@ -93,11 +93,7 @@ export default function NavigationBar() {
 
   return (
     <>
-      <div
-        className={`w-full bg-linear-to-r from-blue-500 to-blue-400 px-4 py-2 text-center text-xs font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] sm:text-sm ${
-          mobileMenuOpen ? "hidden lg:block" : ""
-        }`}
-      >
+      <div className="hidden w-full bg-linear-to-r from-blue-500 to-blue-400 px-4 py-2 text-center text-sm font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] lg:block">
         Try a 1-month Free Trial
       </div>
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
