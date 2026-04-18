@@ -156,7 +156,7 @@ export default function ProblemSolutionSection() {
   return (
     <div ref={sectionRef}>
       {/* Mobile: single carousel with toggle button, horizontal slide animation */}
-      <div className={isMobile ? "px-4 py-8" : "hidden"}>
+      <div className={isMobile ? "" : "hidden"}>
         <div className="mb-6 flex items-center justify-center gap-3">
           {/* Invisible spacer mirrors the button so the header stays centered */}
           <div className="h-9 w-9" aria-hidden="true" />
@@ -186,7 +186,7 @@ export default function ProblemSolutionSection() {
           </button>
         </div>
 
-        <div className="relative mx-auto h-[420px] w-full max-w-5xl overflow-hidden sm:aspect-[16/9] sm:h-auto">
+        <div className="relative mx-auto h-[420px] w-full overflow-hidden md:aspect-[16/9] md:h-auto">
           {/* Solution sits static underneath; paused when covered to save work */}
           <div className="ps-mobile-solution absolute inset-0 z-10">
             <FeatureCarousel inverted paused={!showSolution} />
@@ -203,8 +203,8 @@ export default function ProblemSolutionSection() {
       {/* Desktop: GSAP pinned scroll animation */}
       <section className={isMobile ? "hidden" : "ps-section relative flex h-screen items-center justify-center overflow-hidden"}>
         {/* Carousel row — centered in section with fixed aspect ratio */}
-        <div className="relative flex w-full justify-center px-4 md:px-6 lg:px-8">
-          <div className="relative w-full max-w-6xl aspect-[16/9]">
+        <div className="relative flex w-full justify-center">
+          <div className="relative w-full aspect-[16/9]">
             {/* Problem carousel — normal layout (blue left, images right) */}
             <div className="ps-problem absolute inset-0">
               <FeatureCarousel title="The Problem" />

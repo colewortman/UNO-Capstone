@@ -10,7 +10,7 @@ import LiquidMetalLogo from "./ui/liquid-metal-hero";
 
 export default function FooterSection() {
   return (
-    <footer className="relative overflow-hidden border-t border-white/10 bg-black px-4 pb-8 pt-12 text-white sm:px-6 sm:pb-10 sm:pt-20 md:px-10 lg:px-16">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-black px-4 pb-12 pt-16 text-white sm:px-6 sm:pb-16 sm:pt-20 md:px-8 lg:px-12 lg:pb-20 lg:pt-24 xl:px-16 xl:pt-32">
       {/* background glow */}
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute left-1/2 top-24 h-[220px] w-[220px] -translate-x-1/2 rounded-full bg-blue-500/10 blur-[80px] sm:h-[320px] sm:w-[320px] sm:blur-[120px] md:h-[420px] md:w-[420px]" />
@@ -18,7 +18,7 @@ export default function FooterSection() {
         <div className="absolute left-[10%] bottom-24 h-[100px] w-[100px] rounded-full bg-blue-400/8 blur-[60px] sm:h-[160px] sm:w-[160px] sm:blur-[90px]" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl">
+      <div className="relative mx-auto max-w-[var(--container-content)]">
         {/* liquid metal logo — own row on mobile/tablet, hidden here on desktop */}
         <div className="mb-8 flex justify-center sm:mb-12 lg:hidden">
           <div className="relative h-[140px] w-full max-w-[180px] sm:h-[160px] sm:max-w-[200px]">
@@ -172,10 +172,10 @@ export default function FooterSection() {
         </div>
 
         {/* bottom bar */}
-        <div className="mt-6 flex flex-col items-start justify-between gap-3 border-t border-white/10 pt-4 text-xs text-white/35 sm:mt-10 sm:gap-4 sm:pt-6 md:flex-row md:items-center">
+        <div className="mt-6 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-4 text-center text-xs text-white/35 sm:mt-10 sm:flex-row sm:gap-4 sm:pt-6 sm:text-left">
           <p>© 2026 Bar-IQ. All rights reserved.</p>
 
-          <div className="flex flex-wrap gap-5">
+          <div className="flex flex-wrap justify-center gap-5 sm:justify-end">
             <a
               href="#"
               className="inline-block py-1 transition hover:text-white"

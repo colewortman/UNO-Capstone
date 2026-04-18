@@ -88,7 +88,7 @@ export default function ElegantCarousel() {
   }, []);
 
   useEffect(() => {
-    const mq = window.matchMedia('(max-width: 640px)');
+    const mq = window.matchMedia('(max-width: 1023.98px)');
     setIsMobile(mq.matches);
     const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
     mq.addEventListener('change', handler);

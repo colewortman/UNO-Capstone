@@ -244,67 +244,29 @@
     0 0 40px rgba(90,150,255,0.2);
 }
 
-/* RESPONSIVE — Tablet (≤1024px): stack vertically, phone still visible */
-@media (max-width: 1024px) {
-  .carousel-wrapper {
-    min-height: auto;
-  }
-
-  .carousel-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 3rem 1.5rem;
-  }
-
-  .carousel-content {
-    padding: 0 0 2rem 0;
-    text-align: center;
-    justify-content: center;
-  }
-
-  .carousel-content-inner {
-    max-width: 560px;
-    align-items: center;
-  }
-
-  .carousel-title {
-    font-size: clamp(36px, 5vw, 48px);
-  }
-
-  .carousel-nav-arrows {
-    justify-content: center;
-  }
-
-  .carousel-right {
-    width: 100%;
-    align-items: center;
-  }
-
-  .carousel-image-frame {
-    width: 260px;
-    height: 520px;
-    border-radius: 32px;
-  }
-
-  .carousel-progress-item {
-    width: 60px;
-  }
-}
-
-/* RESPONSIVE — Mobile (≤640px): image becomes background */
-@media (max-width: 640px) {
+/* RESPONSIVE — Below desktop (<1024px): image becomes background.
+   The mobile "image as background" layout is used across all sub-desktop
+   widths; the side-by-side phone layout only kicks in at ≥1024px. */
+@media (max-width: 1023.98px) {
   .carousel-inner {
     padding: 2rem 1rem;
     position: relative;
   }
 
   .carousel-content {
+    padding: 2rem 0;
     text-align: left;
   }
 
   .carousel-content-inner {
+    max-width: 100%;
     align-items: flex-start;
+  }
+
+  .carousel-title {
+    letter-spacing: -1px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
   }
 
   .carousel-nav-arrows {
@@ -312,11 +274,11 @@
   }
 
   .carousel-title {
-    font-size: 32px;
+    font-size: clamp(32px, 5vw, 56px);
   }
 
   .carousel-description {
-    font-size: 15px;
+    font-size: clamp(15px, 1.6vw, 18px);
     margin-bottom: 24px;
   }
 

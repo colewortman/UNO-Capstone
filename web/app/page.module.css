@@ -5,52 +5,18 @@
   width: 100%;
 }
 
-.section {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  min-height: auto;
-  padding: 2rem 1rem;
-  overflow: hidden;
-}
-
-@media (min-width: 640px) {
-  .section {
-    padding: 3rem 1.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .section {
-    padding: 3rem 2rem;
-  }
-}
-
-/* Alternating background for visual separation while building */
-.section:nth-child(even) {
+/* Alternating background for visual separation while building.
+   Padding, max-width, and centering are now owned by the <Section>
+   wrapper in page.tsx via Tailwind classes. Scoped to .page so this
+   does not affect other routes. */
+.page > section:nth-child(even) {
   background-color: var(--section-alt, rgba(0, 0, 0, 0.03));
 }
 
 @media (prefers-color-scheme: dark) {
-  .section:nth-child(even) {
+  .page > section:nth-child(even) {
     --section-alt: rgba(255, 255, 255, 0.03);
   }
-}
-
-.sectionInner {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.sectionFull {
-  padding: 0;
-}
-
-.sectionFull .sectionInner {
-  max-width: none;
 }
 
 .heroSection {
@@ -63,27 +29,9 @@
 }
 
 .socialProofSection {
-  min-height: auto;
-  padding: 2rem 1rem;
   background:
     radial-gradient(ellipse 50% 80% at 50% 0%, rgba(59, 130, 246, 0.1) 0%, transparent 60%),
     #000;
-}
-
-.testimonialsSection {
-  padding-top: 0;
-}
-
-@media (min-width: 640px) {
-  .testimonialsSection {
-    padding-top: 0;
-  }
-}
-
-@media (min-width: 1024px) {
-  .testimonialsSection {
-    padding-top: 0;
-  }
 }
 
 .placeholder {

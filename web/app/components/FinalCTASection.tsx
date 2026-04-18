@@ -8,12 +8,10 @@
 
 export default function FinalCTASection() {
   return (
-    <section className="bg-black text-white">
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-        <div className="relative">
-          <div className="grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-12">
+    <div className="text-white">
+      <div className="grid items-center gap-10 lg:grid-cols-[1fr_1fr] lg:gap-12">
             {/* LEFT SIDE */}
-            <div className="max-w-xl">
+            <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
               <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
                 Inventory complete.
                 <br />
@@ -25,7 +23,7 @@ export default function FinalCTASection() {
                 revenue between sessions.
               </p>
 
-              <div className="mt-8 flex flex-wrap items-center gap-4 sm:mt-10">
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-4 sm:mt-10 lg:justify-start">
                 <a
                   href="#"
                   className="inline-flex items-center rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-5 py-3 text-sm font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01] sm:px-7 sm:py-4 sm:text-base"
@@ -46,9 +44,9 @@ export default function FinalCTASection() {
             <div className="relative flex justify-center">
               <div className="relative w-full max-w-[620px]">
                 {/* Desktop / Tablet */}
-                <div className="relative hidden min-h-[540px] md:block">
+                <div className="relative hidden min-h-[460px] md:block">
                   {/* Glow */}
-                  <div className="absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[100px]" />
+                  <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[100px]" />
 
                   {/* Left stat cards */}
                   <div className="absolute left-0 top-1/2 z-10 flex -translate-y-1/2 -translate-x-[18%] flex-col gap-4 sm:-translate-x-[22%] lg:-translate-x-[28%]">
@@ -85,19 +83,19 @@ export default function FinalCTASection() {
                   </div>
 
                   {/* Phone */}
-                  <div className="absolute left-1/2 top-1/2 h-[470px] w-[235px] -translate-x-1/2 -translate-y-1/2 rounded-[2.7rem] border border-white/10 bg-white/[0.03] p-3 shadow-[0_0_80px_rgba(59,130,246,0.08)]">
-                    <div className="flex h-full w-full flex-col rounded-[2.15rem] border border-white/10 bg-black p-6">
+                  <div className="absolute left-1/2 top-1/2 h-[420px] w-[210px] -translate-x-1/2 -translate-y-1/2 rounded-[2.3rem] border border-white/10 bg-white/[0.03] p-3 shadow-[0_0_80px_rgba(59,130,246,0.08)]">
+                    <div className="flex h-full w-full flex-col rounded-[1.85rem] border border-white/10 bg-black p-5">
                       <div className="text-xs text-white/50">Bar-IQ • Completed</div>
 
-                      <div className="mt-7">
-                        <p className="text-2xl font-semibold tracking-tight text-white">
+                      <div className="mt-5">
+                        <p className="text-xl font-semibold tracking-tight text-white">
                           Session
                           <br />
                           summary
                         </p>
                       </div>
 
-                      <div className="mt-7 space-y-4 text-sm">
+                      <div className="mt-5 space-y-3 text-sm">
                         <div className="flex items-center justify-between text-white/65">
                           <span>Duration</span>
                           <span className="text-white">15m 9s</span>
@@ -216,9 +214,6 @@ export default function FinalCTASection() {
               </div>
             </div>
           </div>
-
         </div>
-      </div>
-    </section>
   );
 }
