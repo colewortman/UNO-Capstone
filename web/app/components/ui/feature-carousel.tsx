@@ -211,7 +211,7 @@ export function FeatureCarousel({
             )}
           />
           {title && (
-            <h2 className="hidden md:block relative z-50 w-full text-center text-white font-semibold text-3xl lg:text-4xl pt-6 md:pt-8 lg:pt-10 px-2">
+            <h2 className="hidden md:block relative z-50 w-full text-center text-white font-semibold text-2xl lg:text-4xl pt-6 md:pt-8 lg:pt-10 px-2 whitespace-nowrap">
               {title}
             </h2>
           )}

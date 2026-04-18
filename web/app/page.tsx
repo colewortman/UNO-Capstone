@@ -14,14 +14,27 @@ function Section({
   children,
   className,
   id,
+  full,
+  flush,
 }: {
   children: React.ReactNode;
   className?: string;
   id?: string;
+  /** Full-bleed: drop horizontal padding and max-width rail. */
+  full?: boolean;
+  /** Drop the standard vertical section padding (e.g. Hero uses viewport height instead). */
+  flush?: boolean;
 }) {
+  const horizontal = full ? "" : "px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16";
+  const vertical = flush ? "" : "py-16 sm:py-20 lg:py-24";
   return (
-    <section id={id} className={`${styles.section} ${className ?? ""}`}>
-      <div className={styles.sectionInner}>{children}</div>
+    <section
+      id={id}
+      className={`relative flex w-full items-center justify-center overflow-hidden ${horizontal} ${vertical} ${className ?? ""}`}
+    >
+      <div className={`mx-auto w-full ${full ? "" : "max-w-[var(--container-content)]"}`}>
+        {children}
+      </div>
     </section>
   );
 }
@@ -29,8 +42,8 @@ function Section({
 export default function Home() {
   return (
     <main className={styles.page}>
-      {/* Hero */}
-      <Section id="hero" className={`${styles.heroSection} scroll-mt-20`}>
+      {/* Hero — viewport-tall; keeps standard vertical padding for breathing room when content exceeds 100vh */}
+      <Section id="hero" flush className={`${styles.heroSection} scroll-mt-20 min-h-[calc(100svh-4rem)] px-4 py-8 sm:px-6 sm:py-10 md:px-8 lg:min-h-svh lg:px-12 lg:py-12 xl:px-16`}>
         <HeroSection />
       </Section>
 
@@ -50,27 +63,27 @@ export default function Home() {
       </Section>
 
       {/* Testimonials */}
-      <Section id="testimonials" className={`${styles.testimonialsSection} scroll-mt-20`}>
+      <Section id="testimonials" className="scroll-mt-20">
         <TestimonialsSection />
       </Section>
 
       {/* Feature Highlights */}
-      <Section id="feature-highlights" className="scroll-mt-20">
+      <Section id="feature-highlights" className="scroll-mt-20 [@media(max-height:880px)]:py-10 md:[@media(max-height:880px)]:py-12">
         <FeatureHighlightsSection />
       </Section>
 
-      {/* Comparisons (differentiator) */}
-      <Section id="comparisons" className={`${styles.sectionFull} scroll-mt-20`}>
+      {/* Comparisons (differentiator) — full bleed */}
+      <Section id="comparisons" full flush className="scroll-mt-20">
         <Comparisons />
       </Section>
 
       {/* ROI Calculator */}
-      <Section className="scroll-mt-20" id="roi-calculator">
+      <Section className="scroll-mt-20 sm:[@media(max-height:800px)]:py-10 lg:[@media(max-height:800px)]:py-12" id="roi-calculator">
         <ROICalculator />
       </Section>
 
       {/* CTA */}
-      <Section id="final-cta" className="scroll-mt-20">
+      <Section id="final-cta" className="scroll-mt-20 [@media(max-height:880px)]:py-10 md:[@media(max-height:880px)]:py-12">
         <FinalCTASection />
       </Section>
 
