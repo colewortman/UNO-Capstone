@@ -13,7 +13,7 @@ export default function HeroSection() {
         </p>
 
         <h1 className="text-4xl font-semibold leading-[0.95] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
-          Take bar inventory in minutes, not hours.
+          Bar inventory in minutes, not hours.
         </h1>
 
         {/* mobile/tablet-only phone placeholder, sits between header and tagline.
