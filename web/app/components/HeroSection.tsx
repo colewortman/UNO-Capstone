@@ -62,6 +62,8 @@ export default function HeroSection() {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   >
                     <path d="M20 21a8 8 0 0 0-16 0" />
                     <circle cx="12" cy="8" r="4" />
@@ -92,15 +94,22 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* right side — unchanged except pricing removed */}
+      {/* right side */}
       <div className="hidden flex-col justify-center gap-5 lg:flex lg:max-w-[300px]">
-        <div className="mx-auto max-w-[260px] text-center text-sm leading-7 text-white/55 xl:text-base">
+        <div className="max-w-[260px] text-left text-sm leading-7 text-white/55 xl:text-base">
           Bottle-level visibility for faster counts, cleaner reporting, and less
           manual inventory work.
         </div>
 
-        <div className="flex flex-col items-center gap-3">
-          <div className="flex items-center gap-4">
+        <a
+          href="#testimonials"
+          className="w-full whitespace-nowrap rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-center text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10 sm:text-lg"
+        >
+          See Testimonials
+        </a>
+
+        <div className="flex flex-col items-end gap-3 pt-1">
+          <div className="flex items-center justify-end gap-4">
             <div className="flex -space-x-3">
               {[0, 1, 2].map((item) => (
                 <div
@@ -113,6 +122,8 @@ export default function HeroSection() {
                     fill="none"
                     stroke="currentColor"
                     strokeWidth="1.8"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   >
                     <path d="M20 21a8 8 0 0 0-16 0" />
                     <circle cx="12" cy="8" r="4" />
@@ -124,16 +135,9 @@ export default function HeroSection() {
             <div className="text-4xl font-semibold text-white">50K+</div>
           </div>
 
-          <p className="max-w-[240px] text-center text-sm text-white/55 xl:text-base">
+          <p className="max-w-[240px] text-right text-sm text-white/55 xl:text-base">
             Trusted by bars and hospitality teams across multiple locations.
           </p>
-
-          <a
-            href="#testimonials"
-            className="mt-2 w-full rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-center text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10 sm:text-lg"
-          >
-            See Testimonials
-          </a>
         </div>
       </div>
     </div>
