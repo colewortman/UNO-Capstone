@@ -1,7 +1,5 @@
 /**
  * @file FinalCTASection.tsx
- * @description Responsive final CTA section with a sleek, minimal layout,
- * subtle glass metric cards, and a centered phone composition.
  */
 
 "use client";
@@ -10,6 +8,7 @@ export default function FinalCTASection() {
   return (
     <div className="text-white">
       <div className="grid items-center gap-10 [@media(max-height:880px)]:gap-6 lg:grid-cols-[1fr_1fr] lg:gap-12">
+        
         {/* LEFT SIDE */}
         <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
           <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl [@media(max-height:880px)]:text-3xl lg:[@media(max-height:880px)]:text-4xl">
@@ -42,147 +41,151 @@ export default function FinalCTASection() {
         {/* RIGHT SIDE */}
         <div className="relative flex justify-center">
           <div className="relative w-full max-w-[620px]">
-            {/* Desktop / Tablet */}
-            <div className="relative hidden min-h-[460px] md:block md:[@media(max-height:880px)]:min-h-[360px]">
+
+            {/* Desktop */}
+            <div className="relative hidden min-h-[460px] md:block md:[@media(max-height:880px)]:min-h-[380px]">
+
               {/* Glow */}
               <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[100px]" />
 
-              {/* Left stat cards */}
+              {/* Left cards */}
               <div className="absolute left-0 top-1/2 z-10 flex -translate-y-1/2 -translate-x-[18%] flex-col gap-4 sm:-translate-x-[22%] lg:-translate-x-[28%]">
-                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.035] px-5 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-xl">
+                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.035] px-5 py-4 backdrop-blur-xl">
                   <p className="text-sm text-white/50">Session</p>
-                  <p className="mt-1 text-2xl font-semibold tracking-tight text-white">
-                    15m 9s
-                  </p>
+                  <p className="mt-1 text-2xl font-semibold text-white">15m 9s</p>
                 </div>
 
-                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.03] px-5 py-4 opacity-85 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.03] px-5 py-4 opacity-85 backdrop-blur-xl">
                   <p className="text-sm text-white/50">Recovered</p>
-                  <p className="mt-1 text-2xl font-semibold tracking-tight text-white">
-                    $1,240
-                  </p>
+                  <p className="mt-1 text-2xl font-semibold text-white">$1,240</p>
                 </div>
               </div>
 
-              {/* Right stat cards */}
+              {/* Right cards */}
               <div className="absolute right-0 top-1/2 z-10 flex -translate-y-1/2 translate-x-[18%] flex-col gap-4 sm:translate-x-[22%] lg:translate-x-[28%]">
-                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.035] px-5 py-4 shadow-[0_10px_30px_rgba(0,0,0,0.22)] backdrop-blur-xl">
+                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.035] px-5 py-4 backdrop-blur-xl">
                   <p className="text-sm text-white/50">Speed</p>
-                  <p className="mt-1 text-2xl font-semibold tracking-tight text-green-400">
-                    +42%
-                  </p>
+                  <p className="mt-1 text-2xl font-semibold text-green-400">+42%</p>
                 </div>
 
-                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.03] px-5 py-4 opacity-85 shadow-[0_10px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl">
+                <div className="w-[140px] rounded-[24px] border border-white/10 bg-white/[0.03] px-5 py-4 opacity-85 backdrop-blur-xl">
                   <p className="text-sm text-white/50">Variance</p>
-                  <p className="mt-1 text-2xl font-semibold tracking-tight text-blue-300">
-                    Low
-                  </p>
+                  <p className="mt-1 text-2xl font-semibold text-blue-300">Low</p>
                 </div>
               </div>
 
-              {/* Phone */}
-              <div className="absolute left-1/2 top-1/2 h-96 w-56 -translate-x-1/2 -translate-y-1/2 rounded-[2.8rem] border border-white/10 bg-white/[0.03] p-3 shadow-[0_0_80px_rgba(59,130,246,0.08)] xl:h-[28rem] xl:w-64 md:[@media(max-height:880px)]:h-[360px] md:[@media(max-height:880px)]:w-[220px]">
-                <div className="flex h-full w-full flex-col rounded-[2.2rem] border border-white/10 bg-black px-5 py-5 xl:px-6 xl:py-6">
-                  <div className="text-xs text-white/50">Bar-IQ • Completed</div>
+              {/* SINGLE PHONE (clean) */}
+              <div className="absolute left-1/2 top-1/2 h-[520px] w-[260px] -translate-x-1/2 -translate-y-1/2 rounded-[2.8rem] border border-white/10 bg-black px-6 py-7 shadow-[0_0_80px_rgba(59,130,246,0.08)] md:[@media(max-height:880px)]:h-[440px] md:[@media(max-height:880px)]:w-[220px]">
 
-                  <div className="mt-4">
-                    <p className="text-[1.9rem] font-semibold leading-[1.05] tracking-tight text-white xl:text-[2rem]">
+                <div className="text-xs text-white/50">
+                  Bar-IQ • Completed
+                </div>
+
+                <div className="mt-6">
+                  <p className="text-[2.1rem] font-semibold leading-[1.05] tracking-tight text-white md:[@media(max-height:880px)]:text-[1.7rem]">
+                    Session
+                    <br />
+                    summary
+                  </p>
+                </div>
+
+                <div className="mt-8 space-y-5 text-sm md:[@media(max-height:880px)]:mt-6 md:[@media(max-height:880px)]:space-y-4">
+                  <div className="flex justify-between text-white/65">
+                    <span>Duration</span>
+                    <span className="text-white">15m 9s</span>
+                  </div>
+
+                  <div className="flex justify-between text-white/65">
+                    <span>Top brands</span>
+                    <span className="text-white">Tracked</span>
+                  </div>
+
+                  <div className="flex justify-between text-white/65">
+                    <span>Recovered</span>
+                    <span className="text-white">$1,240</span>
+                  </div>
+
+                  <div className="flex justify-between text-white/65">
+                    <span>Speed</span>
+                    <span className="text-green-400">+42%</span>
+                  </div>
+
+                  <div className="flex justify-between text-white/65">
+                    <span>Variance</span>
+                    <span className="text-blue-300">Low</span>
+                  </div>
+                </div>
+
+                <div className="mt-auto pt-7">
+                  <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 text-center">
+                    <p className="text-sm text-white/80">
+                      Inventory completed
+                    </p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            {/* Mobile */}
+            <div className="md:hidden">
+              <div className="relative mx-auto flex w-full max-w-[320px] flex-col items-center">
+
+                <div className="absolute left-1/2 top-[38%] h-[260px] w-[260px] -translate-x-1/2 rounded-full bg-blue-500/10 blur-[85px]" />
+
+                <div className="h-[580px] w-[280px] rounded-[2.8rem] border border-white/10 bg-black px-6 py-7 shadow-[0_0_60px_rgba(59,130,246,0.08)] [@media(max-height:880px)]:h-[460px] [@media(max-height:880px)]:w-[230px]">
+
+                  <div className="text-xs text-white/50">
+                    Bar-IQ • Completed
+                  </div>
+
+                  <div className="mt-6">
+                    <p className="text-[2rem] font-semibold leading-[1.05] text-white">
                       Session
                       <br />
                       summary
                     </p>
                   </div>
 
-                  <div className="mt-5 space-y-4 text-sm xl:text-[15px]">
-                    <div className="flex items-center justify-between text-white/65">
+                  <div className="mt-8 space-y-5 text-sm">
+                    <div className="flex justify-between text-white/65">
                       <span>Duration</span>
                       <span className="text-white">15m 9s</span>
                     </div>
 
-                    <div className="flex items-center justify-between text-white/65">
+                    <div className="flex justify-between text-white/65">
                       <span>Top brands</span>
                       <span className="text-white">Tracked</span>
                     </div>
 
-                    <div className="flex items-center justify-between text-white/65">
+                    <div className="flex justify-between text-white/65">
                       <span>Recovered</span>
                       <span className="text-white">$1,240</span>
                     </div>
 
-                    <div className="flex items-center justify-between text-white/65">
+                    <div className="flex justify-between text-white/65">
                       <span>Speed</span>
                       <span className="text-green-400">+42%</span>
                     </div>
 
-                    <div className="flex items-center justify-between text-white/65">
+                    <div className="flex justify-between text-white/65">
                       <span>Variance</span>
                       <span className="text-blue-300">Low</span>
                     </div>
                   </div>
 
-                  <div className="mt-auto pt-5">
-                    <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-center backdrop-blur-sm">
-                      <p className="text-sm text-white/80">Inventory completed</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Mobile layout */}
-            <div className="md:hidden">
-              <div className="relative mx-auto flex w-full max-w-[320px] flex-col items-center">
-                <div className="absolute left-1/2 top-[38%] h-[260px] w-[260px] -translate-x-1/2 rounded-full bg-blue-500/10 blur-[85px]" />
-
-                <div className="relative h-[560px] w-[280px] rounded-[2.8rem] border border-white/10 bg-white/[0.03] p-3 shadow-[0_0_60px_rgba(59,130,246,0.08)] [@media(max-height:880px)]:h-[430px] [@media(max-height:880px)]:w-[220px]">
-                  <div className="flex h-full w-full flex-col rounded-[2.2rem] border border-white/10 bg-black px-5 py-5">
-                    <div className="text-xs text-white/50">Bar-IQ • Completed</div>
-
-                    <div className="mt-5">
-                      <p className="text-[2rem] font-semibold leading-[1.05] tracking-tight text-white">
-                        Session
-                        <br />
-                        summary
+                  <div className="mt-auto pt-7">
+                    <div className="rounded-xl border border-white/10 bg-white/[0.03] px-4 py-4 text-center">
+                      <p className="text-sm text-white/80">
+                        Inventory completed
                       </p>
                     </div>
-
-                    <div className="mt-6 space-y-4 text-sm">
-                      <div className="flex items-center justify-between text-white/65">
-                        <span>Duration</span>
-                        <span className="text-white">15m 9s</span>
-                      </div>
-
-                      <div className="flex items-center justify-between text-white/65">
-                        <span>Top brands</span>
-                        <span className="text-white">Tracked</span>
-                      </div>
-
-                      <div className="flex items-center justify-between text-white/65">
-                        <span>Recovered</span>
-                        <span className="text-white">$1,240</span>
-                      </div>
-
-                      <div className="flex items-center justify-between text-white/65">
-                        <span>Speed</span>
-                        <span className="text-green-400">+42%</span>
-                      </div>
-
-                      <div className="flex items-center justify-between text-white/65">
-                        <span>Variance</span>
-                        <span className="text-blue-300">Low</span>
-                      </div>
-                    </div>
-
-                    <div className="mt-auto pt-5">
-                      <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3 text-center backdrop-blur-sm">
-                        <p className="text-sm text-white/80">Inventory completed</p>
-                      </div>
-                    </div>
                   </div>
+
                 </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
