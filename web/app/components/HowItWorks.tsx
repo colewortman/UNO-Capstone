@@ -11,8 +11,7 @@ const steps = [
     step: "Step 1",
     title: "Scan barcode of one or multiple bottles at a time",
     icon: ScanLine,
-    iconWrap:
-      "bg-yellow-500/20 text-yellow-400 ring-1 ring-yellow-400/15",
+    iconWrap: "bg-yellow-500/20 text-yellow-400 ring-1 ring-yellow-400/15",
     image: "/images/how-it-works-step-1.jpg",
     alt: "Scanning bottle barcode",
   },
@@ -20,8 +19,7 @@ const steps = [
     step: "Step 2",
     title: "Point phone camera at liquid level or full bottle",
     icon: Smartphone,
-    iconWrap:
-      "bg-blue-500/20 text-blue-400 ring-1 ring-blue-400/15",
+    iconWrap: "bg-blue-500/20 text-blue-400 ring-1 ring-blue-400/15",
     image: "/images/how-it-works-step-2.jpg",
     alt: "Phone measuring bottle level",
   },
@@ -29,8 +27,7 @@ const steps = [
     step: "Step 3",
     title: "Export inventory count to POS (integrations coming soon)",
     icon: Upload,
-    iconWrap:
-      "bg-green-500/20 text-green-400 ring-1 ring-green-400/15",
+    iconWrap: "bg-green-500/20 text-green-400 ring-1 ring-green-400/15",
     image: "/images/how-it-works-step-3.jpg",
     alt: "Exporting inventory count",
   },
@@ -57,7 +54,10 @@ export default function HowItWorksSection() {
             const Icon = item.icon;
 
             return (
-              <div key={item.step} className="relative flex flex-col items-center text-center">
+              <div
+                key={item.step}
+                className="relative flex flex-col items-center text-center"
+              >
                 <p className="text-[2rem] font-semibold tracking-tight text-white">
                   {item.step}
                 </p>
