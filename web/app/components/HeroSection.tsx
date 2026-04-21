@@ -3,6 +3,9 @@
  * @description Responsive hero section for the Bar-IQ landing page.
  */
 
+import Image from "next/image";
+import heroImage from "@/public/hero_1.4.png";
+
 export default function HeroSection() {
   return (
     <div className="grid w-full items-center gap-10 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,300px)] lg:gap-12">
@@ -18,13 +21,12 @@ export default function HeroSection() {
 
         {/* mobile/tablet phone */}
         <div className="mt-4 flex justify-center lg:hidden">
-          <div className="relative h-[min(56svh,34rem,calc(100svh_-_26rem))] aspect-[5/8] overflow-hidden rounded-[2rem] border border-white/10 bg-black shadow-[0_0_80px_rgba(59,130,246,0.08)] sm:rounded-[2.5rem] [@media(min-width:380px)]:h-[min(60svh,36rem,calc(100svh_-_24rem))] [@media(min-width:470px)]:h-[min(64svh,38rem,calc(100svh_-_22rem))] [@media(max-height:700px)]:h-[min(38svh,20rem)]">
-            <img
-              src="/hero-phone.png"
-              alt="Bar-IQ inventory scanning interface"
-              className="h-full w-full object-cover"
-            />
-          </div>
+          <Image
+            src={heroImage}
+            alt="Bar-IQ inventory scanning interface"
+            className="h-auto w-auto max-h-[min(64svh,38rem,calc(100svh_-_22rem))] [@media(min-width:380px)]:max-h-[min(66svh,40rem,calc(100svh_-_22rem))] [@media(min-width:470px)]:max-h-[min(70svh,42rem,calc(100svh_-_22rem))] [@media(max-height:700px)]:max-h-[min(60svh,32rem,calc(100svh_-_24rem))] sm:max-h-[min(72svh,48rem,calc(100svh_-_28rem))] md:max-h-[min(76svh,54rem,calc(100svh_-_28rem))]"
+            priority
+          />
         </div>
 
         <p className="mt-4 max-w-xl text-base leading-7 text-white/65 sm:text-lg sm:leading-8 [@media(max-height:700px)]:text-sm [@media(max-height:700px)]:leading-6">
@@ -46,52 +48,16 @@ export default function HeroSection() {
             Watch Demo
           </a>
         </div>
-
-        {/* mobile social proof */}
-        <div className="mt-8 flex flex-col items-center gap-3 lg:hidden">
-          <div className="flex items-center gap-4">
-            <div className="flex -space-x-3">
-              {[0, 1, 2].map((item) => (
-                <div
-                  key={item}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm"
-                >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5 text-white/80"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M20 21a8 8 0 0 0-16 0" />
-                    <circle cx="12" cy="8" r="4" />
-                  </svg>
-                </div>
-              ))}
-            </div>
-
-            <div className="text-3xl font-semibold text-white sm:text-4xl">
-              50K+
-            </div>
-          </div>
-
-          <p className="max-w-xs text-center text-sm text-white/55 sm:text-base">
-            Trusted by bars and hospitality teams across multiple locations.
-          </p>
-        </div>
       </div>
 
       {/* desktop phone */}
       <div className="hidden lg:flex lg:items-center lg:justify-center">
-        <div className="relative overflow-hidden rounded-[3rem] border border-white/10 bg-black shadow-[0_0_80px_rgba(59,130,246,0.08)] lg:h-96 lg:w-56 xl:h-[28rem] xl:w-64">
-          <img
-            src="/hero-phone.png"
-            alt="Bar-IQ inventory scanning interface"
-            className="h-full w-full object-cover"
-          />
-        </div>
+        <Image
+          src={heroImage}
+          alt="Bar-IQ inventory scanning interface"
+          className="h-auto w-auto lg:max-h-[28rem] xl:max-h-[32rem]"
+          priority
+        />
       </div>
 
       {/* right side */}
