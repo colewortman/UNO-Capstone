@@ -6,7 +6,6 @@ import {
   TestimonialCard,
   TestimonialAuthor,
 } from "@/app/components/ui/testimonial-card";
-import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
 interface TestimonialsSectionProps {
   title?: string;
@@ -110,8 +109,16 @@ export function TestimonialsSection({
   testimonials = defaultTestimonials,
   className,
 }: TestimonialsSectionProps) {
-  const isTablet = useMediaQuery("(min-width: 768px)");
-  const cardsPerPage = isTablet ? 4 : 1;
+  const [viewportWidth, setViewportWidth] = useState(0);
+
+  useEffect(() => {
+    const updateViewportWidth = () => setViewportWidth(window.innerWidth);
+    updateViewportWidth();
+    window.addEventListener("resize", updateViewportWidth);
+    return () => window.removeEventListener("resize", updateViewportWidth);
+  }, []);
+
+  const cardsPerPage = viewportWidth >= 1133 ? 4 : viewportWidth >= 700 ? 3 : 1;
 
   const pages = useMemo(() => {
     const result: typeof testimonials[] = [];
@@ -181,22 +188,18 @@ export function TestimonialsSection({
 
           <div className="w-full overflow-hidden px-0 xl:px-14">
             <div
-              className="flex transition-transform duration-500 ease-out"
+              className="flex w-full transition-transform duration-500 ease-out"
               style={{ transform: `translateX(-${activePage * 100}%)` }}
             >
               {pages.map((page, pageIndex) => (
                 <div
                   key={`page-${pageIndex}`}
+                  style={{
+                    gridTemplateColumns: `repeat(${Math.max(page.length, 1)}, minmax(0, 1fr))`,
+                  }}
                   className={cn(
-                    "grid min-w-full gap-4",
+                    "grid min-w-full shrink-0 gap-4",
                     page.length === 2 && "mx-auto max-w-[900px] gap-2 sm:gap-3",
-                    page.length >= 4
-                      ? "grid-cols-4"
-                      : page.length === 3
-                        ? "grid-cols-3"
-                        : page.length === 2
-                          ? "grid-cols-2"
-                        : "grid-cols-1",
                   )}
                 >
                   {page.map((testimonial, i) => (
