@@ -49,7 +49,7 @@ export default function FeatureHighlightsSection() {
         </p>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:gap-5 lg:grid-cols-3 [@media(max-height:880px)]:gap-2 sm:[@media(max-height:880px)]:gap-3">
+      <div className="grid grid-cols-3 gap-3 sm:gap-5 ...">
         {features.map((feature) => (
           <div
             key={feature.title}
