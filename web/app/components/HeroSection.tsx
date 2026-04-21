@@ -108,8 +108,8 @@ export default function HeroSection() {
           See Testimonials
         </a>
 
-        <div className="flex flex-col items-end gap-3 pt-1">
-          <div className="flex items-center justify-end gap-4">
+        <div className="flex flex-col items-start gap-3 pt-1">
+          <div className="flex items-center justify-start gap-4">
             <div className="flex -space-x-3">
               {[0, 1, 2].map((item) => (
                 <div
@@ -135,7 +135,7 @@ export default function HeroSection() {
             <div className="text-4xl font-semibold text-white">50K+</div>
           </div>
 
-          <p className="max-w-[240px] text-right text-sm text-white/55 xl:text-base">
+          <p className="max-w-[240px] text-left text-sm text-white/55 xl:text-base">
             Trusted by bars and hospitality teams across multiple locations.
           </p>
         </div>
