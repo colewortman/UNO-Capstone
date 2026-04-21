@@ -16,10 +16,15 @@ export default function HeroSection() {
           Bar inventory in minutes, not hours.
         </h1>
 
-        {/* mobile/tablet-only phone placeholder, sits between header and tagline.
-            Height is viewport-relative so it yields when vertical space is tight. */}
+        {/* mobile/tablet phone */}
         <div className="mt-4 flex justify-center lg:hidden">
-          <div className="h-[min(56svh,34rem,calc(100svh_-_26rem))] aspect-[5/8] rounded-[2rem] border border-white/10 bg-white/3 shadow-[0_0_80px_rgba(59,130,246,0.08)] backdrop-blur-sm sm:rounded-[2.5rem] [@media(min-width:380px)]:h-[min(60svh,36rem,calc(100svh_-_24rem))] [@media(min-width:470px)]:h-[min(64svh,38rem,calc(100svh_-_22rem))] [@media(max-height:700px)]:h-[min(38svh,20rem)]" />
+          <div className="relative h-[min(56svh,34rem,calc(100svh_-_26rem))] aspect-[5/8] overflow-hidden rounded-[2rem] border border-white/10 bg-black shadow-[0_0_80px_rgba(59,130,246,0.08)] sm:rounded-[2.5rem] [@media(min-width:380px)]:h-[min(60svh,36rem,calc(100svh_-_24rem))] [@media(min-width:470px)]:h-[min(64svh,38rem,calc(100svh_-_22rem))] [@media(max-height:700px)]:h-[min(38svh,20rem)]">
+            <img
+              src="/hero-phone.png"
+              alt="Bar-IQ inventory scanning interface"
+              className="h-full w-full object-cover"
+            />
+          </div>
         </div>
 
         <p className="mt-4 max-w-xl text-base leading-7 text-white/65 sm:text-lg sm:leading-8 [@media(max-height:700px)]:text-sm [@media(max-height:700px)]:leading-6">
@@ -41,28 +46,91 @@ export default function HeroSection() {
             Watch Demo
           </a>
         </div>
+
+        {/* mobile social proof */}
+        <div className="mt-8 flex flex-col items-center gap-3 lg:hidden">
+          <div className="flex items-center gap-4">
+            <div className="flex -space-x-3">
+              {[0, 1, 2].map((item) => (
+                <div
+                  key={item}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-5 w-5 text-white/80"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                  >
+                    <path d="M20 21a8 8 0 0 0-16 0" />
+                    <circle cx="12" cy="8" r="4" />
+                  </svg>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-3xl font-semibold text-white sm:text-4xl">
+              50K+
+            </div>
+          </div>
+
+          <p className="max-w-xs text-center text-sm text-white/55 sm:text-base">
+            Trusted by bars and hospitality teams across multiple locations.
+          </p>
+        </div>
       </div>
 
-      {/* center — phone placeholder (desktop only) */}
+      {/* desktop phone */}
       <div className="hidden lg:flex lg:items-center lg:justify-center">
-        <div className="lg:h-96 lg:w-56 lg:rounded-[3rem] border border-white/10 bg-white/3 shadow-[0_0_80px_rgba(59,130,246,0.08)] backdrop-blur-sm xl:h-[28rem] xl:w-64" />
+        <div className="relative overflow-hidden rounded-[3rem] border border-white/10 bg-black shadow-[0_0_80px_rgba(59,130,246,0.08)] lg:h-96 lg:w-56 xl:h-[28rem] xl:w-64">
+          <img
+            src="/hero-phone.png"
+            alt="Bar-IQ inventory scanning interface"
+            className="h-full w-full object-cover"
+          />
+        </div>
       </div>
 
-      {/* right side — supporting copy & actions (desktop only) */}
+      {/* right side — unchanged except pricing removed */}
       <div className="hidden flex-col justify-center gap-5 lg:flex lg:max-w-[300px]">
         <div className="mx-auto max-w-[260px] text-center text-sm leading-7 text-white/55 xl:text-base">
           Bottle-level visibility for faster counts, cleaner reporting, and less
           manual inventory work.
         </div>
 
-        <div className="flex flex-col gap-3">
-          <button className="w-full rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10 sm:text-lg">
-            See Pricing
-          </button>
+        <div className="flex flex-col items-center gap-3">
+          <div className="flex items-center gap-4">
+            <div className="flex -space-x-3">
+              {[0, 1, 2].map((item) => (
+                <div
+                  key={item}
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    className="h-5 w-5 text-white/80"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                  >
+                    <path d="M20 21a8 8 0 0 0-16 0" />
+                    <circle cx="12" cy="8" r="4" />
+                  </svg>
+                </div>
+              ))}
+            </div>
+
+            <div className="text-4xl font-semibold text-white">50K+</div>
+          </div>
+
+          <p className="max-w-[240px] text-center text-sm text-white/55 xl:text-base">
+            Trusted by bars and hospitality teams across multiple locations.
+          </p>
 
           <a
             href="#testimonials"
-            className="w-full whitespace-nowrap rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-center text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10 sm:text-lg"
+            className="mt-2 w-full rounded-xl border border-white/15 bg-white/5 px-6 py-4 text-center text-base font-medium text-white/90 backdrop-blur-sm transition hover:bg-white/10 sm:text-lg"
           >
             See Testimonials
           </a>
