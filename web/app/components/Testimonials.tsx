@@ -149,16 +149,9 @@ export function TestimonialsSection({
   };
 
   return (
-    <section
-      className={cn(
-        "bg-background text-foreground",
-        "pt-0 pb-8 sm:pb-14 md:pb-20 px-0",
-        className,
-      )}
-    >
-      <div className="mx-auto max-w-[1200px] px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16">
-        <div className="flex flex-col items-center gap-4 text-center sm:gap-10">
-        <div className="space-y-1.5 px-4 text-center sm:space-y-2">
+    <div className={cn("text-foreground", className)}>
+      <div className="flex flex-col items-center gap-6 text-center sm:gap-10">
+        <div className="space-y-2 text-center">
           <h2 className="mx-auto max-w-[720px] text-3xl font-semibold leading-tight sm:text-5xl sm:leading-tight">
             {title}
           </h2>
@@ -198,7 +191,8 @@ export function TestimonialsSection({
                     gridTemplateColumns: `repeat(${Math.max(page.length, 1)}, minmax(0, 1fr))`,
                   }}
                   className={cn(
-                    "grid min-w-full shrink-0 gap-4",
+                    "grid min-w-full gap-4",
+                    page.length === 1 && "justify-items-center",
                     page.length === 2 && "mx-auto max-w-[900px] gap-2 sm:gap-3",
                   )}
                 >
@@ -206,7 +200,10 @@ export function TestimonialsSection({
                     <TestimonialCard
                       key={`${pageIndex}-${i}-${testimonial.author.name}`}
                       {...testimonial}
-                      className="h-full max-w-none"
+                      className={cn(
+                        "h-full",
+                        page.length > 1 && "max-w-none",
+                      )}
                     />
                   ))}
                 </div>
@@ -288,8 +285,7 @@ export function TestimonialsSection({
             </button>
           </div>
         )}
-        </div>
       </div>
-    </section>
+    </div>
   );
 }

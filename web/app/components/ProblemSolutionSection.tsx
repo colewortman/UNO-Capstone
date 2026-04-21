@@ -1,17 +1,19 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { FeatureCarousel } from "./ui/feature-carousel";
 import { useMediaQuery } from "@/app/hooks/useMediaQuery";
+import { cn } from "@/lib/utils";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function ProblemSolutionSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 767px)");
+  const [showSolution, setShowSolution] = useState(false);
 
   useGSAP(
     () => {
@@ -24,13 +26,22 @@ export default function ProblemSolutionSection() {
         ".ps-problem .fc-image-panel",
         ".ps-solution .fc-blue-panel",
         ".ps-solution .fc-image-panel",
-        ".ps-title-problem-text",
-        ".ps-title-solution-text",
+        ".ps-mobile-problem .fc-blue-panel",
+        ".ps-mobile-problem .fc-image-panel",
+        ".ps-mobile-solution .fc-blue-panel",
+        ".ps-mobile-solution .fc-image-panel",
       ]) as HTMLElement[];
       animated.forEach((el) => gsap.set(el, { clearProps: "all" }));
 
-      // Skip GSAP animations on mobile — stacked layout shown via CSS instead
-      if (isMobile) return;
+      // Mobile: solution stays static underneath. If starting on the solution
+      // view, set the problem carousel to its split-apart state.
+      if (isMobile) {
+        if (showSolution) {
+          gsap.set(".ps-mobile-problem .fc-blue-panel", { yPercent: -100 });
+          gsap.set(".ps-mobile-problem .fc-image-panel", { yPercent: 100 });
+        }
+        return;
+      }
 
       // Wait one frame so the desktop section is visible and measurable
       const rafId = requestAnimationFrame(() => {
@@ -47,9 +58,6 @@ export default function ProblemSolutionSection() {
           filter: "blur(12px)",
         });
 
-        // Hide "The Solution" title initially (pushed down below the mask)
-        gsap.set(".ps-title-solution-text", { yPercent: 100 });
-
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: ".ps-section",
@@ -60,26 +68,15 @@ export default function ProblemSolutionSection() {
           },
         });
 
-        // --- Title out + Problem carousel out (overlapped) ---
+        // --- Problem carousel out ---
 
-        // "The Problem" title slides down out of its mask
-        tl.to(".ps-title-problem-text", {
-          yPercent: 100,
-          duration: 0.35,
+        // Problem blue panel (with header) slides out to the left
+        tl.to(".ps-problem .fc-blue-panel", {
+          xPercent: -100,
+          opacity: 0,
+          duration: 0.5,
           ease: "power2.in",
         });
-
-        // Problem blue panel starts fading out alongside the title
-        tl.to(
-          ".ps-problem .fc-blue-panel",
-          {
-            xPercent: -100,
-            opacity: 0,
-            duration: 0.5,
-            ease: "power2.in",
-          },
-          "<0.1",
-        );
 
         // Problem image panel blurs and slides to the right
         tl.to(
@@ -94,7 +91,7 @@ export default function ProblemSolutionSection() {
           "<0.05",
         );
 
-        // --- Solution carousel in + Title in (overlapped) ---
+        // --- Solution carousel in ---
 
         tl.addLabel("reveal", "-=0.15");
 
@@ -112,7 +109,7 @@ export default function ProblemSolutionSection() {
           "reveal",
         );
 
-        // Solution blue panel slides in from the right
+        // Solution blue panel (with header) slides in from the right
         tl.fromTo(
           ".ps-solution .fc-blue-panel",
           { xPercent: 100, opacity: 0 },
@@ -125,17 +122,6 @@ export default function ProblemSolutionSection() {
           "reveal+=0.05",
         );
 
-        // "The Solution" title slides up, starting near the end of the carousel reveal
-        tl.to(
-          ".ps-title-solution-text",
-          {
-            yPercent: 0,
-            duration: 0.35,
-            ease: "power2.out",
-          },
-          "-=0.35",
-        );
-
         // Ensure ScrollTrigger recalculates layout
         ScrollTrigger.refresh();
       });
@@ -145,64 +131,98 @@ export default function ProblemSolutionSection() {
     { scope: sectionRef, dependencies: [isMobile] },
   );
 
+  const toggleMobileCarousel = () => {
+    const toSolution = !showSolution;
+    setShowSolution(toSolution);
+
+    // Only the problem carousel animates — solution sits static underneath.
+    // Toggling on splits the problem apart to reveal the solution; toggling
+    // off brings the problem back together to cover the solution.
+    const bluePanel = ".ps-mobile-problem .fc-blue-panel";
+    const imagePanel = ".ps-mobile-problem .fc-image-panel";
+
+    gsap.to(bluePanel, {
+      yPercent: toSolution ? -100 : 0,
+      duration: 0.6,
+      ease: "power2.inOut",
+    });
+    gsap.to(imagePanel, {
+      yPercent: toSolution ? 100 : 0,
+      duration: 0.6,
+      ease: "power2.inOut",
+    });
+  };
+
   return (
     <div ref={sectionRef}>
-      {/* Mobile: stacked layout without GSAP pinning */}
-      <div className={isMobile ? "space-y-12 px-4 py-8" : "hidden"}>
-        <div>
-          <h2 className="mb-6 text-center text-3xl font-semibold sm:text-4xl">
-            The Problem
+      {/* Mobile: single carousel with toggle button, horizontal slide animation */}
+      <div className={isMobile ? "" : "hidden"}>
+        <div className="mb-6 flex items-center justify-center gap-3">
+          {/* Invisible spacer mirrors the button so the header stays centered */}
+          <div className="h-9 w-9" aria-hidden="true" />
+          <h2 className="text-3xl font-semibold sm:text-4xl">
+            {showSolution ? "The Solution" : "The Problem"}
           </h2>
-          <div className="mx-auto h-[420px] w-full max-w-5xl sm:aspect-[16/9] sm:h-auto">
-            <FeatureCarousel />
-          </div>
+          <button
+            type="button"
+            onClick={toggleMobileCarousel}
+            aria-label={showSolution ? "Show The Problem" : "Show The Solution"}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/20 text-foreground transition-colors hover:bg-foreground/10 cursor-pointer"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={2}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className={cn(
+                "h-4 w-4 transition-transform duration-300",
+                showSolution && "rotate-180",
+              )}
+            >
+              <path d="M9 6l6 6-6 6" />
+            </svg>
+          </button>
         </div>
 
-        <div>
-          <h2 className="mb-6 text-center text-3xl font-semibold sm:text-4xl">
-            The Solution
-          </h2>
-          <div className="mx-auto h-[420px] w-full max-w-5xl sm:aspect-[16/9] sm:h-auto">
-            <FeatureCarousel inverted />
+        <div className="relative mx-auto h-[420px] w-full overflow-hidden md:aspect-[16/9] md:h-auto">
+          {/* Solution sits static underneath; paused when covered to save work */}
+          <div className="ps-mobile-solution absolute inset-0 z-10">
+            <FeatureCarousel inverted paused={!showSolution} />
+          </div>
+          {/* Problem renders on top and is the only carousel that animates.
+              Force the image panel fully opaque so the solution beneath
+              doesn't bleed through the default 30% tint. When split apart to
+              reveal the solution, disable pointer events so clicks fall
+              through to the solution's chips underneath. */}
+          <div
+            className={cn(
+              "ps-mobile-problem absolute inset-0 z-20 [&_.fc-image-panel]:bg-secondary",
+              showSolution && "pointer-events-none",
+            )}
+          >
+            <FeatureCarousel paused={showSolution} />
           </div>
         </div>
       </div>
 
       {/* Desktop: GSAP pinned scroll animation */}
-      <section className={isMobile ? "hidden" : "ps-section relative flex h-screen flex-col overflow-hidden"}>
-        {/* Top spacer — contains the title, centered between section top and carousel */}
-        <div className="relative z-10 flex min-h-0 flex-1 items-center justify-center pt-16">
-          <div className="relative">
-            <div className="ps-title-problem overflow-hidden">
-              <h2 className="ps-title-problem-text text-center text-4xl font-semibold md:text-5xl">
-                The Problem
-              </h2>
-            </div>
-            <div className="ps-title-solution absolute inset-0 overflow-hidden">
-              <h2 className="ps-title-solution-text text-center text-4xl font-semibold md:text-5xl">
-                The Solution
-              </h2>
-            </div>
-          </div>
-        </div>
-
+      <section className={isMobile ? "hidden" : "ps-section relative flex h-screen items-center justify-center overflow-hidden"}>
         {/* Carousel row — centered in section with fixed aspect ratio */}
-        <div className="relative flex w-full justify-center px-4 md:px-6 lg:px-8">
-          <div className="relative w-full max-w-6xl aspect-[16/9]">
+        <div className="relative flex w-full justify-center">
+          <div className="relative w-full aspect-[16/9]">
             {/* Problem carousel — normal layout (blue left, images right) */}
             <div className="ps-problem absolute inset-0">
-              <FeatureCarousel />
+              <FeatureCarousel title="The Problem" />
             </div>
 
             {/* Solution carousel — inverted layout (images left, blue right) */}
             <div className="ps-solution absolute inset-0">
-              <FeatureCarousel inverted />
+              <FeatureCarousel title="The Solution" inverted />
             </div>
           </div>
         </div>
-
-        {/* Bottom spacer — equal to top spacer so carousel stays vertically centered */}
-        <div className="min-h-0 flex-1" aria-hidden="true" />
       </section>
     </div>
   );
