@@ -68,7 +68,10 @@ export default function Home() {
       </Section>
 
       {/* How It Works */}
-      <Section id="how-it-works" className="scroll-mt-20">
+      <Section
+        id="how-it-works"
+        className="scroll-mt-20 [@media(max-height:880px)]:py-10 md:[@media(max-height:880px)]:py-12"
+      >
         <HowItWorksSection />
       </Section>
 
