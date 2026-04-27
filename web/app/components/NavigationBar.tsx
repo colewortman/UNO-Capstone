@@ -287,14 +287,14 @@ export default function NavigationBar() {
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
-                {/* Premium link */}
+                {/* ROI calculator link */}
                 <NavigationMenuItem>
                   <NavigationMenuLink
-                    href="/premium"
-                    render={<Link href="/premium" />}
+                    href="/ROI"
+                    render={<Link href="/ROI" />}
                     className={navigationMenuTriggerStyle()}
                   >
-                    Premium
+                    ROI Calculator
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
