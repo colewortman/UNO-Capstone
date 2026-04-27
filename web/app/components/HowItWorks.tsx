@@ -4,8 +4,9 @@
 
 "use client";
 
-import { useEffect, useState } from "react";
-import Image from "next/image";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Image, { type StaticImageData } from "next/image";
+import Link from "next/link";
 import { ScanLine, Smartphone, Upload } from "lucide-react";
 import barScanImage from "@/public/barscanblog.jpg";
 import bottleScanImage from "@/public/bottle_scan.png";
@@ -15,7 +16,17 @@ const STEP_DURATION_MS = 5000;
 const RING_RADIUS = 48;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
 
-const steps = [
+type Step = {
+  step: string;
+  title: string;
+  icon: typeof ScanLine;
+  iconWrap: string;
+  image: StaticImageData;
+  alt: string;
+  link?: { href: string; label: string };
+};
+
+const steps: Step[] = [
   {
     step: "Step 1",
     title: "Scan barcode of one or multiple bottles at a time",
@@ -34,29 +45,40 @@ const steps = [
   },
   {
     step: "Step 3",
-    title: "Export inventory count to POS (integrations coming soon)",
+    title: "Export inventory count to POS",
     icon: Upload,
     iconWrap: "bg-green-500/20 text-green-400 ring-1 ring-green-400/15",
     image: phoneNotificationImage,
     alt: "Exporting inventory count",
+    link: { href: "/integration", label: "Learn More" },
   },
 ];
 
 export default function HowItWorksSection() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [isInView, setIsInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveIndex((i) => (i + 1) % steps.length);
-    }, STEP_DURATION_MS);
-    return () => clearInterval(timer);
+    const el = containerRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { threshold: 0.1 },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const advanceStep = useCallback(() => {
+    setActiveIndex((i) => (i + 1) % steps.length);
   }, []);
 
   const activeStep = steps[activeIndex];
   const ActiveIcon = activeStep.icon;
 
   return (
-    <div className="text-white">
+    <div ref={containerRef} className="text-white">
       {/* Header */}
       <div className="mx-auto max-w-3xl text-center">
         <p className="mb-2 text-xs uppercase tracking-[0.35em] text-blue-300 [@media(max-height:880px)]:mb-1">
@@ -119,17 +141,37 @@ export default function HowItWorksSection() {
                               ["--ring-circumference" as string]:
                                 RING_CIRCUMFERENCE,
                               animation: `draw-ring ${STEP_DURATION_MS}ms linear forwards`,
+                              animationPlayState: isInView
+                                ? "running"
+                                : "paused",
                             }
                           : undefined
                       }
+                      onAnimationEnd={isActive ? advanceStep : undefined}
                     />
                   </svg>
                 </div>
               </div>
 
-              <p className="mt-6 max-w-[320px] text-base leading-snug text-white/70 xl:text-lg">
+              <p className="mt-6 min-h-[2.75em] max-w-[320px] text-base leading-snug text-white/70 xl:text-lg">
                 {item.title}
               </p>
+
+              {item.link ? (
+                <Link
+                  href={item.link.href}
+                  className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-blue-400 transition hover:text-blue-300 xl:text-base"
+                >
+                  {item.link.label} <span aria-hidden>→</span>
+                </Link>
+              ) : (
+                <span
+                  aria-hidden
+                  className="mt-3 inline-flex items-center gap-1 text-sm font-medium xl:text-base invisible"
+                >
+                  Learn More <span>→</span>
+                </span>
+              )}
 
               <div className="mt-8 w-full overflow-hidden rounded-[20px] border border-white/8 bg-white/[0.03] shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
                 <Image
@@ -177,7 +219,9 @@ export default function HowItWorksSection() {
                   style={{
                     ["--ring-circumference" as string]: RING_CIRCUMFERENCE,
                     animation: `draw-ring ${STEP_DURATION_MS}ms linear forwards`,
+                    animationPlayState: isInView ? "running" : "paused",
                   }}
+                  onAnimationEnd={advanceStep}
                 />
               </svg>
             </div>
@@ -185,6 +229,22 @@ export default function HowItWorksSection() {
             <p className="mt-4 max-w-[28rem] text-sm leading-snug text-white/70 sm:mt-6 sm:text-lg [@media(max-height:880px)]:mt-3 [@media(max-height:880px)]:text-xs [@media(max-height:880px)]:leading-5">
               {activeStep.title}
             </p>
+
+            {activeStep.link ? (
+              <Link
+                href={activeStep.link.href}
+                className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-blue-400 transition hover:text-blue-300 sm:mt-3 sm:text-base"
+              >
+                {activeStep.link.label} <span aria-hidden>→</span>
+              </Link>
+            ) : (
+              <span
+                aria-hidden
+                className="mt-2 inline-flex items-center gap-1 text-sm font-medium sm:mt-3 sm:text-base invisible"
+              >
+                Learn More <span>→</span>
+              </span>
+            )}
 
             <div className="mx-auto mt-5 w-full max-w-[380px] overflow-hidden rounded-[20px] border border-white/8 bg-white/[0.03] sm:mt-8 sm:max-w-[440px] [@media(max-height:880px)]:mt-3 [@media(max-height:880px)]:max-w-[220px]">
               <Image
