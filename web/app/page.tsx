@@ -6,7 +6,6 @@ import ProductDemoSection from "./components/ProductDemoSection";
 import FinalCTASection from "./components/FinalCTASection";
 import FeatureHighlightsSection from "./components/FeatureHighlights";
 import SocialProofSection from "./components/SocialProofSection";
-import ROICalculator from "./components/ROICalculator";
 import { TestimonialsSection } from "./components/Testimonials";
 import Comparisons from "./components/ComparisonSection";
 import HowItWorksSection from "./components/HowItWorks";
@@ -93,17 +92,9 @@ export default function Home() {
         <FeatureHighlightsSection />
       </Section>
 
-      {/* Comparisons (differentiator) — full bleed */}
+      {/* Comparisons */}
       <Section id="comparisons" full flush className="scroll-mt-20">
         <Comparisons />
-      </Section>
-
-      {/* ROI Calculator */}
-      <Section
-        className="scroll-mt-20 sm:[@media(max-height:800px)]:py-10 lg:[@media(max-height:800px)]:py-12"
-        id="roi-calculator"
-      >
-        <ROICalculator />
       </Section>
 
       {/* CTA */}

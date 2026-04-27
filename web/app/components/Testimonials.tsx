@@ -111,7 +111,7 @@ export function TestimonialsSection({
   className,
 }: TestimonialsSectionProps) {
   const isTablet = useMediaQuery("(min-width: 768px)");
-  const cardsPerPage = isTablet ? 4 : 1;
+  const cardsPerPage = isTablet ? 3 : 1;
 
   const pages = useMemo(() => {
     const result: typeof testimonials[] = [];
