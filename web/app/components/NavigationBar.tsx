@@ -238,24 +238,6 @@ export default function NavigationBar() {
                           </li>
                           <li>
                             <NavigationMenuLink
-                              href="/#roi-calculator"
-                              render={
-                                <Link
-                                  href="/#roi-calculator"
-                                  onClick={scrollToHash}
-                                />
-                              }
-                            >
-                              <span className="font-medium">
-                                ROI Calculator
-                              </span>
-                              <span className="text-muted-foreground text-xs">
-                                See how much Bar IQ can save your business
-                              </span>
-                            </NavigationMenuLink>
-                          </li>
-                          <li>
-                            <NavigationMenuLink
                               href="/#final-cta"
                               render={
                                 <Link
