@@ -112,11 +112,13 @@ export function FeatureCarousel({
   className = "",
   title,
   paused = false,
+  onChipClick,
 }: {
   inverted?: boolean;
   className?: string;
   title?: string;
   paused?: boolean;
+  onChipClick?: () => void;
 }) {
   const [step, setStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -155,6 +157,8 @@ export function FeatureCarousel({
       () => setIsPaused(false),
       AUTO_PLAY_INTERVAL * 3,
     );
+
+    onChipClick?.();
   };
 
   useEffect(() => {
