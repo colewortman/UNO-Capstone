@@ -118,7 +118,7 @@ export function TestimonialsSection({
     return () => window.removeEventListener("resize", updateViewportWidth);
   }, []);
 
-  const cardsPerPage = viewportWidth >= 1133 ? 4 : viewportWidth >= 700 ? 3 : 1;
+  const cardsPerPage = viewportWidth >= 700 ? 3 : 1;
 
   const pages = useMemo(() => {
     const result: typeof testimonials[] = [];
