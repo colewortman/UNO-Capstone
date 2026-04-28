@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import FooterSection from "../components/FooterSection";
 
 const faqItems = [
   {
@@ -47,6 +48,7 @@ export default function FAQSection() {
   }, [query]);
 
   return (
+    <>
     <section id="faq" className="bg-black text-white">
       {/* Header */}
       <div className="px-4 py-10 sm:px-6 sm:py-12 md:px-8 md:py-14 lg:px-12 lg:py-16 xl:px-16">
@@ -168,5 +170,7 @@ export default function FAQSection() {
         </div>
       </div>
     </section>
+    <FooterSection />
+    </>
   );
 }

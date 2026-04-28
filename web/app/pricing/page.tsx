@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Check } from "lucide-react";
 import { GlowingEffect } from "@/app/components/ui/glowing-effect";
+import FooterSection from "@/app/components/FooterSection";
 
 /**
  * Pricing tiers for BarIQ subscriptions.
@@ -332,6 +333,8 @@ export default function PricingPage() {
           {tiers.map((tier) => renderCard(tier))}
         </div>
       </div>
+
+      <FooterSection />
     </div>
   );
 }
