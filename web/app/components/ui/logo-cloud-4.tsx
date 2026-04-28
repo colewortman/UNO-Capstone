@@ -2,9 +2,11 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import Image, { type StaticImageData } from "next/image";
+import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
 type Logo = {
-  src: string;
+  src: StaticImageData;
   alt: string;
   width?: number;
   height?: number;
@@ -13,20 +15,33 @@ type Logo = {
 type LogoCloudProps = React.ComponentProps<"div"> & {
   logos: Logo[];
   perPage?: number;
+  perPageMobile?: number;
   interval?: number;
 };
 
 const DURATION = 8;
 
-export function LogoCloud({ logos, perPage = 4 }: LogoCloudProps) {
-  const totalPages = Math.ceil(logos.length / perPage);
+export function LogoCloud({
+  logos,
+  perPage = 4,
+  perPageMobile,
+}: LogoCloudProps) {
+  const isDesktop = useMediaQuery("(min-width: 640px)");
+  const effectivePerPage =
+    !isDesktop && perPageMobile !== undefined ? perPageMobile : perPage;
+  const totalPages = Math.ceil(logos.length / effectivePerPage);
   const [page, setPage] = useState(0);
+
+  // Keep page index valid when perPage changes between breakpoints.
+  useEffect(() => {
+    setPage((p) => (p >= totalPages ? 0 : p));
+  }, [totalPages]);
   const [barKey, setBarKey] = useState(0);
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  const start = page * perPage;
-  const visible = logos.slice(start, start + perPage);
+  const start = page * effectivePerPage;
+  const visible = logos.slice(start, start + effectivePerPage);
 
   const advance = useCallback(
     (dir: 1 | -1) => {
@@ -47,15 +62,15 @@ export function LogoCloud({ logos, perPage = 4 }: LogoCloudProps) {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (!isInView) return;
-    const timer = setTimeout(() => advance(1), DURATION * 1000);
-    return () => clearTimeout(timer);
-  }, [page, barKey, advance, isInView]);
-
   return (
     <div ref={containerRef} className="relative mx-auto max-w-3xl py-6">
-      <div className="flex items-center gap-4">
+      <style>{`
+        @keyframes logoCloudProgress {
+          from { width: 0%; }
+          to { width: 100%; }
+        }
+      `}</style>
+      <div className="flex items-center gap-2 sm:gap-4">
         <button
           onClick={() => advance(-1)}
           aria-label="Previous logos"
@@ -83,14 +98,11 @@ export function LogoCloud({ logos, perPage = 4 }: LogoCloudProps) {
               className="flex items-center justify-center gap-6 sm:gap-10 md:gap-14"
             >
               {visible.map((logo) => (
-                <img
+                <Image
                   alt={logo.alt}
-                  className="pointer-events-none h-4 select-none brightness-0 invert md:h-5"
-                  height="auto"
+                  className="pointer-events-none h-7 w-auto select-none brightness-0 invert sm:h-8 md:h-10"
                   key={`logo-${logo.alt}`}
-                  loading="lazy"
                   src={logo.src}
-                  width="auto"
                 />
               ))}
             </motion.div>
@@ -116,15 +128,16 @@ export function LogoCloud({ logos, perPage = 4 }: LogoCloudProps) {
 
       {/* Progress bar */}
       <div className="mx-auto mt-6 h-0.5 overflow-hidden rounded-full bg-white/10">
-        <motion.div
+        <div
           key={barKey}
           className="h-full rounded-full"
           style={{
             background: "linear-gradient(90deg, #3478F7, #3B81F7)",
+            animation: `logoCloudProgress ${DURATION}s linear forwards`,
+            animationPlayState: isInView ? "running" : "paused",
+            width: 0,
           }}
-          initial={{ width: "0%" }}
-          animate={{ width: "100%" }}
-          transition={{ duration: DURATION, ease: "linear" }}
+          onAnimationEnd={() => advance(1)}
         />
       </div>
     </div>

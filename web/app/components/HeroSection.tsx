@@ -4,7 +4,7 @@
  */
 
 import Image from "next/image";
-import heroImage from "@/public/hero_1.4.png";
+import heroImage from "@/public/hero_1.4.webp";
 
 export default function HeroSection() {
   return (

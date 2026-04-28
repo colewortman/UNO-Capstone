@@ -178,6 +178,29 @@ const VideoPlayer = ({ src }: { src: string }) => {
       />
 
       <AnimatePresence>
+        {!isPlaying && (
+          <motion.button
+            type="button"
+            aria-label="Play video"
+            onClick={togglePlay}
+            className="absolute inset-0 flex items-center justify-center bg-black/20 transition-colors hover:bg-black/30"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.span
+              className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-black shadow-[0_4px_24px_rgba(0,0,0,0.4)] sm:h-20 sm:w-20"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Play className="h-7 w-7 translate-x-0.5 fill-current sm:h-8 sm:w-8" />
+            </motion.span>
+          </motion.button>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
         {showControls && (
           <motion.div
             className="absolute bottom-0 mx-auto max-w-xl left-0 right-0 p-4 m-2 bg-[#11111198] backdrop-blur-md rounded-2xl"

@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
+import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 import {
   TestimonialCard,
   TestimonialAuthor,
@@ -109,16 +110,8 @@ export function TestimonialsSection({
   testimonials = defaultTestimonials,
   className,
 }: TestimonialsSectionProps) {
-  const [viewportWidth, setViewportWidth] = useState(0);
-
-  useEffect(() => {
-    const updateViewportWidth = () => setViewportWidth(window.innerWidth);
-    updateViewportWidth();
-    window.addEventListener("resize", updateViewportWidth);
-    return () => window.removeEventListener("resize", updateViewportWidth);
-  }, []);
-
-  const cardsPerPage = viewportWidth >= 700 ? 3 : 1;
+  const isTablet = useMediaQuery("(min-width: 768px)");
+  const cardsPerPage = isTablet ? 3 : 1;
 
   const pages = useMemo(() => {
     const result: typeof testimonials[] = [];
