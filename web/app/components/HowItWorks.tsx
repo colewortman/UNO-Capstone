@@ -4,7 +4,6 @@
 
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
 import Image, { type StaticImageData } from "next/image";
 import Link from "next/link";
 import { ScanLine, Smartphone, Upload } from "lucide-react";
@@ -12,250 +11,124 @@ import barScanImage from "@/public/barscanblog.jpg";
 import bottleScanImage from "@/public/bottle_scan.png";
 import phoneNotificationImage from "@/public/phone_notification.png";
 
-const STEP_DURATION_MS = 5000;
-const RING_RADIUS = 48;
-const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
-
 type Step = {
   step: string;
   title: string;
+  description: string;
   icon: typeof ScanLine;
   iconWrap: string;
+  cardAccent: string;
   image: StaticImageData;
   alt: string;
+  recommended?: boolean;
   link?: { href: string; label: string };
 };
 
 const steps: Step[] = [
   {
     step: "Step 1",
-    title: "Scan barcode of one or multiple bottles at a time",
+    title: "Scan",
+    description: "Scan the barcode of one or multiple bottles at a time.",
     icon: ScanLine,
-    iconWrap: "bg-yellow-500/20 text-yellow-400 ring-1 ring-yellow-400/15",
+    iconWrap: "bg-yellow-500/15 text-yellow-300",
+    cardAccent: "hover:border-yellow-400/40 hover:shadow-yellow-500/10",
     image: barScanImage,
     alt: "Scanning bottle barcode",
   },
   {
     step: "Step 2",
-    title: "Point phone camera at liquid level or full bottle",
+    title: "Measure",
+    description: "Point your phone camera at the liquid level or full bottle.",
     icon: Smartphone,
-    iconWrap: "bg-blue-500/20 text-blue-400 ring-1 ring-blue-400/15",
+    iconWrap: "bg-blue-500/15 text-blue-300",
+    cardAccent: "hover:border-blue-400/40 hover:shadow-blue-500/10",
     image: bottleScanImage,
     alt: "Phone measuring bottle level",
   },
   {
     step: "Step 3",
-    title: "Export inventory count to POS",
+    title: "Export",
+    description: "Export your inventory count directly to your POS.",
     icon: Upload,
-    iconWrap: "bg-green-500/20 text-green-400 ring-1 ring-green-400/15",
+    iconWrap: "bg-green-500/15 text-green-300",
+    cardAccent:
+      "border-blue-400/45 bg-blue-950/30 hover:border-blue-300/60 hover:shadow-blue-500/15",
     image: phoneNotificationImage,
     alt: "Exporting inventory count",
+    recommended: true,
     link: { href: "/integration", label: "Learn More" },
   },
 ];
 
 export default function HowItWorksSection() {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [isInView, setIsInView] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsInView(entry.isIntersecting),
-      { threshold: 0.1 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
-
-  const advanceStep = useCallback(() => {
-    setActiveIndex((i) => (i + 1) % steps.length);
-  }, []);
-
-  const activeStep = steps[activeIndex];
-  const ActiveIcon = activeStep.icon;
-
   return (
-    <div ref={containerRef} className="text-white">
-      {/* Header */}
+    <section className="text-white">
       <div className="mx-auto max-w-3xl text-center">
-        <p className="mb-2 text-xs uppercase tracking-[0.35em] text-blue-300 [@media(max-height:880px)]:mb-1">
-          How It Works
-        </p>
-        <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-4xl md:text-5xl [@media(max-height:880px)]:text-xl sm:[@media(max-height:880px)]:text-3xl">
-          Inventory in three simple steps.
+        <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+          Get Started in 3 Easy Steps
         </h2>
 
-        <p className="mx-auto mt-3 hidden max-w-2xl text-base leading-relaxed text-white/60 sm:mt-4 sm:block sm:text-lg [@media(max-height:880px)]:hidden">
-          Liqr Vision’s patent-pending AI Vision technology does the work.
+        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg">
+          Liqr Vision’s patent-pending AI Vision technology makes inventory
+          control simple, fast, and accurate.
         </p>
       </div>
 
-      {/* Desktop */}
-      <div className="relative mt-14 hidden lg:grid lg:grid-cols-3 lg:gap-10 xl:gap-14">
-        {steps.map((item, idx) => {
+      <div className="mt-14 grid gap-6 lg:grid-cols-3">
+        {steps.map((item) => {
           const Icon = item.icon;
-          const isActive = idx === activeIndex;
-          const isComplete = idx < activeIndex;
 
           return (
             <div
               key={item.step}
-              className="relative flex flex-col items-center text-center"
+              className={`relative overflow-hidden rounded-[28px] border border-white/10 bg-[#121318] p-6 shadow-2xl shadow-black/20 transition duration-300 ${item.cardAccent}`}
             >
-              <p className="text-2xl font-semibold tracking-tight text-white lg:text-3xl">
-                {item.step}
-              </p>
-
-              <div className="mt-6 flex w-full items-center justify-center">
-                <div className="relative">
-                  <div
-                    className={`relative z-10 flex h-16 w-16 items-center justify-center rounded-full ${item.iconWrap} backdrop-blur-sm lg:h-20 lg:w-20`}
-                  >
-                    <Icon className="h-8 w-8 stroke-[2.2] lg:h-9 lg:w-9" />
-                  </div>
-
-                  <svg
-                    key={activeIndex}
-                    className="absolute -inset-1.5 -rotate-90"
-                    viewBox="0 0 100 100"
-                    aria-hidden="true"
-                  >
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r={RING_RADIUS}
-                      fill="none"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeDasharray={RING_CIRCUMFERENCE}
-                      strokeDashoffset={
-                        isComplete ? 0 : RING_CIRCUMFERENCE
-                      }
-                      style={
-                        isActive
-                          ? {
-                              ["--ring-circumference" as string]:
-                                RING_CIRCUMFERENCE,
-                              animation: `draw-ring ${STEP_DURATION_MS}ms linear forwards`,
-                              animationPlayState: isInView
-                                ? "running"
-                                : "paused",
-                            }
-                          : undefined
-                      }
-                      onAnimationEnd={isActive ? advanceStep : undefined}
-                    />
-                  </svg>
+              {item.recommended && (
+                <div className="absolute right-6 top-6 rounded-full bg-blue-500/20 px-4 py-1 text-sm font-semibold text-blue-200 ring-1 ring-blue-300/20">
+                  Recommended
                 </div>
-              </div>
-
-              <p className="mt-6 min-h-[2.75em] max-w-[320px] text-base leading-snug text-white/70 xl:text-lg">
-                {item.title}
-              </p>
-
-              {item.link ? (
-                <Link
-                  href={item.link.href}
-                  className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-blue-400 transition hover:text-blue-300 xl:text-base"
-                >
-                  {item.link.label} <span aria-hidden>→</span>
-                </Link>
-              ) : (
-                <span
-                  aria-hidden
-                  className="mt-3 inline-flex items-center gap-1 text-sm font-medium xl:text-base invisible"
-                >
-                  Learn More <span>→</span>
-                </span>
               )}
 
-              <div className="mt-8 w-full overflow-hidden rounded-[20px] border border-white/8 bg-white/[0.03] shadow-[0_0_0_1px_rgba(255,255,255,0.02)]">
+              <div
+                className={`flex h-14 w-14 items-center justify-center rounded-2xl ${item.iconWrap}`}
+              >
+                <Icon className="h-7 w-7 stroke-[2.2]" />
+              </div>
+
+              <div className="mt-8">
+                <p className="text-sm font-semibold uppercase tracking-[0.25em] text-white/35">
+                  {item.step}
+                </p>
+
+                <h3 className="mt-3 text-3xl font-semibold tracking-tight text-white">
+                  {item.title}
+                </h3>
+
+                <p className="mt-4 min-h-[3.5rem] text-base leading-relaxed text-white/55">
+                  {item.description}
+                </p>
+              </div>
+
+              <div className="mt-8 overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03]">
                 <Image
                   src={item.image}
                   alt={item.alt}
-                  className="h-[230px] w-full object-cover"
+                  className="h-[220px] w-full object-cover"
                 />
               </div>
+
+              {item.link && (
+                <Link
+                  href={item.link.href}
+                  className="mt-6 inline-flex items-center gap-1 text-sm font-semibold text-blue-300 transition hover:text-blue-200"
+                >
+                  {item.link.label} <span aria-hidden>→</span>
+                </Link>
+              )}
             </div>
           );
         })}
       </div>
-
-      {/* Mobile / Tablet — single card, auto-cycles every 5s */}
-      <div className="mt-8 sm:mt-12 lg:hidden [@media(max-height:880px)]:mt-5">
-        <div className="rounded-[28px] border border-white/8 bg-white/[0.02] p-4 sm:p-6 [@media(max-height:880px)]:p-3">
-          <div className="flex flex-col items-center text-center">
-            <p className="text-xl font-semibold tracking-tight text-white sm:text-3xl [@media(max-height:880px)]:text-lg">
-              {activeStep.step}
-            </p>
-
-            <div className="relative mt-4 h-16 w-16 sm:mt-6 sm:h-24 sm:w-24 [@media(max-height:880px)]:mt-3 [@media(max-height:880px)]:h-14 [@media(max-height:880px)]:w-14">
-              <div
-                className={`absolute inset-1.5 flex items-center justify-center rounded-full ${activeStep.iconWrap}`}
-              >
-                <ActiveIcon className="h-6 w-6 stroke-[2.2] sm:h-9 sm:w-9 [@media(max-height:880px)]:h-5 [@media(max-height:880px)]:w-5" />
-              </div>
-
-              <svg
-                key={activeIndex}
-                className="absolute inset-0 h-full w-full -rotate-90"
-                viewBox="0 0 100 100"
-                aria-hidden="true"
-              >
-                <circle
-                  cx="50"
-                  cy="50"
-                  r={RING_RADIUS}
-                  fill="none"
-                  stroke="white"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeDasharray={RING_CIRCUMFERENCE}
-                  strokeDashoffset={RING_CIRCUMFERENCE}
-                  style={{
-                    ["--ring-circumference" as string]: RING_CIRCUMFERENCE,
-                    animation: `draw-ring ${STEP_DURATION_MS}ms linear forwards`,
-                    animationPlayState: isInView ? "running" : "paused",
-                  }}
-                  onAnimationEnd={advanceStep}
-                />
-              </svg>
-            </div>
-
-            <p className="mt-4 max-w-[28rem] text-sm leading-snug text-white/70 sm:mt-6 sm:text-lg [@media(max-height:880px)]:mt-3 [@media(max-height:880px)]:text-xs [@media(max-height:880px)]:leading-5">
-              {activeStep.title}
-            </p>
-
-            {activeStep.link ? (
-              <Link
-                href={activeStep.link.href}
-                className="mt-2 inline-flex items-center gap-1 text-sm font-medium text-blue-400 transition hover:text-blue-300 sm:mt-3 sm:text-base"
-              >
-                {activeStep.link.label} <span aria-hidden>→</span>
-              </Link>
-            ) : (
-              <span
-                aria-hidden
-                className="mt-2 inline-flex items-center gap-1 text-sm font-medium sm:mt-3 sm:text-base invisible"
-              >
-                Learn More <span>→</span>
-              </span>
-            )}
-
-            <div className="mx-auto mt-5 w-full max-w-[380px] overflow-hidden rounded-[20px] border border-white/8 bg-white/[0.03] sm:mt-8 sm:max-w-[440px] [@media(max-height:880px)]:mt-3 [@media(max-height:880px)]:max-w-[220px]">
-              <Image
-                src={activeStep.image}
-                alt={activeStep.alt}
-                className="aspect-[3/2] w-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    </section>
   );
 }
