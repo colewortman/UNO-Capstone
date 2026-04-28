@@ -12,7 +12,7 @@ type Step = {
   title: string;
   description: string;
   icon: typeof ScanLine;
-  link?: { href: string; label: string };
+  iconWrap: string;
 };
 
 const steps: Step[] = [
@@ -22,6 +22,7 @@ const steps: Step[] = [
     description:
       "Scan the barcode of one or multiple bottles at a time.",
     icon: ScanLine,
+    iconWrap: "bg-yellow-500/20 text-yellow-400 ring-1 ring-yellow-400/20",
   },
   {
     step: "Step 2",
@@ -29,6 +30,7 @@ const steps: Step[] = [
     description:
       "Point your phone camera at the liquid level or full bottle.",
     icon: Smartphone,
+    iconWrap: "bg-blue-500/20 text-blue-400 ring-1 ring-blue-400/20",
   },
   {
     step: "Step 3",
@@ -36,7 +38,7 @@ const steps: Step[] = [
     description:
       "Export your inventory count directly to your POS system.",
     icon: Upload,
-    link: { href: "/integration", label: "Learn More" },
+    iconWrap: "bg-green-500/20 text-green-400 ring-1 ring-green-400/20",
   },
 ];
 
@@ -70,8 +72,10 @@ export default function HowItWorksSection() {
               className="relative rounded-[28px] border border-white/10 bg-[#121318] p-8 text-center transition hover:border-white/20"
             >
               {/* Icon */}
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/5">
-                <Icon className="h-8 w-8 text-white/80" />
+              <div
+                className={`mx-auto flex h-16 w-16 items-center justify-center rounded-2xl ${item.iconWrap}`}
+              >
+                <Icon className="h-8 w-8 stroke-[2.2]" />
               </div>
 
               {/* Step */}
@@ -88,19 +92,19 @@ export default function HowItWorksSection() {
               <p className="mt-3 text-sm leading-relaxed text-white/60">
                 {item.description}
               </p>
-
-              {/* Link */}
-              {item.link && (
-                <Link
-                  href={item.link.href}
-                  className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-blue-400 hover:text-blue-300"
-                >
-                  {item.link.label} →
-                </Link>
-              )}
             </div>
           );
         })}
+      </div>
+
+      {/* Centered CTA */}
+      <div className="mt-10 flex justify-center">
+        <Link
+          href="/integration"
+          className="inline-flex items-center gap-2 rounded-full border border-blue-400/30 bg-blue-500/10 px-6 py-3 text-sm font-semibold text-blue-300 transition hover:bg-blue-500/20 hover:text-blue-200"
+        >
+          Learn More →
+        </Link>
       </div>
     </section>
   );
