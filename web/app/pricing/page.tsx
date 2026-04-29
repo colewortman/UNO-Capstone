@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Check } from "lucide-react";
 import { GlowingEffect } from "@/app/components/ui/glowing-effect";
@@ -18,7 +17,7 @@ import FooterSection from "@/app/components/FooterSection";
  *   description — Short marketing copy shown below the tier name
  *   icon        — Inline SVG used as the tier's visual icon
  *   cta         — Call-to-action button label
- *   ctaStyle    — Tailwind classes for the CTA button (differs for recommended tier)
+ *   ctaStyle    — Tailwind classes for the CTA button (differs for highlighted tier)
  *   recommended — Set true on exactly ONE tier to highlight it with a blue glow + badge
  *   features    — Bullet list of included features shown in the card
  *   prefix      — Small label above the feature list (e.g. "Basic Features:" or "Everything in X plus:")
@@ -187,40 +186,40 @@ export default function PricingPage() {
   const renderCard = (tier: (typeof tiers)[0]) => (
     <div
       key={tier.name}
-      className={`relative flex h-full flex-col rounded-xl border p-3 transition-all sm:rounded-2xl sm:p-6 ${
+      className={`relative flex h-full flex-col rounded-xl border p-3 transition-all sm:rounded-2xl sm:p-4 lg:p-3.5 xl:p-4 ${
         tier.recommended
           ? "border-blue-500/50 bg-[#1a1f2e] shadow-[0_0_40px_rgba(59,130,246,0.15)]"
           : "border-white/10 bg-[#18181b]"
       }`}
     >
-      <GlowingEffect disabled={false} spread={30} proximity={60} borderWidth={1.5} />
+      <GlowingEffect disabled={false} spread={30} proximity={60} borderWidth={1.5} variant="white" />
       {tier.recommended && (
         <span className="absolute right-2 top-2 rounded-full border border-blue-400/30 bg-blue-500/20 px-2 py-0.5 text-[10px] font-medium text-blue-300 sm:right-4 sm:top-4 sm:px-3 sm:text-xs">
-          Recommended
+          Most Popular
         </span>
       )}
-      <div className={`mb-2 w-fit rounded-lg p-1.5 sm:mb-4 sm:rounded-xl sm:p-2.5 ${tier.recommended ? "bg-blue-500/15 text-blue-300" : "bg-white/8 text-white/60"}`}>
+      <div className={`mb-2 w-fit rounded-lg p-1.5 sm:mb-3 sm:rounded-xl sm:p-2 ${tier.recommended ? "bg-blue-500/15 text-blue-300" : "bg-white/8 text-white/60"}`}>
         <div className="h-5 w-5 sm:h-7 sm:w-7 [&>svg]:h-full [&>svg]:w-full">
           {tier.icon}
         </div>
       </div>
       <h2 className="mb-1 text-sm font-semibold sm:mb-1.5 sm:text-xl">{tier.name}</h2>
-      <p className="mb-3 hidden text-sm leading-relaxed text-white/50 sm:mb-6 sm:block">{tier.description}</p>
+      <p className="mb-3 hidden text-sm leading-relaxed text-white/50 sm:mb-4 sm:block">{tier.description}</p>
       <div className="mb-1 flex items-end gap-0.5 sm:gap-1">
         <span className="text-2xl font-bold sm:text-4xl">${getPrice(tier.monthly)}</span>
         <span className="mb-0.5 text-[10px] text-white/50 sm:mb-1 sm:text-sm">/mo</span>
       </div>
       {isYearly && (
-        <p className="mb-3 text-[10px] text-white/35 sm:mb-6 sm:text-xs">
+        <p className="mb-3 text-[10px] text-white/35 sm:mb-4 sm:text-xs">
           Billed as ${getPrice(tier.monthly) * 12}/yr
         </p>
       )}
-      {!isYearly && <div className="mb-3 sm:mb-6" />}
-      <div className="mb-3 h-px bg-white/10 sm:mb-5" />
-      <p className="mb-2 hidden text-xs font-medium uppercase tracking-widest text-white/35 sm:mb-3 sm:block">
+      {!isYearly && <div className="mb-3 sm:mb-4" />}
+      <div className="mb-3 h-px bg-white/10 sm:mb-4" />
+      <p className="mb-2 hidden text-xs font-medium uppercase tracking-widest text-white/35 sm:mb-2 sm:block">
         {tier.prefix}
       </p>
-      <ul className="mb-4 hidden flex-1 space-y-2.5 sm:mb-8 sm:block">
+      <ul className="mb-4 hidden flex-1 space-y-2 sm:mb-6 sm:block">
         {tier.features
           .filter((f) => !f.endsWith("plus:"))
           .map((feature) => (
@@ -247,22 +246,12 @@ export default function PricingPage() {
 
   return (
     <div className="min-h-screen bg-[#111113] text-white">
-      <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:py-24">
-
-        {/* ── Back link ── */}
-        <div className="mb-4 text-center">
-          <Link
-            href="/"
-            className="text-sm text-white/40 hover:text-white/70 transition-colors"
-          >
-            ← Back to Home
-          </Link>
-        </div>
+      <div className="mx-auto max-w-[1800px] px-4 py-10 sm:px-6 md:py-12">
 
         {/* ── Page heading + subtitle ── */}
-        <div className="mb-12 text-center">
+        <div className="mb-8 text-center md:mb-10">
           <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-            From concept to launch — all in one place.
+            Choose the plan that works for you
           </h1>
           <p className="mx-auto max-w-2xl text-white/55 text-lg">
             End-to-end bar management, without the chaos. Stay aligned on pour costs
@@ -273,7 +262,7 @@ export default function PricingPage() {
         {/* ── Billing toggle: monthly / yearly ──
             Active selection gets a white pill background.
             The yearly savings badge is always visible to encourage upgrades. */}
-        <div className="mb-14 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-4">
+        <div className="mb-8 flex flex-col items-center justify-center gap-3 sm:mb-10 sm:flex-row sm:gap-4">
           <div className="flex items-center gap-2">
             <button
               onClick={() => setIsYearly(false)}
@@ -299,8 +288,19 @@ export default function PricingPage() {
           <span className="text-sm text-blue-400">Save up to 20% with yearly</span>
         </div>
 
-        {/* ── Mobile / tablet carousel (hidden on lg+) ── */}
-        <div className="relative lg:hidden">
+        {/* ── Mobile grid (shows all plans at once) ── */}
+        <div className="sm:hidden">
+          <div className="flex flex-wrap justify-center gap-2">
+            {tiers.map((tier) => (
+              <div key={tier.name} className="w-[calc(33.333%-0.5rem)] min-w-[102px] max-w-[128px]">
+                {renderCard(tier)}
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Tablet carousel (hidden on mobile and lg+) ── */}
+        <div className="relative hidden sm:block lg:hidden">
           <div
             ref={carouselRef}
             onScroll={handleCarouselScroll}
@@ -329,7 +329,7 @@ export default function PricingPage() {
         </div>
 
         {/* ── Desktop pricing grid (lg+) ── */}
-        <div className="hidden lg:grid lg:grid-cols-3 xl:grid-cols-5 gap-5">
+        <div className="hidden gap-3 lg:grid lg:grid-cols-5">
           {tiers.map((tier) => renderCard(tier))}
         </div>
       </div>

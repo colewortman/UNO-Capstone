@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useRef, useState } from "react"
+import { Play } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Avatar, AvatarFallback, AvatarImage } from "@/app/components/ui/avatar"
 
@@ -28,6 +29,8 @@ export function TestimonialCard({
   className
 }: TestimonialCardProps) {
   const [isExpanded, setIsExpanded] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const isLinkedCard = Boolean(href && href !== "#")
   const Card = isLinkedCard ? 'a' : 'div'
   const initials = author.name
@@ -36,6 +39,16 @@ export function TestimonialCard({
     .join("")
     .slice(0, 2)
   const needsToggle = text.length > 120
+
+  const handlePlay = async () => {
+    if (!videoRef.current) return
+    try {
+      await videoRef.current.play()
+      setIsPlaying(true)
+    } catch {
+      setIsPlaying(false)
+    }
+  }
 
   return (
     <Card
@@ -84,17 +97,33 @@ export function TestimonialCard({
         )}
       </div>
       {videoSrc && (
-        <div className="mt-4 aspect-video w-full overflow-hidden rounded-md border bg-black">
+        <div className="relative mt-4 aspect-video w-full overflow-hidden rounded-md border bg-black">
           <video
+            ref={videoRef}
             className="h-full w-full object-cover"
-            controls
             preload="metadata"
             playsInline
             poster={thumbnailSrc ?? author.avatar}
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onEnded={() => setIsPlaying(false)}
+            controls={isPlaying}
           >
             <source src={videoSrc} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
+          {!isPlaying && (
+            <button
+              type="button"
+              aria-label="Play testimonial video"
+              onClick={handlePlay}
+              className="absolute inset-0 flex items-center justify-center bg-black/25 transition hover:bg-black/35"
+            >
+              <span className="flex h-12 w-12 items-center justify-center rounded-full border border-white/35 bg-white/20 text-white shadow-lg backdrop-blur-sm">
+                <Play className="h-5 w-5 translate-x-[1px] fill-current" />
+              </span>
+            </button>
+          )}
         </div>
       )}
     </Card>

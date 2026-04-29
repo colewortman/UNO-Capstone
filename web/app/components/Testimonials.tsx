@@ -32,7 +32,7 @@ const defaultTestimonials: NonNullable<
     },
     text: "Liqr Vision has revolutionized our inventory management!",
     videoSrc: "/UNO-Capstone/videos/testimonials/johndoe.mp4",
-    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
+    thumbnailSrc: "/UNO-Capstone/testimonial2.jpg",
   },
   {
     author: {
@@ -52,7 +52,7 @@ const defaultTestimonials: NonNullable<
     },
     text: "BarIq helps our team move faster with fewer inventory mistakes.",
     videoSrc: "/UNO-Capstone/videos/testimonials/janedoe.mp4",
-    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
+    thumbnailSrc: "/UNO-Capstone/testimonial3.jpg",
   },
   {
     author: {
@@ -62,17 +62,17 @@ const defaultTestimonials: NonNullable<
     },
     text: "Implementation was smooth and the ROI showed up quickly.",
     videoSrc: "/UNO-Capstone/videos/testimonials/johndoe.mp4",
-    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
+    thumbnailSrc: "/UNO-Capstone/testimonial4.jpg",
   },
   {
     author: {
       name: "Mia Torres",
       handle: "General Manager",
-      avatar: "/UNO-Capstone/testimonial3.jpg",
+      avatar: "/UNO-Capstone/testimonial5.jpg",
     },
     text: "Ordering is cleaner and our weekly counts now take half the time.",
     videoSrc: "/UNO-Capstone/videos/testimonials/johndoe.mp4",
-    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
+    thumbnailSrc: "/UNO-Capstone/testimonial5.jpg",
   },
   {
     author: {
@@ -82,7 +82,7 @@ const defaultTestimonials: NonNullable<
     },
     text: "The dashboards made it easy to spot waste and fix margin leaks fast.",
     videoSrc: "/UNO-Capstone/videos/testimonials/janedoe.mp4",
-    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
+    thumbnailSrc: "/UNO-Capstone/testimonial3.jpg",
   },
   {
     author: {
@@ -102,7 +102,7 @@ const defaultTestimonials: NonNullable<
     },
     text: "We rolled this out across locations and saw immediate process consistency.",
     videoSrc: "/UNO-Capstone/videos/testimonials/johndoe.mp4",
-    thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
+    thumbnailSrc: "/UNO-Capstone/testimonial2.jpg",
   },
 ];
 
