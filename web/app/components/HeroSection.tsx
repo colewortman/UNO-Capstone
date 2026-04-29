@@ -4,8 +4,14 @@
  */
 
 import Image from "next/image";
-import { Apple, CirclePlay, User, Zap } from "lucide-react";
+import { Apple, Play, User, Zap } from "lucide-react";
 import heroImage from "@/public/hero_1.4.webp";
+
+const avatars = [
+  "https://randomuser.me/api/portraits/men/32.jpg",
+  "https://randomuser.me/api/portraits/women/44.jpg",
+  "https://randomuser.me/api/portraits/men/76.jpg",
+];
 
 export default function HeroSection() {
   return (
@@ -38,7 +44,7 @@ export default function HeroSection() {
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:mt-8 lg:justify-start [@media(max-height:700px)]:mt-5">
           <a
             href="#"
-            className="inline-flex items-center gap-2 rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-5 py-2.5 text-sm font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01] sm:px-6 sm:py-3 sm:text-sm"
+            className="inline-flex items-center gap-2 rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-5 py-2.5 text-sm font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01] sm:px-6 sm:py-3"
           >
             <Apple className="h-4 w-4 fill-white text-white" />
             Download App
@@ -46,9 +52,9 @@ export default function HeroSection() {
 
           <a
             href="#"
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-white/90 transition hover:border-white/40 hover:bg-white/5 sm:px-6 sm:py-3 sm:text-sm"
+            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-white/90 transition hover:border-white/40 hover:bg-white/5 sm:px-6 sm:py-3"
           >
-            <CirclePlay className="h-4 w-4 fill-white text-white" />
+            <Play className="h-4 w-4 fill-white text-white" />
             Watch Demo
           </a>
         </div>
@@ -82,18 +88,16 @@ export default function HeroSection() {
         <div className="flex flex-col items-start gap-3 pt-1">
           <div className="flex items-center justify-start gap-4">
             <div className="flex -space-x-3">
-              {[0, 1, 2].map((item) => (
+              {avatars.map((avatar, index) => (
                 <div
-                  key={item}
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 backdrop-blur-sm"
+                  key={avatar}
+                  className="h-11 w-11 overflow-hidden rounded-full border border-white/20 bg-white/10 shadow-[0_0_24px_rgba(59,130,246,0.16)] backdrop-blur-sm"
                 >
-                  <svg
-                    viewBox="0 0 24 24"
-                    className="h-5 w-5 fill-white/80 text-white/80"
-                    fill="currentColor"
-                  >
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4Zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4Z" />
-                  </svg>
+                  <img
+                    src={avatar}
+                    alt={`Bar-IQ customer ${index + 1}`}
+                    className="h-full w-full object-cover"
+                  />
                 </div>
               ))}
             </div>
