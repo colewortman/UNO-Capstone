@@ -21,7 +21,9 @@ interface TestimonialsSectionProps {
   className?: string;
 }
 
-const defaultTestimonials: NonNullable<TestimonialsSectionProps["testimonials"]> = [
+const defaultTestimonials: NonNullable<
+  TestimonialsSectionProps["testimonials"]
+> = [
   {
     author: {
       name: "John Doe",
@@ -106,7 +108,7 @@ const defaultTestimonials: NonNullable<TestimonialsSectionProps["testimonials"]>
 
 export function TestimonialsSection({
   title = "What Our Customers Are Saying",
-  description = "Hear from businesses that have transformed their operations with BarIq.",
+  description = "Hear from businesses that have transformed their operations with Liqr Vision.",
   testimonials = defaultTestimonials,
   className,
 }: TestimonialsSectionProps) {
@@ -114,7 +116,7 @@ export function TestimonialsSection({
   const cardsPerPage = isTablet ? 3 : 1;
 
   const pages = useMemo(() => {
-    const result: typeof testimonials[] = [];
+    const result: (typeof testimonials)[] = [];
     for (let i = 0; i < testimonials.length; i += cardsPerPage) {
       result.push(testimonials.slice(i, i + cardsPerPage));
     }
@@ -190,17 +192,14 @@ export function TestimonialsSection({
                         ? "grid-cols-3"
                         : page.length === 2
                           ? "grid-cols-2"
-                        : "grid-cols-1",
+                          : "grid-cols-1",
                   )}
                 >
                   {page.map((testimonial, i) => (
                     <TestimonialCard
                       key={`${pageIndex}-${i}-${testimonial.author.name}`}
                       {...testimonial}
-                      className={cn(
-                        "h-full",
-                        page.length > 1 && "max-w-none",
-                      )}
+                      className={cn("h-full", page.length > 1 && "max-w-none")}
                     />
                   ))}
                 </div>

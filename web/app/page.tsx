@@ -93,7 +93,10 @@ export default function Home() {
       </Section>
 
       {/* Comparisons */}
-      <Section id="comparisons" full flush className="scroll-mt-20">
+      <Section
+        id="comparisons"
+        className="scroll-mt-20 [@media(max-height:880px)]:py-10 md:[@media(max-height:880px)]:py-12"
+      >
         <Comparisons />
       </Section>
 
