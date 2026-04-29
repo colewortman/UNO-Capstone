@@ -28,7 +28,7 @@ const defaultTestimonials: NonNullable<TestimonialsSectionProps["testimonials"]>
       handle: "Bar Manager",
       avatar: "/UNO-Capstone/testimonial2.jpg",
     },
-    text: "BarIq has revolutionized our inventory management!",
+    text: "Liqr Vision has revolutionized our inventory management!",
     videoSrc: "/UNO-Capstone/videos/testimonials/johndoe.mp4",
     thumbnailSrc: "/UNO-Capstone/testimonial1.jpg",
   },
@@ -106,12 +106,12 @@ const defaultTestimonials: NonNullable<TestimonialsSectionProps["testimonials"]>
 
 export function TestimonialsSection({
   title = "What Our Customers Are Saying",
-  description = "Hear from businesses that have transformed their operations with BarIq.",
+  description = "Hear from businesses that have transformed their operations with Liqr Vision.",
   testimonials = defaultTestimonials,
   className,
 }: TestimonialsSectionProps) {
   const isTablet = useMediaQuery("(min-width: 768px)");
-  const cardsPerPage = isTablet ? 3 : 1;
+  const cardsPerPage = isTablet ? 4 : 1;
 
   const pages = useMemo(() => {
     const result: typeof testimonials[] = [];
