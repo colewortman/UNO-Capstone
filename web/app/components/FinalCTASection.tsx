@@ -4,6 +4,29 @@
 
 "use client";
 
+const statCards = [
+  {
+    icon: "🍾",
+    title: "Consumption",
+    value: "8.2 Bottles",
+  },
+  {
+    icon: "🔥",
+    title: "New Streak!",
+    value: "12 days in a row",
+  },
+  {
+    icon: "🏅",
+    title: "Recovered",
+    value: "$1,285",
+  },
+  {
+    icon: "⚠️",
+    title: "Low Stock",
+    value: "Alert",
+  },
+];
+
 export default function FinalCTASection() {
   return (
     <div className="text-white">
@@ -39,13 +62,13 @@ export default function FinalCTASection() {
 
         {/* RIGHT SIDE */}
         <div className="relative flex justify-center">
-          <div className="relative h-[560px] w-full max-w-[760px]">
+          <div className="relative w-full max-w-[760px] pb-4 md:h-[560px] md:pb-0">
             {/* SUBTLE GLOW */}
-            <div className="absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[140px]" />
-            <div className="absolute left-1/2 top-1/2 -z-10 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400/10 blur-[120px]" />
-            <div className="absolute left-1/2 top-[55%] -z-10 h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-[120px]" />
+            <div className="absolute left-1/2 top-[42%] -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[140px]" />
+            <div className="absolute left-1/2 top-[42%] -z-10 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400/10 blur-[120px]" />
+            <div className="absolute left-1/2 top-[48%] -z-10 h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-[120px]" />
 
-            {/* LEFT FLOATING CARDS */}
+            {/* DESKTOP FLOATING CARDS */}
             <div className="absolute left-[5%] top-[28%] z-20 hidden h-[138px] w-[148px] rounded-[28px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/[0.07] text-3xl">
                 🍾
@@ -70,7 +93,6 @@ export default function FinalCTASection() {
               </p>
             </div>
 
-            {/* RIGHT FLOATING CARDS */}
             <div className="absolute right-[5%] top-[28%] z-20 hidden h-[138px] w-[148px] rounded-[28px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/[0.07] text-3xl">
                 🏅
@@ -96,7 +118,7 @@ export default function FinalCTASection() {
             </div>
 
             {/* PHONE */}
-            <div className="absolute left-1/2 top-1/2 z-10 h-[500px] w-[245px] -translate-x-1/2 -translate-y-1/2 rounded-[2.9rem] border-[7px] border-black bg-black shadow-[0_0_80px_rgba(0,0,0,0.7)]">
+            <div className="relative left-1/2 z-10 h-[500px] w-[245px] -translate-x-1/2 rounded-[2.9rem] border-[7px] border-black bg-black shadow-[0_0_80px_rgba(0,0,0,0.7)] md:absolute md:top-1/2 md:-translate-y-1/2">
               <div className="h-full w-full rounded-[2.35rem] border border-white/10 bg-black px-5 py-6">
                 <div className="mx-auto mt-1 flex h-11 w-11 items-center justify-center rounded-full bg-green-500/15 shadow-[0_0_22px_rgba(34,197,94,0.25)]">
                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-green-500 text-sm font-black text-black">
@@ -149,17 +171,26 @@ export default function FinalCTASection() {
               </div>
             </div>
 
-            {/* MOBILE CARDS */}
-            <div className="absolute bottom-0 left-1/2 grid w-full max-w-[340px] -translate-x-1/2 grid-cols-2 gap-3 md:hidden">
-              <div className="rounded-2xl border border-white/10 bg-black px-4 py-4 text-center">
-                <p className="text-2xl">🍾</p>
-                <p className="mt-1 text-sm font-semibold">8.2 Bottles</p>
-              </div>
+            {/* MOBILE CARDS UNDER PHONE */}
+            <div className="relative z-20 mx-auto mt-6 grid w-full max-w-[340px] grid-cols-2 gap-3 md:hidden">
+              {statCards.map((card) => (
+                <div
+                  key={card.title}
+                  className="rounded-[22px] border border-white/10 bg-black px-4 py-4 text-center shadow-[0_0_28px_rgba(0,0,0,0.35)]"
+                >
+                  <div className="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-white/[0.07] text-2xl">
+                    {card.icon}
+                  </div>
 
-              <div className="rounded-2xl border border-white/10 bg-black px-4 py-4 text-center">
-                <p className="text-2xl">🏅</p>
-                <p className="mt-1 text-sm font-semibold">$1,285</p>
-              </div>
+                  <p className="mt-3 text-xs font-semibold text-white">
+                    {card.title}
+                  </p>
+
+                  <p className="mt-1 text-xs font-semibold text-white/40">
+                    {card.value}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
