@@ -191,29 +191,12 @@ export function FeatureCarousel({
       >
         <div
           className={cn(
-            "fc-blue-panel w-full h-[40%] sm:w-[40%] sm:h-full relative z-30 flex flex-col overflow-hidden px-4 sm:px-8 md:px-12",
+            "fc-blue-panel w-full h-[40%] sm:w-[40%] sm:h-full relative z-30 flex flex-col overflow-hidden px-4 sm:px-8 md:px-12 bg-linear-to-b from-[#0a0a0a] to-black",
             title ? "" : "items-start justify-center lg:pl-12",
-            inverted
-              ? "bg-linear-to-b from-[#3478F7] to-[#3B81F7]"
-              : "bg-linear-to-b from-[#EA4E3E] to-[#EB5445]",
           )}
         >
-          <div
-            className={cn(
-              "pointer-events-none absolute inset-x-0 top-0 h-10 sm:h-16 lg:h-16 bg-linear-to-b to-transparent z-40",
-              inverted
-                ? "from-[#3478F7] via-[#3478F7]/80"
-                : "from-[#EA4E3E] via-[#EA4E3E]/80",
-            )}
-          />
-          <div
-            className={cn(
-              "pointer-events-none absolute inset-x-0 bottom-0 h-10 sm:h-16 lg:h-16 bg-linear-to-t to-transparent z-40",
-              inverted
-                ? "from-[#3B81F7] via-[#3B81F7]/80"
-                : "from-[#EB5445] via-[#EB5445]/80",
-            )}
-          />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-10 sm:h-16 lg:h-16 bg-linear-to-b from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent z-40" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 sm:h-16 lg:h-16 bg-linear-to-t from-black via-black/80 to-transparent z-40" />
           {title && (
             <h2 className="hidden md:block relative z-50 w-full text-center text-white font-semibold text-2xl lg:text-4xl pt-6 md:pt-8 lg:pt-10 px-2 whitespace-nowrap">
               {title}
@@ -266,8 +249,10 @@ export function FeatureCarousel({
                       "relative flex items-center gap-3 sm:gap-3 md:gap-4 px-5 sm:px-6 md:px-8 lg:px-8 py-3 sm:py-3 md:py-4 rounded-full transition-all duration-700 text-left group border cursor-pointer",
                       isActive
                         ? cn(
-                            "bg-white border-white z-10",
-                            inverted ? "text-[#3478F7]" : "text-[#EA4E3E]",
+                            "text-white z-10",
+                            inverted
+                              ? "bg-blue-500 border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.35)]"
+                              : "bg-red-500 border-red-500 shadow-[0_0_30px_rgba(239,68,68,0.35)]",
                           )
                         : "bg-transparent text-white/60 border-white/20 hover:border-white/40 hover:text-white",
                     )}
@@ -275,11 +260,7 @@ export function FeatureCarousel({
                     <div
                       className={cn(
                         "flex items-center justify-center transition-colors duration-500",
-                        isActive
-                          ? inverted
-                            ? "text-[#3478F7]"
-                            : "text-[#EA4E3E]"
-                          : "text-white/40",
+                        isActive ? "text-white" : "text-white/40",
                       )}
                     >
                       <HugeiconsIcon

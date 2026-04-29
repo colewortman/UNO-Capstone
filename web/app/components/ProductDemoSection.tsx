@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import VideoPlayer from "./ui/video-player";
+import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 
 const VideoPlayerDemo = () => {
   return (
@@ -14,6 +15,7 @@ export { VideoPlayerDemo };
 
 export default function ProductDemoSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const isMobile = useMediaQuery("(max-width: 767px)");
 
   // Drive animation purely from natural scroll. No pin → no extra section height.
   //   "start 10%" — section top is 10% from the viewport top (about to slide
@@ -34,6 +36,27 @@ export default function ProductDemoSection() {
 
   // Step 3 — player fades out before leaving the viewport.
   const playerOpacity = useTransform(scrollYProgress, [0.55, 1], [1, 0]);
+
+  if (isMobile) {
+    return (
+      <div ref={sectionRef} className="relative text-white">
+        <div className="relative z-10">
+          <h2 className="mb-4 text-center text-3xl font-semibold sm:text-4xl md:text-5xl">
+            See Liqr Vision in action
+          </h2>
+
+          <p className="mx-auto mb-8 max-w-2xl text-center text-base text-white/70 sm:text-lg">
+            Watch how Liqr Vision helps teams move from slow manual counts to fast,
+            guided inventory workflows.
+          </p>
+        </div>
+
+        <div className="relative mx-auto w-full max-w-4xl">
+          <VideoPlayerDemo />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div ref={sectionRef} className="relative text-white">

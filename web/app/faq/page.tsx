@@ -112,12 +112,6 @@ export default function FAQSection() {
                           <h3 className="text-lg font-semibold tracking-tight text-white sm:text-xl">
                             {item.question}
                           </h3>
-
-                          {!isOpen && (
-                            <p className="mt-3 max-w-4xl text-sm leading-7 text-white/55 sm:text-base">
-                              {item.answer}
-                            </p>
-                          )}
                         </div>
 
                         <span
