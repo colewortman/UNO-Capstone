@@ -10,11 +10,11 @@ export default function FinalCTASection() {
       <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         {/* LEFT SIDE */}
         <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
-        <h3 className="text-4xl font-semibold leading-tight tracking-tight text-white md:text-4xl">
+          <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
             Inventory complete.
-          <br>
+            <br />
             Revenue recovered.
-          </h3>
+          </h2>
 
           <p className="mt-6 text-lg leading-relaxed text-white/50 sm:text-xl">
             Faster counts, fewer losses, more revenue.
@@ -40,7 +40,7 @@ export default function FinalCTASection() {
         {/* RIGHT SIDE */}
         <div className="relative flex justify-center">
           <div className="relative h-[560px] w-full max-w-[760px]">
-            {/* SUBTLE GLOW (NEW) */}
+            {/* SUBTLE GLOW */}
             <div className="absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[140px]" />
             <div className="absolute left-1/2 top-1/2 -z-10 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400/10 blur-[120px]" />
             <div className="absolute left-1/2 top-[55%] -z-10 h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-[120px]" />
