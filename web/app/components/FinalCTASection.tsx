@@ -10,11 +10,9 @@ export default function FinalCTASection() {
       <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         {/* LEFT SIDE */}
         <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
-          <h2 className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
-            Inventory complete.
-            <br />
-            Revenue recovered.
-          </h2>
+         <h1 className="text-4xl font-semibold leading-[0.95] tracking-tight text-white sm:text-5xl lg:text-6xl xl:text-7xl">
+          Bar inventory in minutes, not hours.
+        </h1>
 
           <p className="mt-6 text-lg leading-relaxed text-white/50 sm:text-xl">
             Faster counts, fewer losses, more revenue.
