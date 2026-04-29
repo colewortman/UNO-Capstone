@@ -4,8 +4,9 @@
 
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { ScanLine, Smartphone, Upload } from "lucide-react";
+import { ChevronLeft, ChevronRight, ScanLine, Smartphone, Upload } from "lucide-react";
 
 type Step = {
   step: string;
@@ -22,7 +23,7 @@ const steps: Step[] = [
     description:
       "Scan the barcode of one or multiple bottles at a time.",
     icon: ScanLine,
-    iconWrap: "bg-yellow-500/20 text-yellow-400 ring-1 ring-yellow-400/20",
+    iconWrap: "bg-white/10 text-white/80 ring-1 ring-white/20",
   },
   {
     step: "Step 2",
@@ -30,7 +31,7 @@ const steps: Step[] = [
     description:
       "Point your phone camera at the liquid level or full bottle.",
     icon: Smartphone,
-    iconWrap: "bg-blue-500/20 text-blue-400 ring-1 ring-blue-400/20",
+    iconWrap: "bg-blue-500/10 text-blue-300 ring-1 ring-blue-400/30",
   },
   {
     step: "Step 3",
@@ -42,7 +43,52 @@ const steps: Step[] = [
   },
 ];
 
+function StepCard({ item }: { item: Step }) {
+  const Icon = item.icon;
+
+  return (
+    <div className="group relative rounded-[28px] border border-white/10 bg-[#121318] p-8 text-center transition hover:border-white/20 lg:h-[280px] lg:overflow-hidden">
+      {/* Top content — vertically nudged down on lg+, slides up on hover */}
+      <div className="lg:translate-y-7 lg:transition-transform lg:duration-500 lg:ease-out lg:group-hover:translate-y-0">
+        {/* Icon */}
+        <div
+          className={`mx-auto flex h-16 w-16 items-center justify-center rounded-2xl ${item.iconWrap}`}
+        >
+          <Icon className="h-8 w-8 stroke-[2.2]" />
+        </div>
+
+        {/* Step */}
+        <p className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-white/40">
+          {item.step}
+        </p>
+
+        {/* Title */}
+        <h3 className="mt-3 text-xl font-semibold text-white">
+          {item.title}
+        </h3>
+      </div>
+
+      {/* Description — inline on mobile, no animation */}
+      <p className="mt-3 text-sm leading-relaxed text-white/60 lg:hidden">
+        {item.description}
+      </p>
+
+      {/* Description — lg+ pinned to bottom, slides up from below on hover */}
+      <p className="hidden text-sm leading-relaxed text-white/60 lg:absolute lg:inset-x-8 lg:bottom-8 lg:block lg:translate-y-10 lg:opacity-0 lg:transition-all lg:duration-500 lg:ease-out lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
+        {item.description}
+      </p>
+    </div>
+  );
+}
+
 export default function HowItWorksSection() {
+  const [activeStep, setActiveStep] = useState(0);
+
+  const goToStep = (idx: number) =>
+    setActiveStep(((idx % steps.length) + steps.length) % steps.length);
+  const nextStep = () => goToStep(activeStep + 1);
+  const prevStep = () => goToStep(activeStep - 1);
+
   return (
     <section className="text-white">
       {/* Header */}
@@ -61,40 +107,52 @@ export default function HowItWorksSection() {
         </p>
       </div>
 
-      {/* Cards */}
-      <div className="mt-14 grid gap-6 lg:grid-cols-3">
-        {steps.map((item) => {
-          const Icon = item.icon;
+      {/* Mobile / tablet carousel — single card with arrows + dots */}
+      <div className="mt-14 lg:hidden">
+        <div className="mx-auto max-w-md">
+          <StepCard item={steps[activeStep]} />
+        </div>
 
-          return (
-            <div
-              key={item.step}
-              className="relative rounded-[28px] border border-white/10 bg-[#121318] p-8 text-center transition hover:border-white/20"
-            >
-              {/* Icon */}
-              <div
-                className={`mx-auto flex h-16 w-16 items-center justify-center rounded-2xl ${item.iconWrap}`}
-              >
-                <Icon className="h-8 w-8 stroke-[2.2]" />
-              </div>
+        <div className="mt-6 flex items-center justify-center gap-4">
+          <button
+            type="button"
+            onClick={prevStep}
+            aria-label="Previous step"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition hover:border-white/30 hover:bg-white/10 hover:text-white cursor-pointer"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
 
-              {/* Step */}
-              <p className="mt-6 text-xs font-semibold uppercase tracking-[0.3em] text-white/40">
-                {item.step}
-              </p>
+          <div className="flex gap-2">
+            {steps.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                aria-label={`Go to step ${idx + 1}`}
+                onClick={() => goToStep(idx)}
+                className={`h-2 w-2 rounded-full transition cursor-pointer ${
+                  activeStep === idx ? "scale-125 bg-white" : "bg-white/30 hover:bg-white/50"
+                }`}
+              />
+            ))}
+          </div>
 
-              {/* Title */}
-              <h3 className="mt-3 text-xl font-semibold text-white">
-                {item.title}
-              </h3>
+          <button
+            type="button"
+            onClick={nextStep}
+            aria-label="Next step"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-white/70 transition hover:border-white/30 hover:bg-white/10 hover:text-white cursor-pointer"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
+        </div>
+      </div>
 
-              {/* Description */}
-              <p className="mt-3 text-sm leading-relaxed text-white/60">
-                {item.description}
-              </p>
-            </div>
-          );
-        })}
+      {/* Desktop grid (lg+) */}
+      <div className="mt-14 hidden gap-6 lg:grid lg:grid-cols-3">
+        {steps.map((item) => (
+          <StepCard key={item.step} item={item} />
+        ))}
       </div>
 
       {/* Centered CTA */}

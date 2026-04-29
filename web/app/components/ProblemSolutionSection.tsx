@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import { useLenis } from "lenis/react";
 import { FeatureCarousel } from "./ui/feature-carousel";
 import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
@@ -12,8 +13,22 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function ProblemSolutionSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const scrollTriggerRef = useRef<ScrollTrigger | null>(null);
   const isMobile = useMediaQuery("(max-width: 767px)");
   const [showSolution, setShowSolution] = useState(false);
+  const lenis = useLenis();
+
+  // Snap the page so the chosen carousel sits fully revealed in the pin range.
+  // problem → start of pin (progress 0); solution → end of pin (progress 1).
+  // Lenis.scrollTo interrupts any in-flight smooth scroll so the new tween
+  // starts immediately on click instead of queuing behind existing momentum.
+  const scrollToCarousel = (target: "problem" | "solution") => {
+    if (isMobile) return;
+    const st = scrollTriggerRef.current;
+    if (!st || !lenis) return;
+    const targetScroll = target === "problem" ? st.start : st.end;
+    lenis.scrollTo(targetScroll, { duration: 0.8, force: true });
+  };
 
   useGSAP(
     () => {
@@ -67,6 +82,8 @@ export default function ProblemSolutionSection() {
             scrub: 0.8,
           },
         });
+
+        scrollTriggerRef.current = tl.scrollTrigger ?? null;
 
         // --- Problem carousel out ---
 
@@ -214,12 +231,19 @@ export default function ProblemSolutionSection() {
           <div className="relative w-full aspect-[16/9]">
             {/* Problem carousel — normal layout (blue left, images right) */}
             <div className="ps-problem absolute inset-0">
-              <FeatureCarousel title="The Problem" />
+              <FeatureCarousel
+                title="The Problem"
+                onChipClick={() => scrollToCarousel("problem")}
+              />
             </div>
 
             {/* Solution carousel — inverted layout (images left, blue right) */}
             <div className="ps-solution absolute inset-0">
-              <FeatureCarousel title="The Solution" inverted />
+              <FeatureCarousel
+                title="The Solution"
+                inverted
+                onChipClick={() => scrollToCarousel("solution")}
+              />
             </div>
           </div>
         </div>

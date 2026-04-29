@@ -1,0 +1,99 @@
+FeatureCarousel theme variants
+==============================
+
+Three styling presets for the FeatureCarousel "blue panel" + active chip.
+Drop the snippet you want into feature-carousel.tsx — the rest of the
+component (layout, motion, image side) is theme-agnostic.
+
+Each preset replaces the same two regions:
+  A) panel backdrop + top/bottom fade gradients
+  B) active chip background/border + chip text/icon color
+
+
+-------------------------------------------------------------------------
+Variant 1 — Original (red Problem / blue Solution, accented chip)
+-------------------------------------------------------------------------
+
+Panel + fades:
+
+    <div
+      className={cn(
+        "fc-blue-panel w-full h-[40%] sm:w-[40%] sm:h-full relative z-30 flex flex-col overflow-hidden px-4 sm:px-8 md:px-12",
+        title ? "" : "items-start justify-center lg:pl-12",
+        inverted
+          ? "bg-linear-to-b from-[#3478F7] to-[#3B81F7]"
+          : "bg-linear-to-b from-[#EA4E3E] to-[#EB5445]",
+      )}
+    >
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-x-0 top-0 h-10 sm:h-16 lg:h-16 bg-linear-to-b to-transparent z-40",
+          inverted
+            ? "from-[#3478F7] via-[#3478F7]/80"
+            : "from-[#EA4E3E] via-[#EA4E3E]/80",
+        )}
+      />
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-x-0 bottom-0 h-10 sm:h-16 lg:h-16 bg-linear-to-t to-transparent z-40",
+          inverted
+            ? "from-[#3B81F7] via-[#3B81F7]/80"
+            : "from-[#EB5445] via-[#EB5445]/80",
+        )}
+      />
+
+Active chip (button + inner icon wrapper):
+
+    isActive
+      ? cn(
+          "bg-white border-white z-10",
+          inverted ? "text-[#3478F7]" : "text-[#EA4E3E]",
+        )
+      : "bg-transparent text-white/60 border-white/20 hover:border-white/40 hover:text-white",
+
+    // icon wrapper:
+    isActive
+      ? inverted ? "text-[#3478F7]" : "text-[#EA4E3E]"
+      : "text-white/40",
+
+
+-------------------------------------------------------------------------
+Variant 2 — Black panel, blue active chip (glow)
+-------------------------------------------------------------------------
+
+Panel + fades:
+
+    <div
+      className={cn(
+        "fc-blue-panel w-full h-[40%] sm:w-[40%] sm:h-full relative z-30 flex flex-col overflow-hidden px-4 sm:px-8 md:px-12 bg-linear-to-b from-[#0a0a0a] to-black",
+        title ? "" : "items-start justify-center lg:pl-12",
+      )}
+    >
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-10 sm:h-16 lg:h-16 bg-linear-to-b from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent z-40" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-10 sm:h-16 lg:h-16 bg-linear-to-t from-black via-black/80 to-transparent z-40" />
+
+Active chip:
+
+    isActive
+      ? "bg-blue-500 border-blue-500 text-white shadow-[0_0_30px_rgba(59,130,246,0.35)] z-10"
+      : "bg-transparent text-white/60 border-white/20 hover:border-white/40 hover:text-white",
+
+    // icon wrapper:
+    isActive ? "text-white" : "text-white/40",
+
+
+-------------------------------------------------------------------------
+Variant 3 — Black panel, white active chip with blue text/icon (current)
+All chips (active + inactive) use blue text + blue icons.
+-------------------------------------------------------------------------
+
+Panel + fades: same as Variant 2.
+
+Active chip:
+
+    isActive
+      ? "bg-white border-white text-blue-500 z-10"
+      : "bg-transparent text-blue-400/70 border-white/20 hover:border-white/40 hover:text-blue-300",
+
+    // icon wrapper:
+    isActive ? "text-blue-500" : "text-blue-400/60",

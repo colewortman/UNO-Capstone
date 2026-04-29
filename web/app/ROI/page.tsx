@@ -1,4 +1,5 @@
 import ROICalculator from "../components/ROICalculator";
+import FooterSection from "../components/FooterSection";
 
 function Section({
   children,
@@ -30,6 +31,8 @@ export default function ROIPage() {
       >
         <ROICalculator />
       </Section>
+
+      <FooterSection />
     </main>
   );
 }

@@ -21,7 +21,9 @@ interface TestimonialsSectionProps {
   className?: string;
 }
 
-const defaultTestimonials: NonNullable<TestimonialsSectionProps["testimonials"]> = [
+const defaultTestimonials: NonNullable<
+  TestimonialsSectionProps["testimonials"]
+> = [
   {
     author: {
       name: "John Doe",
@@ -114,7 +116,7 @@ export function TestimonialsSection({
   const cardsPerPage = isTablet ? 4 : 1;
 
   const pages = useMemo(() => {
-    const result: typeof testimonials[] = [];
+    const result: (typeof testimonials)[] = [];
     for (let i = 0; i < testimonials.length; i += cardsPerPage) {
       result.push(testimonials.slice(i, i + cardsPerPage));
     }
@@ -193,10 +195,7 @@ export function TestimonialsSection({
                     <TestimonialCard
                       key={`${pageIndex}-${i}-${testimonial.author.name}`}
                       {...testimonial}
-                      className={cn(
-                        "h-full",
-                        page.length > 1 && "max-w-none",
-                      )}
+                      className={cn("h-full", page.length > 1 && "max-w-none")}
                     />
                   ))}
                 </div>
