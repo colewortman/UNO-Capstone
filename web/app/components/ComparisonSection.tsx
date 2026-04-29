@@ -6,6 +6,9 @@
 
 "use client";
 
+import { useState } from "react";
+import { AnimatePresence, motion } from "motion/react";
+
 const competitors = [
   {
     title: "Bar IQ",
@@ -30,50 +33,73 @@ const competitors = [
 ];
 
 export default function Comparisons() {
-  return (
-    <section className="relative overflow-hidden rounded-[2rem] border border-blue-400/10 bg-black px-5 py-8 shadow-[0_0_80px_rgba(37,99,235,0.12)] sm:px-8 md:px-10 md:py-12">
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_80%_20%,rgba(37,99,235,0.22),transparent_32%),radial-gradient(circle_at_20%_75%,rgba(59,130,246,0.16),transparent_36%)]" />
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
-      <div className="relative grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+  return (
+    <section className="text-white">
+      <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         {/* List — left column on lg+ (reversed from FeatureHighlights) */}
         <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_70px_rgba(37,99,235,0.18)] backdrop-blur-sm sm:p-6 lg:order-1">
           <div className="divide-y divide-white/10">
-            {competitors.map((item, index) => (
-              <div
-                key={item.title}
-                className="group grid gap-3 py-5 sm:grid-cols-[auto_1fr] sm:items-center"
-              >
-                <span
-                  className={[
-                    "text-sm font-medium transition",
-                    index === 0
-                      ? "text-blue-300"
-                      : "text-white/25 group-hover:text-blue-300/70",
-                  ].join(" ")}
-                >
-                  0{index + 1}
-                </span>
+            {competitors.map((item, index) => {
+              const isSelected = index === selectedIndex;
 
-                <div>
-                  <h3
+              return (
+                <motion.button
+                  key={item.title}
+                  type="button"
+                  layout
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={() => setSelectedIndex(index)}
+                  aria-pressed={isSelected}
+                  className="group grid w-full cursor-pointer gap-3 py-5 text-left sm:grid-cols-[auto_1fr] sm:items-center"
+                >
+                  <span
                     className={[
-                      "text-xl font-semibold tracking-tight transition md:text-2xl",
-                      index === 0
-                        ? "text-white"
-                        : "text-white/35 group-hover:text-white/70",
+                      "text-sm font-medium transition",
+                      isSelected
+                        ? "text-blue-300"
+                        : "text-white/25 group-hover:text-blue-300/70",
                     ].join(" ")}
                   >
-                    {item.title}
-                  </h3>
+                    0{index + 1}
+                  </span>
 
-                  {index === 0 && (
-                    <p className="mt-2 max-w-md text-sm leading-6 text-white/55">
-                      {item.description}
-                    </p>
-                  )}
-                </div>
-              </div>
-            ))}
+                  <motion.div layout="position">
+                    <h3
+                      className={[
+                        "text-xl font-semibold tracking-tight transition md:text-2xl",
+                        isSelected
+                          ? "text-white"
+                          : "text-white/35 group-hover:text-white/70",
+                      ].join(" ")}
+                    >
+                      {item.title}
+                    </h3>
+
+                    <AnimatePresence initial={false}>
+                      {isSelected && (
+                        <motion.div
+                          key="description"
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{
+                            height: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+                            opacity: { duration: 0.25, ease: "easeOut" },
+                          }}
+                          className="overflow-hidden"
+                        >
+                          <p className="mt-2 max-w-md text-sm leading-6 text-white/55">
+                            {item.description}
+                          </p>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                </motion.button>
+              );
+            })}
           </div>
         </div>
 
