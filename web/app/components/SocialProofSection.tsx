@@ -37,7 +37,7 @@ export default function SocialProofSection() {
         Stop losing your profit!
       </h3>
 
-      <LogoCloud logos={logos} perPage={3} perPageMobile={2} />
+      <LogoCloud logos={logos} perPage={4} perPageMobile={3} />
     </div>
   );
 }

@@ -95,12 +95,12 @@ export function LogoCloud({
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="flex items-center justify-center gap-6 sm:gap-10 md:gap-14"
+              className="flex items-center justify-center gap-4 sm:gap-6 md:gap-8"
             >
               {visible.map((logo) => (
                 <Image
                   alt={logo.alt}
-                  className="pointer-events-none h-7 w-auto select-none brightness-0 invert sm:h-8 md:h-10"
+                  className="pointer-events-none h-5 w-auto max-w-[90px] select-none object-contain brightness-0 invert sm:h-6 sm:max-w-[110px] md:h-8 md:max-w-[130px]"
                   key={`logo-${logo.alt}`}
                   src={logo.src}
                 />

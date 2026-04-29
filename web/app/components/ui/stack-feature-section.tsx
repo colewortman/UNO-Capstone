@@ -19,17 +19,17 @@ import wiskLogo from "@/public/pos icons/Wisk.png";
 
 const posLogos = [
   { src: alohaLogo, alt: "Aloha" },
-  { src: cloverLogo, alt: "Clover" },
+  { src: cloverLogo, alt: "Clover", bg: "#3FAE2A" },
   { src: lightspeedLogo, alt: "Lightspeed" },
   { src: marketmanLogo, alt: "MarketMan" },
-  { src: r365Logo, alt: "Restaurant365" },
-  { src: revelLogo, alt: "Revel" },
+  { src: r365Logo, alt: "Restaurant365", bg: "#DA1F26" },
+  { src: revelLogo, alt: "Revel", bg: "#3DCDF1" },
   { src: shift4Logo, alt: "Shift4" },
   { src: smarttabLogo, alt: "Smarttab" },
   { src: spotonLogo, alt: "SpotOn" },
   { src: squareLogo, alt: "Square" },
-  { src: toastLogo, alt: "Toast" },
-  { src: wiskLogo, alt: "Wisk" },
+  { src: toastLogo, alt: "Toast", bg: "#FF4C00" },
+  { src: wiskLogo, alt: "Wisk", bg: "#3B8BF7" },
 ];
 
 export default function FeatureSection() {
@@ -109,9 +109,12 @@ export default function FeatureSection() {
                         }}
                       >
                         <div
-                          className="h-12 w-12 overflow-hidden rounded-full bg-white p-1 shadow-md"
+                          className={`h-12 w-12 overflow-hidden rounded-full shadow-md ${
+                            logo.bg ? "" : "bg-white p-1"
+                          }`}
                           style={{
                             animation: `featureOrbitSpinReverse ${orbitDuration}s linear infinite`,
+                            backgroundColor: logo.bg,
                           }}
                         >
                           <Image
