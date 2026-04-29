@@ -190,7 +190,7 @@ const VideoPlayer = ({ src }: { src: string }) => {
             transition={{ duration: 0.2 }}
           >
             <motion.span
-              className="flex h-16 w-16 items-center justify-center rounded-full bg-white/90 text-black shadow-[0_4px_24px_rgba(0,0,0,0.4)] sm:h-20 sm:w-20"
+              className="flex h-16 w-16 items-center justify-center rounded-full border border-white/20 bg-white/15 text-white shadow-[0_4px_24px_rgba(0,0,0,0.35)] backdrop-blur-md sm:h-20 sm:w-20"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

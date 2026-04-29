@@ -23,7 +23,7 @@ const steps: Step[] = [
     description:
       "Scan the barcode of one or multiple bottles at a time.",
     icon: ScanLine,
-    iconWrap: "bg-yellow-500/20 text-yellow-400 ring-1 ring-yellow-400/20",
+    iconWrap: "bg-white/10 text-white/80 ring-1 ring-white/20",
   },
   {
     step: "Step 2",

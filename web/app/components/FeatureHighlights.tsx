@@ -35,8 +35,8 @@ export default function FeatureHighlightsSection() {
           </h2>
 
           <p className="mt-4 max-w-lg text-base leading-7 text-white/60">
-            Bar-IQ keeps inventory simple and fast for the people running the
-            bar.
+            Liqr Vision keeps inventory simple and fast for the people running
+            the bar.
           </p>
         </div>
 
