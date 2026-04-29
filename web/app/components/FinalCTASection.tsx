@@ -10,9 +10,11 @@ export default function FinalCTASection() {
       <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         {/* LEFT SIDE */}
         <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
-          <h3 className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
-            Inventory complete. Revenue recovered.
-          </h3>
+          <h2 className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
+            Inventory complete.
+            <br />
+            Revenue recovered.
+          </h2>
 
           <p className="mt-6 text-lg leading-relaxed text-white/50 sm:text-xl">
             Faster counts, fewer losses, more revenue.
@@ -38,7 +40,10 @@ export default function FinalCTASection() {
         {/* RIGHT SIDE */}
         <div className="relative flex justify-center">
           <div className="relative h-[560px] w-full max-w-[760px]">
-            <div className="absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[110px]" />
+            {/* SUBTLE GLOW (NEW) */}
+            <div className="absolute left-1/2 top-1/2 -z-10 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[140px]" />
+            <div className="absolute left-1/2 top-1/2 -z-10 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400/10 blur-[120px]" />
+            <div className="absolute left-1/2 top-[55%] -z-10 h-[260px] w-[260px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-[120px]" />
 
             {/* LEFT FLOATING CARDS */}
             <div className="absolute left-[5%] top-[28%] z-20 hidden h-[138px] w-[148px] rounded-[28px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block">
@@ -91,7 +96,7 @@ export default function FinalCTASection() {
             </div>
 
             {/* PHONE */}
-            <div className="absolute left-1/2 top-1/2 z-10 h-[500px] w-[245px] -translate-x-1/2 -translate-y-1/2 rounded-[2.9rem] border-[7px] border-black bg-black shadow-[0_0_70px_rgba(0,0,0,0.65)]">
+            <div className="absolute left-1/2 top-1/2 z-10 h-[500px] w-[245px] -translate-x-1/2 -translate-y-1/2 rounded-[2.9rem] border-[7px] border-black bg-black shadow-[0_0_80px_rgba(0,0,0,0.7)]">
               <div className="h-full w-full rounded-[2.35rem] border border-white/10 bg-black px-5 py-6">
                 <div className="mx-auto mt-1 flex h-11 w-11 items-center justify-center rounded-full bg-green-500/15 shadow-[0_0_22px_rgba(34,197,94,0.25)]">
                   <div className="flex h-7 w-7 items-center justify-center rounded-full bg-green-500 text-sm font-black text-black">
