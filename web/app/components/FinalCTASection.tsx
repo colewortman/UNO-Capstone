@@ -10,11 +10,9 @@ export default function FinalCTASection() {
       <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         {/* LEFT SIDE */}
         <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
-          <h2 className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
-            Inventory complete.
-            <br />
-            Revenue recovered.
-          </h2>
+          <h3 className="text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl">
+            Inventory complete. Revenue recovered.
+          </h3>
 
           <p className="mt-6 text-lg leading-relaxed text-white/50 sm:text-xl">
             Faster counts, fewer losses, more revenue.
@@ -39,12 +37,11 @@ export default function FinalCTASection() {
 
         {/* RIGHT SIDE */}
         <div className="relative flex justify-center">
-          <div className="relative h-[540px] w-full max-w-[760px]">
-            {/* soft glow */}
-            <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[110px]" />
+          <div className="relative h-[560px] w-full max-w-[760px]">
+            <div className="absolute left-1/2 top-1/2 h-[340px] w-[340px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[110px]" />
 
             {/* LEFT FLOATING CARDS */}
-            <div className="absolute left-0 top-[22%] z-20 hidden h-[135px] w-[145px] rounded-[26px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block xl:left-4">
+            <div className="absolute left-[5%] top-[28%] z-20 hidden h-[138px] w-[148px] rounded-[28px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/[0.07] text-3xl">
                 🍾
               </div>
@@ -56,7 +53,7 @@ export default function FinalCTASection() {
               </p>
             </div>
 
-            <div className="absolute left-0 top-[58%] z-20 hidden h-[135px] w-[145px] rounded-[26px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block xl:left-4">
+            <div className="absolute left-[5%] top-[55%] z-20 hidden h-[138px] w-[148px] rounded-[28px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/[0.07] text-3xl">
                 🔥
               </div>
@@ -69,7 +66,7 @@ export default function FinalCTASection() {
             </div>
 
             {/* RIGHT FLOATING CARDS */}
-            <div className="absolute right-0 top-[22%] z-20 hidden h-[135px] w-[145px] rounded-[26px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block xl:right-4">
+            <div className="absolute right-[5%] top-[28%] z-20 hidden h-[138px] w-[148px] rounded-[28px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/[0.07] text-3xl">
                 🏅
               </div>
@@ -81,7 +78,7 @@ export default function FinalCTASection() {
               </p>
             </div>
 
-            <div className="absolute right-0 top-[58%] z-20 hidden h-[135px] w-[145px] rounded-[26px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block xl:right-4">
+            <div className="absolute right-[5%] top-[55%] z-20 hidden h-[138px] w-[148px] rounded-[28px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block">
               <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/[0.07] text-3xl">
                 ⚠️
               </div>
@@ -94,55 +91,57 @@ export default function FinalCTASection() {
             </div>
 
             {/* PHONE */}
-            <div className="absolute left-1/2 top-1/2 z-10 h-[475px] w-[255px] -translate-x-1/2 -translate-y-1/2 rounded-[3rem] border border-white/10 bg-black px-5 py-6 shadow-[0_0_70px_rgba(0,0,0,0.65)] sm:w-[265px]">
-              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-500/15 shadow-[0_0_22px_rgba(34,197,94,0.25)]">
-                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-500 text-base font-black text-black">
-                  ✓
+            <div className="absolute left-1/2 top-1/2 z-10 h-[500px] w-[245px] -translate-x-1/2 -translate-y-1/2 rounded-[2.9rem] border-[7px] border-black bg-black shadow-[0_0_70px_rgba(0,0,0,0.65)]">
+              <div className="h-full w-full rounded-[2.35rem] border border-white/10 bg-black px-5 py-6">
+                <div className="mx-auto mt-1 flex h-11 w-11 items-center justify-center rounded-full bg-green-500/15 shadow-[0_0_22px_rgba(34,197,94,0.25)]">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-green-500 text-sm font-black text-black">
+                    ✓
+                  </div>
                 </div>
+
+                <div className="mt-7 text-center">
+                  <p className="text-xl font-semibold leading-none text-white">
+                    Inventory
+                  </p>
+                  <p className="mt-1.5 text-base font-semibold leading-none text-white/40">
+                    Insights
+                  </p>
+                </div>
+
+                <div className="mt-10 space-y-3">
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 shadow-[inset_3px_0_0_rgba(34,197,94,0.8)]">
+                    <p className="text-[9px] font-semibold text-white/30">
+                      Speed Baseline
+                    </p>
+                    <p className="mt-1 text-lg font-semibold leading-none text-white">
+                      +149%
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 shadow-[inset_3px_0_0_rgba(96,165,250,0.8)]">
+                    <p className="text-[9px] font-semibold text-white/30">
+                      Total Value
+                    </p>
+                    <p className="mt-1 text-lg font-semibold leading-none text-white">
+                      $22,694
+                    </p>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 shadow-[inset_3px_0_0_rgba(129,140,248,0.8)]">
+                    <p className="text-[9px] font-semibold text-white/30">
+                      Variance Score
+                    </p>
+                    <p className="mt-1 text-lg font-semibold leading-none text-white">
+                      Low{" "}
+                      <span className="text-xs font-semibold text-blue-400/80">
+                        0.42%
+                      </span>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="absolute bottom-5 left-1/2 h-1 w-16 -translate-x-1/2 rounded-full bg-white/45" />
               </div>
-
-              <div className="mt-7 text-center">
-                <p className="text-xl font-semibold leading-none text-white">
-                  Inventory
-                </p>
-                <p className="mt-1.5 text-base font-semibold leading-none text-white/40">
-                  Insights
-                </p>
-              </div>
-
-              <div className="mt-10 space-y-3">
-                <div className="rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 shadow-[inset_3px_0_0_rgba(34,197,94,0.85)]">
-                  <p className="text-[9px] font-semibold text-white/30">
-                    Speed Baseline
-                  </p>
-                  <p className="mt-1 text-lg font-semibold leading-none text-white">
-                    +149%
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 shadow-[inset_3px_0_0_rgba(96,165,250,0.85)]">
-                  <p className="text-[9px] font-semibold text-white/30">
-                    Total Value
-                  </p>
-                  <p className="mt-1 text-lg font-semibold leading-none text-white">
-                    $22,694
-                  </p>
-                </div>
-
-                <div className="rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 shadow-[inset_3px_0_0_rgba(129,140,248,0.85)]">
-                  <p className="text-[9px] font-semibold text-white/30">
-                    Variance Score
-                  </p>
-                  <p className="mt-1 text-lg font-semibold leading-none text-white">
-                    Low{" "}
-                    <span className="text-xs font-semibold text-blue-400/80">
-                      0.42%
-                    </span>
-                  </p>
-                </div>
-              </div>
-
-              <div className="absolute bottom-4 left-1/2 h-1 w-16 -translate-x-1/2 rounded-full bg-white/45" />
             </div>
 
             {/* MOBILE CARDS */}
