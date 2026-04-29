@@ -39,111 +39,110 @@ export default function FinalCTASection() {
 
         {/* RIGHT SIDE */}
         <div className="relative flex justify-center">
-          <div className="relative h-[560px] w-full max-w-[720px]">
+          <div className="relative h-[540px] w-full max-w-[760px]">
             {/* soft glow */}
-            <div className="absolute left-1/2 top-1/2 h-[360px] w-[360px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[110px]" />
-            <div className="absolute left-1/2 top-1/2 h-[280px] w-[280px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-green-500/5 blur-[100px]" />
+            <div className="absolute left-1/2 top-1/2 h-[320px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[110px]" />
 
             {/* LEFT FLOATING CARDS */}
-            <div className="absolute left-0 top-[22%] z-20 hidden h-[150px] w-[160px] rounded-[28px] border border-white/10 bg-black px-5 py-5 shadow-[0_0_35px_rgba(0,0,0,0.45)] md:block">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/[0.08] text-4xl">
+            <div className="absolute left-0 top-[22%] z-20 hidden h-[135px] w-[145px] rounded-[26px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block xl:left-4">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/[0.07] text-3xl">
                 🍾
               </div>
-              <p className="mt-4 text-center text-sm font-semibold leading-tight text-white">
+              <p className="mt-4 text-center text-xs font-semibold leading-tight text-white">
                 Consumption
               </p>
-              <p className="text-center text-sm font-semibold text-white/45">
+              <p className="text-center text-xs font-semibold text-white/40">
                 8.2 Bottles
               </p>
             </div>
 
-            <div className="absolute left-2 top-[57%] z-20 hidden h-[150px] w-[160px] rounded-[28px] border border-white/10 bg-black px-5 py-5 shadow-[0_0_35px_rgba(0,0,0,0.45)] md:block">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/[0.08] text-4xl">
+            <div className="absolute left-0 top-[58%] z-20 hidden h-[135px] w-[145px] rounded-[26px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block xl:left-4">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/[0.07] text-3xl">
                 🔥
               </div>
-              <p className="mt-4 text-center text-sm font-semibold leading-tight text-white">
+              <p className="mt-4 text-center text-xs font-semibold leading-tight text-white">
                 New Streak!
               </p>
-              <p className="text-center text-sm font-semibold text-white/45">
+              <p className="text-center text-xs font-semibold text-white/40">
                 12 days in a row
               </p>
             </div>
 
             {/* RIGHT FLOATING CARDS */}
-            <div className="absolute right-0 top-[22%] z-20 hidden h-[150px] w-[160px] rounded-[28px] border border-white/10 bg-black px-5 py-5 shadow-[0_0_35px_rgba(0,0,0,0.45)] md:block">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/[0.08] text-4xl">
+            <div className="absolute right-0 top-[22%] z-20 hidden h-[135px] w-[145px] rounded-[26px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block xl:right-4">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/[0.07] text-3xl">
                 🏅
               </div>
-              <p className="mt-4 text-center text-2xl font-semibold leading-none text-white">
+              <p className="mt-4 text-center text-xl font-semibold leading-none text-white">
                 $1,285
               </p>
-              <p className="text-center text-sm font-semibold text-white/45">
+              <p className="text-center text-xs font-semibold text-white/40">
                 Recovered
               </p>
             </div>
 
-            <div className="absolute right-2 top-[57%] z-20 hidden h-[150px] w-[160px] rounded-[28px] border border-white/10 bg-black px-5 py-5 shadow-[0_0_35px_rgba(0,0,0,0.45)] md:block">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-white/[0.08] text-4xl">
+            <div className="absolute right-0 top-[58%] z-20 hidden h-[135px] w-[145px] rounded-[26px] border border-white/10 bg-black px-4 py-4 shadow-[0_0_32px_rgba(0,0,0,0.45)] md:block xl:right-4">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-white/[0.07] text-3xl">
                 ⚠️
               </div>
-              <p className="mt-4 text-center text-base font-semibold leading-tight text-white">
+              <p className="mt-4 text-center text-sm font-semibold leading-tight text-white">
                 Low Stock
               </p>
-              <div className="mx-auto mt-2 w-fit rounded-full bg-orange-500/15 px-3 py-1 text-xs font-semibold text-orange-500">
+              <div className="mx-auto mt-2 w-fit rounded-full bg-orange-500/12 px-3 py-1 text-[10px] font-semibold text-orange-500/80">
                 Alert
               </div>
             </div>
 
             {/* PHONE */}
-            <div className="absolute left-1/2 top-1/2 z-10 h-[530px] w-[285px] -translate-x-1/2 -translate-y-1/2 rounded-[3.2rem] border border-white/10 bg-black px-6 py-7 shadow-[0_0_80px_rgba(0,0,0,0.7)] sm:w-[300px]">
-              <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-green-500/20 shadow-[0_0_28px_rgba(34,197,94,0.35)]">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 text-xl font-black text-black">
+            <div className="absolute left-1/2 top-1/2 z-10 h-[475px] w-[255px] -translate-x-1/2 -translate-y-1/2 rounded-[3rem] border border-white/10 bg-black px-5 py-6 shadow-[0_0_70px_rgba(0,0,0,0.65)] sm:w-[265px]">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-green-500/15 shadow-[0_0_22px_rgba(34,197,94,0.25)]">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-green-500 text-base font-black text-black">
                   ✓
                 </div>
               </div>
 
-              <div className="mt-8 text-center">
-                <p className="text-2xl font-semibold leading-none text-white">
+              <div className="mt-7 text-center">
+                <p className="text-xl font-semibold leading-none text-white">
                   Inventory
                 </p>
-                <p className="mt-2 text-xl font-semibold leading-none text-white/45">
+                <p className="mt-1.5 text-base font-semibold leading-none text-white/40">
                   Insights
                 </p>
               </div>
 
-              <div className="mt-12 space-y-3">
-                <div className="rounded-2xl border border-white/10 border-l-green-400 bg-white/[0.055] px-5 py-4 shadow-[inset_4px_0_0_rgba(34,197,94,0.95)]">
-                  <p className="text-[10px] font-semibold text-white/35">
+              <div className="mt-10 space-y-3">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 shadow-[inset_3px_0_0_rgba(34,197,94,0.85)]">
+                  <p className="text-[9px] font-semibold text-white/30">
                     Speed Baseline
                   </p>
-                  <p className="mt-1 text-2xl font-semibold leading-none text-white">
+                  <p className="mt-1 text-lg font-semibold leading-none text-white">
                     +149%
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-white/10 border-l-blue-400 bg-white/[0.055] px-5 py-4 shadow-[inset_4px_0_0_rgba(96,165,250,0.95)]">
-                  <p className="text-[10px] font-semibold text-white/35">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 shadow-[inset_3px_0_0_rgba(96,165,250,0.85)]">
+                  <p className="text-[9px] font-semibold text-white/30">
                     Total Value
                   </p>
-                  <p className="mt-1 text-2xl font-semibold leading-none text-white">
+                  <p className="mt-1 text-lg font-semibold leading-none text-white">
                     $22,694
                   </p>
                 </div>
 
-                <div className="rounded-2xl border border-white/10 border-l-indigo-400 bg-white/[0.055] px-5 py-4 shadow-[inset_4px_0_0_rgba(129,140,248,0.95)]">
-                  <p className="text-[10px] font-semibold text-white/35">
+                <div className="rounded-2xl border border-white/10 bg-white/[0.045] px-4 py-3 shadow-[inset_3px_0_0_rgba(129,140,248,0.85)]">
+                  <p className="text-[9px] font-semibold text-white/30">
                     Variance Score
                   </p>
-                  <p className="mt-1 text-2xl font-semibold leading-none text-white">
+                  <p className="mt-1 text-lg font-semibold leading-none text-white">
                     Low{" "}
-                    <span className="text-sm font-semibold text-blue-400">
+                    <span className="text-xs font-semibold text-blue-400/80">
                       0.42%
                     </span>
                   </p>
                 </div>
               </div>
 
-              <div className="absolute bottom-4 left-1/2 h-1 w-20 -translate-x-1/2 rounded-full bg-white/50" />
+              <div className="absolute bottom-4 left-1/2 h-1 w-16 -translate-x-1/2 rounded-full bg-white/45" />
             </div>
 
             {/* MOBILE CARDS */}
