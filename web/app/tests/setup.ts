@@ -2,15 +2,25 @@ import { vi } from 'vitest'
 import '@testing-library/jest-dom/vitest'
 
 // Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
+class MockIntersectionObserver implements IntersectionObserver {
+  readonly root: Element | Document | null = null
+  readonly rootMargin: string = ''
+  readonly thresholds: ReadonlyArray<number> = []
+
   constructor() {}
-  disconnect() {}
-  observe() {}
-  unobserve() {}
-  takeRecords() {
+
+  disconnect(): void {}
+
+  observe(): void {}
+
+  unobserve(): void {}
+
+  takeRecords(): IntersectionObserverEntry[] {
     return []
   }
-} as any
+}
+
+global.IntersectionObserver = MockIntersectionObserver
 
 // Mock window.matchMedia
 Object.defineProperty(window, 'matchMedia', {

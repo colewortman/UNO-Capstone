@@ -7,6 +7,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import type { FC } from "react";
 
 // Lazy-load LiquidMetalLogo with no SSR to defer expensive WebGL initialization
 // Provides a placeholder skeleton while loading
@@ -18,7 +19,7 @@ const LiquidMetalLogo = dynamic(() => import("./ui/liquid-metal-hero"), {
       style={{ width: "100%", height: "100%" }}
     />
   ),
-});
+}) as unknown as FC<{ scale?: number; className?: string }>;
 
 export default function FooterSection() {
   return (
