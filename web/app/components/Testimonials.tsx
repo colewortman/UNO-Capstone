@@ -204,7 +204,7 @@ export function TestimonialsSection({
             </svg>
           </button>
 
-          <div className="w-full overflow-hidden px-0 xl:px-14">
+          <div className="w-full overflow-hidden px-0 xl:px-14 [mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_8%,black_92%,transparent_100%)] xl:[mask-image:linear-gradient(to_right,transparent_0%,black_25%,black_75%,transparent_100%)] xl:[-webkit-mask-image:linear-gradient(to_right,transparent_0%,black_25%,black_75%,transparent_100%)]">
             <div
               className="flex w-full transition-transform duration-500 ease-out"
               style={{ transform: `translateX(-${activePage * 100}%)` }}
@@ -290,8 +290,6 @@ export function TestimonialsSection({
             </svg>
           </button>
 
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-background sm:w-12 md:w-16 lg:w-20 xl:w-1/4" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-background sm:w-12 md:w-16 lg:w-20 xl:w-1/4" />
         </div>
 
         {pageCount > 0 && (

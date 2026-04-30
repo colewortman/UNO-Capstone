@@ -226,8 +226,9 @@ export default function PricingPage() {
   );
 
   return (
-    <div className="min-h-screen bg-[#111113] text-white">
-      <div className="mx-auto max-w-[1800px] px-4 py-10 sm:px-6 md:py-12">
+    <main className="flex min-h-screen w-full flex-col bg-[#111113] text-white">
+      <section className="relative flex w-full items-center justify-center overflow-hidden px-4 py-16 sm:px-6 sm:py-20 md:px-8 lg:min-h-[calc(100svh-4rem)] lg:items-start lg:px-12 lg:py-24 xl:px-16 scroll-mt-20 sm:[@media(max-height:800px)]:py-10 lg:[@media(max-height:800px)]:py-12">
+        <div className="mx-auto w-full max-w-[1800px]">
 
         {/* ── Page heading + subtitle ── */}
         <motion.div
@@ -311,9 +312,10 @@ export default function PricingPage() {
             </motion.div>
           ))}
         </motion.div>
-      </div>
+        </div>
+      </section>
 
       <FooterSection />
-    </div>
+    </main>
   );
 }

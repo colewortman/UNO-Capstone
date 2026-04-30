@@ -252,7 +252,7 @@ export function FeatureCarousel({
                             "text-white z-10",
                             inverted
                               ? "bg-blue-500 border-blue-500 shadow-[0_0_30px_rgba(59,130,246,0.35)]"
-                              : "bg-red-500 border-red-500 shadow-[0_0_30px_rgba(239,68,68,0.35)]",
+                              : "bg-[#EA4E3E] border-[#EA4E3E] shadow-[0_0_30px_rgba(234,78,62,0.35)]",
                           )
                         : "bg-transparent text-white/60 border-white/20 hover:border-white/40 hover:text-white",
                     )}

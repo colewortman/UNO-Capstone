@@ -22,24 +22,12 @@ export default function ProductDemoSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const isMobile = useMediaQuery("(max-width: 767px)");
 
-  // Drive animation purely from natural scroll. No pin → no extra section height.
-  //   "start 10%" — section top is 10% from the viewport top (about to slide
-  //                 under the sticky navbar).
-  //   "end 20%"   — section bottom is 20% from the viewport top (player nearly
-  //                 off the screen).
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start 10%", "end 20%"],
   });
 
-  // Step 1 — header slides down over the player and fades out.
-  const headerY = useTransform(scrollYProgress, [0, 0.4], ["0%", "200%"]);
-  const headerOpacity = useTransform(scrollYProgress, [0, 0.4], [1, 0]);
-
-  // Step 2 — overlay darkens.
   const overlayOpacity = useTransform(scrollYProgress, [0.3, 0.8], [0, 0.85]);
-
-  // Step 3 — player fades out before leaving the viewport.
   const playerOpacity = useTransform(scrollYProgress, [0.55, 1], [1, 0]);
 
   if (isMobile) {
@@ -80,7 +68,6 @@ export default function ProductDemoSection() {
   return (
     <div ref={sectionRef} className="relative text-white">
       <motion.div
-        style={{ y: headerY, opacity: headerOpacity }}
         className="relative z-10"
         variants={fadeUpContainer}
         initial="hidden"

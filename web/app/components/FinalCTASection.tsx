@@ -4,14 +4,18 @@
 
 "use client";
 
+import { useRouter } from "next/navigation";
 import { motion } from "motion/react";
 import {
   fadeUpContainer,
   fadeUpItem,
   fadeUpItemSlow,
 } from "@/lib/animations";
+import { LiquidMetalButton } from "./ui/liquid-metal-button";
 
 export default function FinalCTASection() {
+  const router = useRouter();
+
   return (
     <div className="text-white">
       <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
@@ -48,17 +52,15 @@ export default function FinalCTASection() {
           >
             <a
               href="#"
-              className="inline-flex items-center rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-8 py-4 text-base font-medium text-white shadow-[0_0_42px_rgba(59,130,246,0.32)] transition hover:scale-[1.02]"
+              className="inline-flex h-[46px] items-center justify-center rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-8 text-sm font-medium text-white shadow-[0_0_42px_rgba(59,130,246,0.32)] transition hover:scale-[1.02]"
             >
               Book a Demo
             </a>
 
-            <a
-              href="#pricing"
-              className="inline-flex items-center rounded-full border border-white/15 bg-white/[0.02] px-8 py-4 text-base font-medium text-white/90 backdrop-blur-sm transition hover:border-white/30 hover:bg-white/[0.05]"
-            >
-              See Pricing
-            </a>
+            <LiquidMetalButton
+              label="See Pricing"
+              onClick={() => router.push("/pricing")}
+            />
           </motion.div>
         </motion.div>
 
@@ -67,9 +69,9 @@ export default function FinalCTASection() {
         <div className="relative flex justify-center">
           <div className="relative aspect-[760/560] w-full max-w-[760px]">
             {/* SUBTLE GLOW */}
-            <div className="absolute left-1/2 top-[42%] -z-10 h-[75%] w-[55%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-[140px]" />
-            <div className="absolute left-1/2 top-[42%] -z-10 h-[57%] w-[42%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400/10 blur-[120px]" />
-            <div className="absolute left-1/2 top-[48%] -z-10 h-[46%] w-[34%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/10 blur-[120px]" />
+            <div className="absolute left-1/2 top-[42%] -z-10 h-[75%] w-[55%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/20 blur-[140px]" />
+            <div className="absolute left-1/2 top-[42%] -z-10 h-[57%] w-[42%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-400/20 blur-[120px]" />
+            <div className="absolute left-1/2 top-[48%] -z-10 h-[46%] w-[34%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-indigo-500/25 blur-[120px]" />
 
             {/* TOP-LEFT CARD — Consumption */}
             <div className="absolute left-[5%] top-[28%] z-20 flex aspect-[148/138] w-[20%] flex-col items-center justify-center rounded-2xl border border-white/10 bg-black px-2 shadow-[0_0_32px_rgba(0,0,0,0.45)] sm:rounded-3xl sm:px-3 md:rounded-[28px] md:px-4">
