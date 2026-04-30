@@ -28,15 +28,14 @@ describe("Pricing Page", () => {
     render(<PricingPage />);
     expect(
       screen.getByRole("heading", {
-        name: "From concept to launch — all in one place.",
+        name: "Choose the plan that works for you",
       }),
     ).toBeInTheDocument();
   });
 
-  it("has a link back to home", () => {
+  it("does not render a back to home link", () => {
     render(<PricingPage />);
-    const link = screen.getByRole("link", { name: /Back to Home/i });
-    expect(link).toHaveAttribute("href", "/");
+    expect(screen.queryByRole("link", { name: /Back to Home/i })).toBeNull();
   });
 });
 
