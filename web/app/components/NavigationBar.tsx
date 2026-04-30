@@ -99,7 +99,11 @@ export default function NavigationBar() {
       <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
         <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:justify-normal lg:px-10">
           {/* Logo / Brand */}
-          <Link href="/" className="shrink-0 justify-self-start">
+          <Link
+            href="/#hero"
+            onClick={scrollToHash}
+            className="shrink-0 justify-self-start"
+          >
             <Image
               src={logoWhite}
               alt="Liquor Vision logo"

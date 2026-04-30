@@ -2,6 +2,12 @@
 
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { motion } from "motion/react";
+import {
+  fadeUpContainer,
+  fadeUpItem,
+  fadeUpItemSlow,
+} from "@/lib/animations";
 
 type ResultMetrics = {
   currentPourCostDollars: number;
@@ -133,15 +139,29 @@ export default function ROICalculator() {
   const highlightRows = resultRows.slice(3);
 
   return (
-    <div className="space-y-6 sm:space-y-8 sm:[@media(max-height:800px)]:space-y-4">
-      <div className="space-y-2 text-center sm:[@media(max-height:800px)]:space-y-1">
-        <h2 className="text-3xl font-bold text-white sm:text-4xl md:text-5xl sm:[@media(max-height:800px)]:text-3xl">
+    <div className="space-y-6 sm:space-y-8 lg:space-y-14 sm:[@media(max-height:800px)]:space-y-4">
+      <motion.div
+        className="space-y-2 text-center sm:[@media(max-height:800px)]:space-y-1"
+        variants={fadeUpContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.h2
+          variants={fadeUpItem}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="text-3xl font-bold text-white sm:text-4xl md:text-5xl sm:[@media(max-height:800px)]:text-3xl"
+        >
           ROI Calculator
-        </h2>
-        <p className="text-sm text-white/65 sm:text-base sm:[@media(max-height:800px)]:text-sm">
+        </motion.h2>
+        <motion.p
+          variants={fadeUpItemSlow}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="text-sm text-white/65 sm:text-base sm:[@media(max-height:800px)]:text-sm"
+        >
           Enter the inputs and see how LiqrVision changes your annual results.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
       <div className="grid gap-6 lg:grid-cols-[1.05fr_0.95fr] sm:[@media(max-height:800px)]:gap-4">
         {/* ── INPUT PANEL ── */}
