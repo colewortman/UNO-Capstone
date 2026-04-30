@@ -4,7 +4,7 @@ This application is an updated website redesign for Bar IQ, meant to better repr
 
 ## Demo
 
-Visit the live site using the GitHub Pages link in the `about` section of the repository, or use this link: https://colewortman.github.io/UNO-Capstone/faq
+Visit the live site using the GitHub Pages link in the `about` section of the repository, or use this link: https://colewortman.github.io/UNO-Capstone/
 
 ## Code
 
