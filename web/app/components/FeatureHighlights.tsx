@@ -28,16 +28,16 @@ export default function FeatureHighlightsSection() {
   return (
     <section className="text-white">
       <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-        <div>
+        <div className="text-center lg:text-left">
           <p className="mb-3 text-xs uppercase tracking-[0.35em] text-blue-300">
             Feature Highlights
           </p>
 
-          <h2 className="max-w-xl text-3xl font-semibold tracking-tight text-white md:text-5xl">
+          <h2 className="mx-auto max-w-xl text-3xl font-semibold tracking-tight text-white md:text-5xl lg:mx-0">
             Built for faster counts and better visibility.
           </h2>
 
-          <p className="mt-4 max-w-lg text-base leading-7 text-white/60">
+          <p className="mx-auto mt-4 max-w-lg text-base leading-7 text-white/60 lg:mx-0">
             Liqr Vision keeps inventory simple and fast for the people running
             the bar.
           </p>
