@@ -6,7 +6,7 @@
 "use client";
 
 import Image from "next/image";
-import { Apple, Play, User, Zap } from "lucide-react";
+import { Apple, User, Zap } from "lucide-react";
 import { motion } from "motion/react";
 import {
   fadeUpContainer,
@@ -14,6 +14,7 @@ import {
   fadeUpItemSlow,
 } from "@/lib/animations";
 import heroImage from "@/public/hero_1.4.webp";
+import { LiquidMetalButton } from "./ui/liquid-metal-button";
 
 const avatars = [
   "https://randomuser.me/api/portraits/men/32.jpg",
@@ -73,19 +74,20 @@ export default function HeroSection() {
         >
           <a
             href="#"
-            className="inline-flex items-center gap-2 rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-5 py-2.5 text-sm font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01] sm:px-6 sm:py-3"
+            className="inline-flex h-[46px] items-center justify-center gap-2 rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-5 text-sm font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] transition hover:scale-[1.01]"
           >
             <Apple className="h-4 w-4 fill-white text-white" />
             Download App
           </a>
 
-          <a
-            href="#"
-            className="inline-flex items-center gap-2 rounded-full border border-white/20 px-5 py-2.5 text-sm font-medium text-white/90 transition hover:border-white/40 hover:bg-white/5 sm:px-6 sm:py-3"
-          >
-            <Play className="h-4 w-4 fill-white text-white" />
-            Watch Demo
-          </a>
+          <LiquidMetalButton
+            label="Watch Demo"
+            onClick={() =>
+              document
+                .getElementById("product-demo")
+                ?.scrollIntoView({ behavior: "smooth" })
+            }
+          />
         </motion.div>
       </motion.div>
 

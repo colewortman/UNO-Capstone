@@ -19,6 +19,7 @@ import {
   fadeUpItem,
   fadeUpItemSlow,
 } from "@/lib/animations";
+import { SpotlightCard } from "./ui/spotlight-card";
 
 const cardsStaggerContainer: Variants = {
   hidden: {},
@@ -36,6 +37,7 @@ type Step = {
   description: string;
   icon: typeof ScanLine;
   iconWrap: string;
+  spotlight: string;
 };
 
 const steps: Step[] = [
@@ -45,6 +47,7 @@ const steps: Step[] = [
     description: "Scan the barcode of one or multiple bottles at a time.",
     icon: ScanLine,
     iconWrap: "bg-white/10 text-white/80 ring-1 ring-white/20",
+    spotlight: "rgba(255, 255, 255, 0.15)",
   },
   {
     step: "Step 2",
@@ -52,6 +55,7 @@ const steps: Step[] = [
     description: "Point your phone camera at the liquid level or full bottle.",
     icon: Smartphone,
     iconWrap: "bg-blue-500/10 text-blue-300 ring-1 ring-blue-400/30",
+    spotlight: "rgba(59, 130, 246, 0.20)",
   },
   {
     step: "Step 3",
@@ -59,6 +63,7 @@ const steps: Step[] = [
     description: "Export your inventory count directly to your POS system.",
     icon: Upload,
     iconWrap: "bg-green-500/20 text-green-400 ring-1 ring-green-400/20",
+    spotlight: "rgba(34, 197, 94, 0.20)",
   },
 ];
 
@@ -66,7 +71,10 @@ function StepCard({ item }: { item: Step }) {
   const Icon = item.icon;
 
   return (
-    <div className="group relative rounded-[28px] border border-white/10 bg-[#121318] p-8 text-center transition hover:border-white/20 lg:h-[280px] lg:overflow-hidden">
+    <SpotlightCard
+      spotlightColor={item.spotlight}
+      className="group rounded-[28px] border-white/10 bg-[#121318] p-8 text-center transition hover:border-white/20 lg:h-[280px]"
+    >
       {/* Top content — vertically nudged down on lg+, slides up on hover */}
       <div className="lg:translate-y-7 lg:transition-transform lg:duration-500 lg:ease-out lg:group-hover:translate-y-0">
         {/* Icon */}
@@ -94,7 +102,7 @@ function StepCard({ item }: { item: Step }) {
       <p className="hidden text-sm leading-relaxed text-white/60 lg:absolute lg:inset-x-8 lg:bottom-8 lg:block lg:translate-y-10 lg:opacity-0 lg:transition-all lg:duration-500 lg:ease-out lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
         {item.description}
       </p>
-    </div>
+    </SpotlightCard>
   );
 }
 

@@ -314,7 +314,7 @@ export default function ROICalculator() {
           </div>
 
           {/* ── RESULTS PANEL ── */}
-          <div className={`rounded-2xl bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 px-4 py-4 text-white shadow-[0_30px_80px_rgba(37,99,235,0.45)] sm:rounded-[28px] sm:px-6 sm:py-5 sm:[@media(max-height:800px)]:px-4 sm:[@media(max-height:800px)]:py-3 ${showResults ? "" : "hidden lg:block"}`}>
+          <div className={`rounded-2xl bg-gradient-to-br from-blue-500 to-blue-400 px-4 py-4 text-white shadow-[0_30px_80px_rgba(59,130,246,0.45)] sm:rounded-[28px] sm:px-6 sm:py-5 sm:[@media(max-height:800px)]:px-4 sm:[@media(max-height:800px)]:py-3 ${showResults ? "" : "hidden lg:block"}`}>
             <div className="mb-3 flex items-start justify-between gap-3 sm:mb-5 sm:gap-4 sm:[@media(max-height:800px)]:mb-2">
               <div>
                 <p className="text-xs uppercase tracking-[0.2em] text-blue-100/70 sm:text-sm">
