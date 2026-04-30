@@ -13,7 +13,10 @@ import dynamic from "next/dynamic";
 const LiquidMetalLogo = dynamic(() => import("./ui/liquid-metal-hero"), {
   ssr: false,
   loading: () => (
-    <div className="bg-blue-500/5 rounded-full animate-pulse" style={{ width: "100%", height: "100%" }} />
+    <div
+      className="bg-blue-500/5 rounded-full animate-pulse"
+      style={{ width: "100%", height: "100%" }}
+    />
   ),
 });
 
