@@ -185,7 +185,7 @@ export default function PricingPage() {
         </div>
       </div>
       <h2 className="mb-1 text-sm font-semibold sm:mb-1.5 sm:text-xl">{tier.name}</h2>
-      <p className="mb-3 hidden text-sm leading-relaxed text-white/50 sm:mb-4 sm:block">{tier.description}</p>
+      <p className="mb-3 text-sm leading-relaxed text-white/50 sm:mb-4">{tier.description}</p>
       <div className="mb-1 flex items-end gap-0.5 sm:gap-1">
         <span className="text-2xl font-bold sm:text-4xl">${getPrice(tier.monthly)}</span>
         <span className="mb-0.5 text-[10px] text-white/50 sm:mb-1 sm:text-sm">/mo</span>
@@ -197,10 +197,10 @@ export default function PricingPage() {
       )}
       {!isYearly && <div className="mb-3 sm:mb-4" />}
       <div className="mb-3 h-px bg-white/10 sm:mb-4" />
-      <p className="mb-2 hidden text-xs font-medium uppercase tracking-widest text-white/35 sm:mb-2 sm:block">
+      <p className="mb-2 text-xs font-medium uppercase tracking-widest text-white/35 sm:mb-2">
         {tier.prefix}
       </p>
-      <ul className="mb-4 hidden flex-1 space-y-2 sm:mb-6 sm:block">
+      <ul className="mb-4 flex-1 space-y-2 sm:mb-6">
         {tier.features
           .filter((f) => !f.endsWith("plus:"))
           .map((feature) => (
@@ -214,9 +214,6 @@ export default function PricingPage() {
             </li>
           ))}
       </ul>
-      <p className="mb-3 flex-1 text-[10px] text-white/40 sm:hidden">
-        {tier.features.filter((f) => !f.endsWith("plus:")).length} features included
-      </p>
       <button
         className={`w-full rounded-lg py-2 text-xs font-medium transition sm:rounded-xl sm:py-2.5 sm:text-sm ${tier.ctaStyle}`}
       >
