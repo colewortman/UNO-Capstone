@@ -8,6 +8,11 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import {
+  fadeUpContainer,
+  fadeUpItem,
+  fadeUpItemSlow,
+} from "@/lib/animations";
 
 const competitors = [
   {
@@ -37,26 +42,48 @@ export default function Comparisons() {
 
   return (
     <section className="text-white">
-      <div className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+      <motion.div
+        className="grid gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center"
+        variants={fadeUpContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
         {/* Heading — appears above the list on small screens (centered),
             and on the right on lg+ (right-aligned). */}
         <div className="text-center lg:order-2 lg:text-right">
-          <p className="mb-3 text-xs uppercase tracking-[0.35em] text-blue-300">
+          <motion.p
+            variants={fadeUpItem}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mb-3 text-xs uppercase tracking-[0.35em] text-blue-300"
+          >
             Comparisons
-          </p>
+          </motion.p>
 
-          <h2 className="mx-auto max-w-xl text-3xl font-semibold tracking-tight text-white md:text-5xl lg:ml-auto lg:mr-0">
+          <motion.h2
+            variants={fadeUpItem}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mx-auto max-w-xl text-3xl font-semibold tracking-tight text-white md:text-5xl lg:ml-auto lg:mr-0"
+          >
             See how Liqr Vision stacks up.
-          </h2>
+          </motion.h2>
 
-          <p className="mx-auto mt-4 max-w-lg text-base leading-7 text-white/60 lg:ml-auto lg:mr-0">
+          <motion.p
+            variants={fadeUpItemSlow}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mx-auto mt-4 max-w-lg text-base leading-7 text-white/60 lg:ml-auto lg:mr-0"
+          >
             Compare modern AI-powered inventory with the legacy tools most bars
             still rely on today.
-          </p>
+          </motion.p>
         </div>
 
         {/* List — left column on lg+ (reversed from FeatureHighlights) */}
-        <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_70px_rgba(37,99,235,0.18)] backdrop-blur-sm sm:p-6 lg:order-1">
+        <motion.div
+          variants={fadeUpItem}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_70px_rgba(37,99,235,0.18)] backdrop-blur-sm sm:p-6 lg:order-1"
+        >
           <div className="divide-y divide-white/10">
             {competitors.map((item, index) => {
               const isSelected = index === selectedIndex;
@@ -121,8 +148,8 @@ export default function Comparisons() {
               );
             })}
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

@@ -4,6 +4,11 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "motion/react";
 import VideoPlayer from "./ui/video-player";
 import { useMediaQuery } from "@/app/hooks/useMediaQuery";
+import {
+  fadeUpContainer,
+  fadeUpItem,
+  fadeUpItemSlow,
+} from "@/lib/animations";
 
 const VideoPlayerDemo = () => {
   return (
@@ -40,16 +45,30 @@ export default function ProductDemoSection() {
   if (isMobile) {
     return (
       <div ref={sectionRef} className="relative text-white">
-        <div className="relative z-10">
-          <h2 className="mb-4 text-center text-3xl font-semibold sm:text-4xl md:text-5xl">
+        <motion.div
+          className="relative z-10"
+          variants={fadeUpContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.h2
+            variants={fadeUpItem}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mb-4 text-center text-3xl font-semibold sm:text-4xl md:text-5xl"
+          >
             See Liqr Vision in action
-          </h2>
+          </motion.h2>
 
-          <p className="mx-auto mb-8 max-w-2xl text-center text-base text-white/70 sm:text-lg">
+          <motion.p
+            variants={fadeUpItemSlow}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mx-auto mb-8 max-w-2xl text-center text-base text-white/70 sm:text-lg"
+          >
             Watch how Liqr Vision helps teams move from slow manual counts to fast,
             guided inventory workflows.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         <div className="relative mx-auto w-full max-w-4xl">
           <VideoPlayerDemo />
@@ -63,15 +82,27 @@ export default function ProductDemoSection() {
       <motion.div
         style={{ y: headerY, opacity: headerOpacity }}
         className="relative z-10"
+        variants={fadeUpContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
       >
-        <h2 className="mb-4 text-center text-3xl font-semibold sm:text-4xl md:text-5xl">
+        <motion.h2
+          variants={fadeUpItem}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="mb-4 text-center text-3xl font-semibold sm:text-4xl md:text-5xl"
+        >
           See Liqr Vision in action
-        </h2>
+        </motion.h2>
 
-        <p className="mx-auto mb-8 max-w-2xl text-center text-base text-white/70 sm:text-lg">
+        <motion.p
+          variants={fadeUpItemSlow}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="mx-auto mb-8 max-w-2xl text-center text-base text-white/70 sm:text-lg"
+        >
           Watch how Liqr Vision helps teams move from slow manual counts to fast,
           guided inventory workflows.
-        </p>
+        </motion.p>
       </motion.div>
 
       <motion.div

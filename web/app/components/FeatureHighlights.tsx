@@ -2,6 +2,11 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import {
+  fadeUpContainer,
+  fadeUpItem,
+  fadeUpItemSlow,
+} from "@/lib/animations";
 
 const features = [
   {
@@ -27,23 +32,45 @@ export default function FeatureHighlightsSection() {
 
   return (
     <section className="text-white">
-      <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+      <motion.div
+        className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center"
+        variants={fadeUpContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+      >
         <div className="text-center lg:text-left">
-          <p className="mb-3 text-xs uppercase tracking-[0.35em] text-blue-300">
+          <motion.p
+            variants={fadeUpItem}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mb-3 text-xs uppercase tracking-[0.35em] text-blue-300"
+          >
             Feature Highlights
-          </p>
+          </motion.p>
 
-          <h2 className="mx-auto max-w-xl text-3xl font-semibold tracking-tight text-white md:text-5xl lg:mx-0">
+          <motion.h2
+            variants={fadeUpItem}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mx-auto max-w-xl text-3xl font-semibold tracking-tight text-white md:text-5xl lg:mx-0"
+          >
             Built for faster counts and better visibility.
-          </h2>
+          </motion.h2>
 
-          <p className="mx-auto mt-4 max-w-lg text-base leading-7 text-white/60 lg:mx-0">
+          <motion.p
+            variants={fadeUpItemSlow}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mx-auto mt-4 max-w-lg text-base leading-7 text-white/60 lg:mx-0"
+          >
             Liqr Vision keeps inventory simple and fast for the people running
             the bar.
-          </p>
+          </motion.p>
         </div>
 
-        <div className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_70px_rgba(37,99,235,0.18)] backdrop-blur-sm sm:p-6">
+        <motion.div
+          variants={fadeUpItem}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="rounded-[2rem] border border-white/10 bg-white/[0.03] p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_0_70px_rgba(37,99,235,0.18)] backdrop-blur-sm sm:p-6"
+        >
           <div className="divide-y divide-white/10">
             {features.map((feature, index) => {
               const isSelected = index === selectedIndex;
@@ -105,8 +132,8 @@ export default function FeatureHighlightsSection() {
               );
             })}
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }

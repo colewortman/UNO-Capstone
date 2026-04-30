@@ -1,12 +1,28 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { motion, type Variants } from "motion/react";
 import { cn } from "@/lib/utils";
 import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 import {
   TestimonialCard,
   TestimonialAuthor,
 } from "@/app/components/ui/testimonial-card";
+import {
+  fadeUpContainer,
+  fadeUpItem,
+  fadeUpItemSlow,
+} from "@/lib/animations";
+
+const cardsStaggerContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.25,
+      staggerChildren: 0.15,
+    },
+  },
+};
 
 interface TestimonialsSectionProps {
   title?: string;
@@ -146,14 +162,28 @@ export function TestimonialsSection({
   return (
     <div className={cn("text-foreground", className)}>
       <div className="flex flex-col items-center gap-6 text-center sm:gap-10">
-        <div className="space-y-2 text-center">
-          <h2 className="mx-auto max-w-[720px] text-3xl font-semibold leading-tight sm:text-5xl sm:leading-tight">
+        <motion.div
+          className="space-y-2 text-center"
+          variants={fadeUpContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.h2
+            variants={fadeUpItem}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mx-auto max-w-[720px] text-3xl font-semibold leading-tight sm:text-5xl sm:leading-tight"
+          >
             {title}
-          </h2>
-          <p className="text-md mx-auto max-w-[600px] font-medium text-muted-foreground sm:text-xl">
+          </motion.h2>
+          <motion.p
+            variants={fadeUpItemSlow}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="text-md mx-auto max-w-[600px] font-medium text-muted-foreground sm:text-xl"
+          >
             {description}
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden px-2 sm:px-4">
           <button
@@ -179,27 +209,66 @@ export function TestimonialsSection({
               className="flex w-full transition-transform duration-500 ease-out"
               style={{ transform: `translateX(-${activePage * 100}%)` }}
             >
-              {pages.map((page, pageIndex) => (
-                <div
-                  key={`page-${pageIndex}`}
-                  style={{
-                    gridTemplateColumns: `repeat(${Math.max(page.length, 1)}, minmax(0, 1fr))`,
-                  }}
-                  className={cn(
-                    "grid min-w-full gap-4",
-                    page.length === 1 && "justify-items-center",
-                    page.length === 2 && "mx-auto max-w-[900px] gap-2 sm:gap-3",
-                  )}
-                >
-                  {page.map((testimonial, i) => (
-                    <TestimonialCard
-                      key={`${pageIndex}-${i}-${testimonial.author.name}`}
-                      {...testimonial}
-                      className={cn("h-full", page.length > 1 && "max-w-none")}
-                    />
-                  ))}
-                </div>
-              ))}
+              {pages.map((page, pageIndex) => {
+                const gridStyle = {
+                  gridTemplateColumns: `repeat(${Math.max(page.length, 1)}, minmax(0, 1fr))`,
+                };
+                const gridClassName = cn(
+                  "grid min-w-full gap-4",
+                  page.length === 1 && "justify-items-center",
+                  page.length === 2 && "mx-auto max-w-[900px] gap-2 sm:gap-3",
+                );
+
+                if (pageIndex === 0) {
+                  return (
+                    <motion.div
+                      key={`page-${pageIndex}`}
+                      style={gridStyle}
+                      className={gridClassName}
+                      variants={cardsStaggerContainer}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true, amount: 0.3 }}
+                    >
+                      {page.map((testimonial, i) => (
+                        <motion.div
+                          key={`${pageIndex}-${i}-${testimonial.author.name}`}
+                          variants={fadeUpItem}
+                          style={{ willChange: "transform, opacity, filter" }}
+                          className="h-full"
+                        >
+                          <TestimonialCard
+                            {...testimonial}
+                            className={cn(
+                              "h-full",
+                              page.length > 1 && "max-w-none",
+                            )}
+                          />
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  );
+                }
+
+                return (
+                  <div
+                    key={`page-${pageIndex}`}
+                    style={gridStyle}
+                    className={gridClassName}
+                  >
+                    {page.map((testimonial, i) => (
+                      <TestimonialCard
+                        key={`${pageIndex}-${i}-${testimonial.author.name}`}
+                        {...testimonial}
+                        className={cn(
+                          "h-full",
+                          page.length > 1 && "max-w-none",
+                        )}
+                      />
+                    ))}
+                  </div>
+                );
+              })}
             </div>
           </div>
 

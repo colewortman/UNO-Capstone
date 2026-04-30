@@ -4,23 +4,48 @@
 
 "use client";
 
+import { motion } from "motion/react";
+import {
+  fadeUpContainer,
+  fadeUpItem,
+  fadeUpItemSlow,
+} from "@/lib/animations";
+
 export default function FinalCTASection() {
   return (
     <div className="text-white">
       <div className="grid items-center gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:gap-16">
         {/* LEFT SIDE */}
-        <div className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left">
-          <h2 className="text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl">
+        <motion.div
+          className="mx-auto max-w-xl text-center lg:mx-0 lg:text-left"
+          variants={fadeUpContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.h2
+            variants={fadeUpItem}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="text-3xl font-semibold leading-tight tracking-tight text-white sm:text-4xl md:text-5xl"
+          >
             Inventory complete.
             <br />
             Revenue recovered.
-          </h2>
+          </motion.h2>
 
-          <p className="mt-6 text-lg leading-relaxed text-white/50 sm:text-xl">
+          <motion.p
+            variants={fadeUpItem}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mt-6 text-lg leading-relaxed text-white/50 sm:text-xl"
+          >
             Faster counts, fewer losses, more revenue.
-          </p>
+          </motion.p>
 
-          <div className="mt-9 flex flex-wrap items-center justify-center gap-4 lg:justify-start">
+          <motion.div
+            variants={fadeUpItemSlow}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mt-9 flex flex-wrap items-center justify-center gap-4 lg:justify-start"
+          >
             <a
               href="#"
               className="inline-flex items-center rounded-full bg-linear-to-r from-blue-500 to-blue-400 px-8 py-4 text-base font-medium text-white shadow-[0_0_42px_rgba(59,130,246,0.32)] transition hover:scale-[1.02]"
@@ -34,8 +59,8 @@ export default function FinalCTASection() {
             >
               See Pricing
             </a>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* RIGHT SIDE — fixed aspect ratio so the phone + side cards
             layout is preserved across all viewports. */}
