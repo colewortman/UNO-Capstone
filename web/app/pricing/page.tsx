@@ -1,9 +1,26 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { motion, type Variants } from "motion/react";
 import { Check } from "lucide-react";
 import { GlowingEffect } from "@/app/components/ui/glowing-effect";
 import FooterSection from "@/app/components/FooterSection";
+import {
+  fadeUpContainer,
+  fadeUpItem,
+  fadeUpItemSlow,
+} from "@/lib/animations";
+
+// Sequential card entrance — same pattern Testimonials.tsx uses.
+const cardsStaggerContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.25,
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 /**
  * Pricing tiers for BarIQ subscriptions.
@@ -249,15 +266,29 @@ export default function PricingPage() {
       <div className="mx-auto max-w-[1800px] px-4 py-10 sm:px-6 md:py-12">
 
         {/* ── Page heading + subtitle ── */}
-        <div className="mb-8 text-center md:mb-10">
-          <h1 className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+        <motion.div
+          className="mb-8 text-center md:mb-10"
+          variants={fadeUpContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          <motion.h1
+            variants={fadeUpItem}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mb-4 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl"
+          >
             Choose the plan that works for you
-          </h1>
-          <p className="mx-auto max-w-2xl text-white/55 text-lg">
+          </motion.h1>
+          <motion.p
+            variants={fadeUpItemSlow}
+            style={{ willChange: "transform, opacity, filter" }}
+            className="mx-auto max-w-2xl text-white/55 text-lg"
+          >
             End-to-end bar management, without the chaos. Stay aligned on pour costs
             at every stage with tools that make inventory seamless.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* ── Billing toggle: monthly / yearly ──
             Active selection gets a white pill background.
@@ -290,28 +321,48 @@ export default function PricingPage() {
 
         {/* ── Mobile grid (shows all plans at once) ── */}
         <div className="sm:hidden">
-          <div className="flex flex-wrap justify-center gap-2">
+          <motion.div
+            className="flex flex-wrap justify-center gap-2"
+            variants={cardsStaggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+          >
             {tiers.map((tier) => (
-              <div key={tier.name} className="w-[calc(33.333%-0.5rem)] min-w-[102px] max-w-[128px]">
+              <motion.div
+                key={tier.name}
+                variants={fadeUpItem}
+                style={{ willChange: "transform, opacity, filter" }}
+                className="w-[calc(33.333%-0.5rem)] min-w-[102px] max-w-[128px]"
+              >
                 {renderCard(tier)}
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
 
         {/* ── Tablet carousel (hidden on mobile and lg+) ── */}
         <div className="relative hidden sm:block lg:hidden">
-          <div
+          <motion.div
             ref={carouselRef}
             onScroll={handleCarouselScroll}
             className="flex items-stretch snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth [touch-action:pan-x] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+            variants={cardsStaggerContainer}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
           >
             {tiers.map((tier) => (
-              <div key={tier.name} className="grid min-w-full snap-center px-0">
+              <motion.div
+                key={tier.name}
+                variants={fadeUpItem}
+                style={{ willChange: "transform, opacity, filter" }}
+                className="grid min-w-full snap-center px-0"
+              >
                 {renderCard(tier)}
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           <div className="mt-6 flex justify-center gap-2">
             {tiers.map((_, idx) => (
@@ -329,9 +380,24 @@ export default function PricingPage() {
         </div>
 
         {/* ── Desktop pricing grid (lg+) ── */}
-        <div className="hidden gap-3 lg:grid lg:grid-cols-5">
-          {tiers.map((tier) => renderCard(tier))}
-        </div>
+        <motion.div
+          className="hidden gap-3 lg:grid lg:grid-cols-5"
+          variants={cardsStaggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          {tiers.map((tier) => (
+            <motion.div
+              key={tier.name}
+              variants={fadeUpItem}
+              style={{ willChange: "transform, opacity, filter" }}
+              className="h-full"
+            >
+              {renderCard(tier)}
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
 
       <FooterSection />

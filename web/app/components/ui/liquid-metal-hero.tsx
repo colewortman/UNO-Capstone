@@ -2,7 +2,11 @@
 
 import { useEffect, useRef, useState } from "react";
 import { LiquidMetal } from "@paper-design/shaders-react";
-import logoSrc from "@/public/lv-logo-icon.svg";
+// Pre-rasterized PNG (~512px tall) instead of the SVG source. The shader
+// library forces SVGs to render at 4096px before its Poisson preprocess,
+// which dominates the first-mount cost. A natural-size PNG bypasses that
+// path and shrinks every per-pixel loop / toBlob in toProcessedLiquidMetal.
+import logoSrc from "@/public/lv-logo-icon.png";
 
 export default function LiquidMetalLogo({
   className = "",
@@ -12,18 +16,15 @@ export default function LiquidMetalLogo({
   scale?: number;
 }) {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  // Allow unmounting when out of view to free GPU memory
-  const [isInView, setIsInView] = useState(false);
+  // Halt the rAF loop while offscreen. The shader stays mounted so we don't
+  // pay shader-recompile / texture-reupload cost on every scroll-back.
+  const [isInView, setIsInView] = useState(true);
 
   useEffect(() => {
     const el = wrapperRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
-      ([entry]) => {
-        setIsInView(entry.isIntersecting);
-      },
-      // No rootMargin: only mount when element is actually in view to avoid triggering
-      // expensive WebGL shader initialization during scroll
+      ([entry]) => setIsInView(entry.isIntersecting),
       { threshold: 0 },
     );
     observer.observe(el);
@@ -36,24 +37,22 @@ export default function LiquidMetalLogo({
       className={className}
       style={{ width: "100%", height: "100%" }}
     >
-      {isInView && (
-        <LiquidMetal
-          className="[&>canvas]:!z-0"
-          style={{ width: "100%", height: "100%" }}
-          image={logoSrc.src}
-          speed={1}
-          scale={scale}
-          colorBack="rgba(0,0,0,0)"
-          colorTint="#ffffff"
-          softness={0.1}
-          repetition={2}
-          shiftRed={0.3}
-          shiftBlue={0.3}
-          distortion={0.07}
-          contour={0.4}
-          angle={70}
-        />
-      )}
+      <LiquidMetal
+        className="[&>canvas]:!z-0"
+        style={{ width: "100%", height: "100%" }}
+        image={logoSrc.src}
+        speed={isInView ? 1 : 0}
+        scale={scale}
+        colorBack="rgba(0,0,0,0)"
+        colorTint="#ffffff"
+        softness={0.1}
+        repetition={2}
+        shiftRed={0.3}
+        shiftBlue={0.3}
+        distortion={0.07}
+        contour={0.4}
+        angle={70}
+      />
     </div>
   );
 }
