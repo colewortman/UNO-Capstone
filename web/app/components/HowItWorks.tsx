@@ -6,7 +6,29 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, ScanLine, Smartphone, Upload } from "lucide-react";
+import { motion, type Variants } from "motion/react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ScanLine,
+  Smartphone,
+  Upload,
+} from "lucide-react";
+import {
+  fadeUpContainer,
+  fadeUpItem,
+  fadeUpItemSlow,
+} from "@/lib/animations";
+
+const cardsStaggerContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.25,
+      staggerChildren: 0.15,
+    },
+  },
+};
 
 type Step = {
   step: string;
@@ -20,24 +42,21 @@ const steps: Step[] = [
   {
     step: "Step 1",
     title: "Scan bottles",
-    description:
-      "Scan the barcode of one or multiple bottles at a time.",
+    description: "Scan the barcode of one or multiple bottles at a time.",
     icon: ScanLine,
     iconWrap: "bg-white/10 text-white/80 ring-1 ring-white/20",
   },
   {
     step: "Step 2",
     title: "Measure levels",
-    description:
-      "Point your phone camera at the liquid level or full bottle.",
+    description: "Point your phone camera at the liquid level or full bottle.",
     icon: Smartphone,
     iconWrap: "bg-blue-500/10 text-blue-300 ring-1 ring-blue-400/30",
   },
   {
     step: "Step 3",
     title: "Export to POS",
-    description:
-      "Export your inventory count directly to your POS system.",
+    description: "Export your inventory count directly to your POS system.",
     icon: Upload,
     iconWrap: "bg-green-500/20 text-green-400 ring-1 ring-green-400/20",
   },
@@ -63,9 +82,7 @@ function StepCard({ item }: { item: Step }) {
         </p>
 
         {/* Title */}
-        <h3 className="mt-3 text-xl font-semibold text-white">
-          {item.title}
-        </h3>
+        <h3 className="mt-3 text-xl font-semibold text-white">{item.title}</h3>
       </div>
 
       {/* Description — inline on mobile, no animation */}
@@ -92,20 +109,38 @@ export default function HowItWorksSection() {
   return (
     <section className="text-white">
       {/* Header */}
-      <div className="mx-auto max-w-3xl text-center">
-        <p className="mb-2 text-xs uppercase tracking-[0.35em] text-blue-300">
+      <motion.div
+        className="mx-auto max-w-3xl text-center"
+        variants={fadeUpContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.p
+          variants={fadeUpItem}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="mb-2 text-xs uppercase tracking-[0.35em] text-blue-300"
+        >
           How It Works
-        </p>
+        </motion.p>
 
-        <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-5xl">
+        <motion.h2
+          variants={fadeUpItem}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="text-3xl font-semibold tracking-tight text-white sm:text-5xl"
+        >
           Get Started in 3 Easy Steps
-        </h2>
+        </motion.h2>
 
-        <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg">
+        <motion.p
+          variants={fadeUpItemSlow}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/55 sm:text-lg"
+        >
           Liqr Vision’s patent-pending AI Vision technology makes inventory
           control simple, fast, and accurate.
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
       {/* Mobile / tablet carousel — single card with arrows + dots */}
       <div className="mt-14 lg:hidden">
@@ -131,7 +166,9 @@ export default function HowItWorksSection() {
                 aria-label={`Go to step ${idx + 1}`}
                 onClick={() => goToStep(idx)}
                 className={`h-2 w-2 rounded-full transition cursor-pointer ${
-                  activeStep === idx ? "scale-125 bg-white" : "bg-white/30 hover:bg-white/50"
+                  activeStep === idx
+                    ? "scale-125 bg-white"
+                    : "bg-white/30 hover:bg-white/50"
                 }`}
               />
             ))}
@@ -149,11 +186,23 @@ export default function HowItWorksSection() {
       </div>
 
       {/* Desktop grid (lg+) */}
-      <div className="mt-14 hidden gap-6 lg:grid lg:grid-cols-3">
+      <motion.div
+        className="mt-14 hidden gap-6 lg:grid lg:grid-cols-3"
+        variants={cardsStaggerContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         {steps.map((item) => (
-          <StepCard key={item.step} item={item} />
+          <motion.div
+            key={item.step}
+            variants={fadeUpItem}
+            style={{ willChange: "transform, opacity, filter" }}
+          >
+            <StepCard item={item} />
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       {/* Centered CTA */}
       <div className="mt-10 flex justify-center">

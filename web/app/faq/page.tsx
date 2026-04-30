@@ -1,7 +1,23 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { motion, type Variants } from "motion/react";
+import {
+  fadeUpContainer,
+  fadeUpItem,
+} from "@/lib/animations";
 import FooterSection from "../components/FooterSection";
+
+// Sequential dropdown entrance — same pattern Testimonials.tsx uses.
+const dropdownsStaggerContainer: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      delayChildren: 0.25,
+      staggerChildren: 0.1,
+    },
+  },
+};
 
 const faqItems = [
   {
@@ -33,7 +49,7 @@ const faqItems = [
 
 export default function FAQSection() {
   const [query, setQuery] = useState("");
-  const [openIndex, setOpenIndex] = useState<number | null>(0);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const filteredFaqs = useMemo(() => {
     const value = query.trim().toLowerCase();
@@ -49,19 +65,33 @@ export default function FAQSection() {
 
   return (
     <>
-      <section id="faq" className="bg-black text-white">
+      <section id="faq" className="flex flex-col justify-center bg-black text-white lg:min-h-[calc(100svh-4rem)]">
         {/* Header */}
         <div className="px-4 py-10 sm:px-6 sm:py-12 md:px-8 md:py-14 lg:px-12 lg:py-16 xl:px-16">
           <div className="mx-auto max-w-7xl">
-            <div className="max-w-5xl">
-              <p className="mb-3 text-[11px] uppercase tracking-[0.35em] text-blue-300 sm:text-xs">
+            <motion.div
+              className="max-w-5xl"
+              variants={fadeUpContainer}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.3 }}
+            >
+              <motion.p
+                variants={fadeUpItem}
+                style={{ willChange: "transform, opacity, filter" }}
+                className="mb-3 text-[11px] uppercase tracking-[0.35em] text-blue-300 sm:text-xs"
+              >
                 FAQ
-              </p>
+              </motion.p>
 
-              <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:whitespace-nowrap">
+              <motion.h2
+                variants={fadeUpItem}
+                style={{ willChange: "transform, opacity, filter" }}
+                className="text-3xl font-semibold tracking-tight text-white sm:text-4xl lg:whitespace-nowrap"
+              >
                 Advice and answers from the Liqr Vision team
-              </h2>
-            </div>
+              </motion.h2>
+            </motion.div>
 
             <div className="mt-6 sm:mt-8">
               <div className="relative">
@@ -91,13 +121,21 @@ export default function FAQSection() {
                 No matching questions found.
               </div>
             ) : (
-              <div className="space-y-4">
+              <motion.div
+                className="space-y-4"
+                variants={dropdownsStaggerContainer}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.1 }}
+              >
                 {filteredFaqs.map((item, index) => {
                   const isOpen = openIndex === index;
 
                   return (
-                    <div
+                    <motion.div
                       key={`${item.question}-${index}`}
+                      variants={fadeUpItem}
+                      style={{ willChange: "transform, opacity, filter" }}
                       className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] shadow-[0_0_30px_rgba(59,130,246,0.03)]"
                     >
                       <button
@@ -136,10 +174,10 @@ export default function FAQSection() {
                           </p>
                         </div>
                       </div>
-                    </div>
+                    </motion.div>
                   );
                 })}
-              </div>
+              </motion.div>
             )}
 
             {/* Bottom banner */}

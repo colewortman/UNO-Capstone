@@ -3,6 +3,12 @@
 import { Button } from "@/app/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "motion/react";
+import {
+  fadeUpContainer,
+  fadeUpItem,
+  fadeUpItemSlow,
+} from "@/lib/animations";
 import lvLogoIcon from "@/public/lv-logo-icon.svg";
 import alohaLogo from "@/public/pos icons/Aloha.png";
 import cloverLogo from "@/public/pos icons/Clover.png";
@@ -41,27 +47,49 @@ export default function FeatureSection() {
     <section className="relative flex w-full items-center justify-center bg-black px-4 py-16 sm:px-6 sm:py-20 md:px-8 lg:min-h-[calc(100svh-4rem)] lg:px-12 lg:py-24 xl:px-16">
       <div className="mx-auto grid w-full max-w-[var(--container-content)] items-center gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,40rem)] lg:gap-12">
       {/* Left side: Heading and Text */}
-      <div className="z-10 mx-auto max-w-lg text-center lg:mx-0 lg:text-left">
-        <p className="mb-3 text-xs uppercase tracking-[0.35em] text-blue-300 lg:mb-4">
+      <motion.div
+        className="z-10 mx-auto max-w-lg text-center lg:mx-0 lg:text-left"
+        variants={fadeUpContainer}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.p
+          variants={fadeUpItem}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="mb-3 text-xs uppercase tracking-[0.35em] text-blue-300 lg:mb-4"
+        >
           POS Integrations
-        </p>
-        <h1 className="text-4xl font-semibold leading-[0.95] tracking-tight text-white sm:text-5xl lg:text-6xl">
+        </motion.p>
+        <motion.h1
+          variants={fadeUpItem}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="text-4xl font-semibold leading-[0.95] tracking-tight text-white sm:text-5xl lg:text-6xl"
+        >
           Plugs into the systems you already run.
-        </h1>
-        <p className="mt-4 max-w-xl text-base leading-7 text-white/65 sm:text-lg sm:leading-8">
+        </motion.h1>
+        <motion.p
+          variants={fadeUpItem}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="mt-4 max-w-xl text-base leading-7 text-white/65 sm:text-lg sm:leading-8"
+        >
           Counts, variance, and reorder data flow straight into your POS and
           back-office tools. No double entry. No spreadsheets. Just cleaner
           numbers in the dashboards your team already trusts.
-        </p>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start">
+        </motion.p>
+        <motion.div
+          variants={fadeUpItemSlow}
+          style={{ willChange: "transform, opacity, filter" }}
+          className="mt-6 flex flex-wrap items-center justify-center gap-3 lg:justify-start"
+        >
           <Button variant="default">
             <Link href="/signup">Get Started</Link>
           </Button>
           <Button variant="outline">
             <Link href="#">Request an Integration</Link>
           </Button>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Right side: Orbit animation */}
       <div className="relative mx-auto aspect-square w-full max-w-[40rem]">
