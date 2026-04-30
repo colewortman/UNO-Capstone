@@ -20,8 +20,7 @@ export function LiquidMetalButton({
     Array<{ x: number; y: number; id: number }>
   >([]);
   const shaderRef = useRef<HTMLDivElement>(null);
-  // biome-ignore lint/suspicious/noExplicitAny: External library without types
-  const shaderMount = useRef<any>(null);
+  const shaderMount = useRef<ShaderMount | null>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
   const rippleId = useRef(0);
 
@@ -81,9 +80,7 @@ export function LiquidMetalButton({
         // static import used above
 
         if (shaderRef.current) {
-          if (shaderMount.current?.destroy) {
-            shaderMount.current.destroy();
-          }
+          shaderMount.current?.dispose();
 
           shaderMount.current = new ShaderMount(
             shaderRef.current,
@@ -113,10 +110,8 @@ export function LiquidMetalButton({
     loadShader();
 
     return () => {
-      if (shaderMount.current?.destroy) {
-        shaderMount.current.destroy();
-        shaderMount.current = null;
-      }
+      shaderMount.current?.dispose();
+      shaderMount.current = null;
     };
   }, []);
 
