@@ -6,13 +6,18 @@
 
 "use client";
 
-import { useMediaQuery } from "@/app/hooks/useMediaQuery";
-import LiquidMetalLogo from "./ui/liquid-metal-hero";
+import dynamic from "next/dynamic";
+
+// Lazy-load LiquidMetalLogo with no SSR to defer expensive WebGL initialization
+// Provides a placeholder skeleton while loading
+const LiquidMetalLogo = dynamic(() => import("./ui/liquid-metal-hero"), {
+  ssr: false,
+  loading: () => (
+    <div className="bg-blue-500/5 rounded-full animate-pulse" style={{ width: "100%", height: "100%" }} />
+  ),
+});
 
 export default function FooterSection() {
-  // Only render LiquidMetalLogo once: mobile version on sm/md, desktop version on lg+
-  const isLargeScreen = useMediaQuery("(min-width: 1024px)");
-
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-black px-4 pb-12 pt-16 text-white sm:px-6 sm:pb-16 sm:pt-20 md:px-8 lg:px-12 lg:pb-20 lg:pt-24 xl:px-16 xl:pt-32">
       {/* background glow */}
@@ -23,27 +28,23 @@ export default function FooterSection() {
       </div>
 
       <div className="relative mx-auto max-w-[var(--container-content)]">
-        {/* liquid metal logo — conditionally rendered based on screen size */}
-        {!isLargeScreen && (
-          <div className="mb-8 flex justify-center sm:mb-12">
-            <div className="relative h-[140px] w-full max-w-[180px] sm:h-[160px] sm:max-w-[200px]">
+        {/* liquid metal logo — single instance with responsive sizing via CSS */}
+        <div className="mb-8 flex justify-center sm:mb-12 lg:hidden">
+          <div className="relative h-[140px] w-full max-w-[180px] sm:h-[160px] sm:max-w-[200px]">
+            <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[60px]" />
+            <LiquidMetalLogo scale={1} />
+          </div>
+        </div>
+
+        {/* main footer grid */}
+        <div className="grid grid-cols-3 justify-items-center gap-x-3 gap-y-8 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-4">
+          {/* liquid metal logo — only shown on lg+ via CSS, not conditional rendering */}
+          <div className="hidden h-full w-full items-stretch justify-center lg:flex">
+            <div className="relative h-full min-h-[160px] w-full max-w-[200px]">
               <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[60px]" />
               <LiquidMetalLogo scale={1} />
             </div>
           </div>
-        )}
-
-        {/* main footer grid */}
-        <div className="grid grid-cols-3 justify-items-center gap-x-3 gap-y-8 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-4">
-          {/* liquid metal logo — only rendered on lg+ */}
-          {isLargeScreen && (
-            <div className="flex h-full w-full items-stretch justify-center">
-              <div className="relative h-full min-h-[160px] w-full max-w-[200px]">
-                <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[60px]" />
-                <LiquidMetalLogo scale={1} />
-              </div>
-            </div>
-          )}
 
           {/* product */}
           <div>
