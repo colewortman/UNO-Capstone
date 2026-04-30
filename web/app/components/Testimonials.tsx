@@ -183,20 +183,19 @@ export function TestimonialsSection({
                 <div
                   key={`page-${pageIndex}`}
                   style={{
-                    gridTemplateColumns: `repeat(${Math.max(page.length, 1)}, minmax(0, 1fr))`,
+                    gridTemplateColumns: `repeat(${cardsPerPage}, minmax(0, 1fr))`,
                   }}
-                  className={cn(
-                    "grid min-w-full gap-4",
-                    page.length === 1 && "justify-items-center",
-                    page.length === 2 && "mx-auto max-w-[900px] gap-2 sm:gap-3",
-                  )}
+                  className="grid min-w-full gap-4"
                 >
                   {page.map((testimonial, i) => (
                     <TestimonialCard
                       key={`${pageIndex}-${i}-${testimonial.author.name}`}
                       {...testimonial}
-                      className={cn("h-full", page.length > 1 && "max-w-none")}
+                      className="h-full max-w-none"
                     />
+                  ))}
+                  {Array.from({ length: Math.max(0, cardsPerPage - page.length) }).map((_, i) => (
+                    <div key={`placeholder-${pageIndex}-${i}`} aria-hidden="true" className="invisible h-full" />
                   ))}
                 </div>
               ))}

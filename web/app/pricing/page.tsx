@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { Check } from "lucide-react";
 import { GlowingEffect } from "@/app/components/ui/glowing-effect";
 import FooterSection from "@/app/components/FooterSection";
@@ -147,42 +147,6 @@ export default function PricingPage() {
   const getPrice = (monthly: number) =>
     isYearly ? Math.round(monthly * 0.8) : monthly;
 
-  // ── Carousel state (mobile / tablet) ──
-  const [activeSlide, setActiveSlide] = useState(0);
-  const slideCount = tiers.length;
-  const carouselRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    if (activeSlide >= slideCount) setActiveSlide(Math.max(0, slideCount - 1));
-  }, [activeSlide, slideCount]);
-
-  const goToSlide = (slideIndex: number) => {
-    const carouselEl = carouselRef.current;
-    if (!carouselEl) {
-      setActiveSlide(slideIndex);
-      return;
-    }
-
-    const boundedSlide = Math.min(Math.max(slideIndex, 0), slideCount - 1);
-    carouselEl.scrollTo({
-      left: boundedSlide * carouselEl.clientWidth,
-      behavior: "smooth",
-    });
-    setActiveSlide(boundedSlide);
-  };
-
-  const handleCarouselScroll = () => {
-    const carouselEl = carouselRef.current;
-    if (!carouselEl) return;
-
-    const nextSlide = Math.round(carouselEl.scrollLeft / carouselEl.clientWidth);
-    const boundedSlide = Math.min(Math.max(nextSlide, 0), slideCount - 1);
-
-    if (boundedSlide !== activeSlide) {
-      setActiveSlide(boundedSlide);
-    }
-  };
-
   const renderCard = (tier: (typeof tiers)[0]) => (
     <div
       key={tier.name}
@@ -288,44 +252,13 @@ export default function PricingPage() {
           <span className="text-sm text-blue-400">Save up to 20% with yearly</span>
         </div>
 
-        {/* ── Mobile grid (shows all plans at once) ── */}
-        <div className="sm:hidden">
-          <div className="flex flex-wrap justify-center gap-2">
-            {tiers.map((tier) => (
-              <div key={tier.name} className="w-[calc(33.333%-0.5rem)] min-w-[102px] max-w-[128px]">
-                {renderCard(tier)}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ── Tablet carousel (hidden on mobile and lg+) ── */}
-        <div className="relative hidden sm:block lg:hidden">
-          <div
-            ref={carouselRef}
-            onScroll={handleCarouselScroll}
-            className="flex items-stretch snap-x snap-mandatory overflow-x-auto overflow-y-hidden scroll-smooth [touch-action:pan-x] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
-          >
-            {tiers.map((tier) => (
-              <div key={tier.name} className="grid min-w-full snap-center px-0">
-                {renderCard(tier)}
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 flex justify-center gap-2">
-            {tiers.map((_, idx) => (
-              <button
-                key={idx}
-                type="button"
-                aria-label={`Go to plan ${idx + 1}`}
-                onClick={() => goToSlide(idx)}
-                className={`h-2 w-2 rounded-full transition ${
-                  activeSlide === idx ? "scale-125 bg-white" : "bg-white/30 hover:bg-white/50"
-                }`}
-              />
-            ))}
-          </div>
+        {/* ── Mobile/compact tablet stacked cards (full-width, scrollable page) ── */}
+        <div className="space-y-4 lg:hidden">
+          {tiers.map((tier) => (
+            <div key={tier.name} className="w-full">
+              {renderCard(tier)}
+            </div>
+          ))}
         </div>
 
         {/* ── Desktop pricing grid (lg+) ── */}
