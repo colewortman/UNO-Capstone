@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { useLenis } from "lenis/react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FeatureCarousel } from "./ui/feature-carousel";
 import { useMediaQuery } from "@/app/hooks/useMediaQuery";
 import { cn } from "@/lib/utils";
@@ -148,59 +149,37 @@ export default function ProblemSolutionSection() {
     { scope: sectionRef, dependencies: [isMobile] },
   );
 
-  const toggleMobileCarousel = () => {
-    const toSolution = !showSolution;
+  // Mobile carousel control. Index 0 = problem, 1 = solution.
+  // Only the problem carousel animates — solution sits static underneath.
+  // Splitting problem apart reveals the solution; bringing it back covers it.
+  const goToMobileIndex = (idx: number) => {
+    const toSolution = idx === 1;
+    if (toSolution === showSolution) return;
     setShowSolution(toSolution);
 
-    // Only the problem carousel animates — solution sits static underneath.
-    // Toggling on splits the problem apart to reveal the solution; toggling
-    // off brings the problem back together to cover the solution.
-    const bluePanel = ".ps-mobile-problem .fc-blue-panel";
-    const imagePanel = ".ps-mobile-problem .fc-image-panel";
-
-    gsap.to(bluePanel, {
+    gsap.to(".ps-mobile-problem .fc-blue-panel", {
       yPercent: toSolution ? -100 : 0,
       duration: 0.6,
       ease: "power2.inOut",
     });
-    gsap.to(imagePanel, {
+    gsap.to(".ps-mobile-problem .fc-image-panel", {
       yPercent: toSolution ? 100 : 0,
       duration: 0.6,
       ease: "power2.inOut",
     });
   };
 
+  const prevMobile = () => goToMobileIndex(showSolution ? 0 : 1);
+  const nextMobile = () => goToMobileIndex(showSolution ? 0 : 1);
+
   return (
     <div ref={sectionRef}>
-      {/* Mobile: single carousel with toggle button, horizontal slide animation */}
+      {/* Mobile: single carousel with chevrons + dot indicators below */}
       <div className={isMobile ? "" : "hidden"}>
-        <div className="mb-6 flex items-center justify-center gap-3">
-          {/* Invisible spacer mirrors the button so the header stays centered */}
-          <div className="h-9 w-9" aria-hidden="true" />
+        <div className="mb-6 flex items-center justify-center">
           <h2 className="text-3xl font-semibold sm:text-4xl">
             {showSolution ? "The Solution" : "The Problem"}
           </h2>
-          <button
-            type="button"
-            onClick={toggleMobileCarousel}
-            aria-label={showSolution ? "Show The Problem" : "Show The Solution"}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-foreground/20 text-foreground transition-colors hover:bg-foreground/10 cursor-pointer"
-          >
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={2}
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              className={cn(
-                "h-4 w-4 transition-transform duration-300",
-                showSolution && "rotate-180",
-              )}
-            >
-              <path d="M9 6l6 6-6 6" />
-            </svg>
-          </button>
         </div>
 
         <div className="relative mx-auto h-[420px] w-full overflow-hidden md:aspect-[16/9] md:h-auto">
@@ -221,6 +200,46 @@ export default function ProblemSolutionSection() {
           >
             <FeatureCarousel paused={showSolution} />
           </div>
+        </div>
+
+        <div className="mt-6 flex items-center justify-center gap-4">
+          <button
+            type="button"
+            onClick={prevMobile}
+            aria-label="Previous carousel"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-foreground/5 text-foreground/70 transition hover:border-foreground/30 hover:bg-foreground/10 hover:text-foreground cursor-pointer"
+          >
+            <ChevronLeft className="h-5 w-5" />
+          </button>
+
+          <div className="flex gap-2">
+            {[0, 1].map((idx) => {
+              const activeIdx = showSolution ? 1 : 0;
+              return (
+                <button
+                  key={idx}
+                  type="button"
+                  aria-label={idx === 0 ? "Show The Problem" : "Show The Solution"}
+                  onClick={() => goToMobileIndex(idx)}
+                  className={cn(
+                    "h-2 w-2 rounded-full transition cursor-pointer",
+                    activeIdx === idx
+                      ? "scale-125 bg-foreground"
+                      : "bg-foreground/30 hover:bg-foreground/50",
+                  )}
+                />
+              );
+            })}
+          </div>
+
+          <button
+            type="button"
+            onClick={nextMobile}
+            aria-label="Next carousel"
+            className="flex h-10 w-10 items-center justify-center rounded-full border border-foreground/15 bg-foreground/5 text-foreground/70 transition hover:border-foreground/30 hover:bg-foreground/10 hover:text-foreground cursor-pointer"
+          >
+            <ChevronRight className="h-5 w-5" />
+          </button>
         </div>
       </div>
 

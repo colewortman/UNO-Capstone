@@ -41,7 +41,7 @@ function HamburgerIcon({ open }: { open: boolean }) {
 }
 
 const mobileLinks = [
-  { href: "/#hero", label: "Home" },
+  { href: "/", label: "Home" },
   { href: "/pricing", label: "Pricing" },
   { href: "/ROI", label: "ROI Calculator" },
   { href: "/integration", label: "Integration" },
@@ -69,15 +69,16 @@ export default function NavigationBar() {
     };
   }, [mobileMenuOpen]);
 
+  const isHomePagePath = () =>
+    window.location.pathname === "/" ||
+    window.location.pathname === "/UNO-Capstone" ||
+    window.location.pathname === "/UNO-Capstone/";
+
   const scrollToHash = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     const href = e.currentTarget.getAttribute("href") ?? "";
     const hash = href.includes("#") ? href.split("#")[1] : null;
     if (hash) {
-      const isHomePage =
-        window.location.pathname === "/" ||
-        window.location.pathname === "/UNO-Capstone" ||
-        window.location.pathname === "/UNO-Capstone/";
-      if (isHomePage) {
+      if (isHomePagePath()) {
         e.preventDefault();
         const el = document.getElementById(hash);
         el?.scrollIntoView({ behavior: "smooth" });
@@ -91,6 +92,16 @@ export default function NavigationBar() {
     }
   }, []);
 
+  const scrollToTop = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (isHomePagePath()) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setMobileMenuOpen(false);
+    }
+    // Cross-page: let Next.js navigate to "/" — it scrolls to top by default,
+    // so no manual setTimeout/scrollTo needed (which caused the two-step jump).
+  }, []);
+
   return (
     <>
       <div className="hidden w-full bg-linear-to-r from-blue-500 to-blue-400 px-4 py-2 text-center text-sm font-medium text-white shadow-[0_0_40px_rgba(59,130,246,0.28)] lg:block">
@@ -100,8 +111,8 @@ export default function NavigationBar() {
         <div className="flex h-16 items-center justify-between px-4 sm:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:justify-normal lg:px-10">
           {/* Logo / Brand */}
           <Link
-            href="/#hero"
-            onClick={scrollToHash}
+            href="/"
+            onClick={scrollToTop}
             className="shrink-0 justify-self-start"
           >
             <Image
@@ -127,9 +138,9 @@ export default function NavigationBar() {
                         <ul className="grid w-100 gap-1 p-2 md:w-125 md:grid-cols-2">
                           <li>
                             <NavigationMenuLink
-                              href="/#hero"
+                              href="/"
                               render={
-                                <Link href="/#hero" onClick={scrollToHash} />
+                                <Link href="/" onClick={scrollToTop} />
                               }
                             >
                               <span className="font-medium">Home</span>
@@ -348,6 +359,8 @@ export default function NavigationBar() {
                 onClick={(e) => {
                   if (link.href.includes("#")) {
                     scrollToHash(e);
+                  } else if (link.href === "/") {
+                    scrollToTop(e);
                   }
                   setMobileMenuOpen(false);
                 }}
