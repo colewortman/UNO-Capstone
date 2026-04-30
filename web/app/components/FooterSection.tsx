@@ -6,7 +6,20 @@
 
 "use client";
 
-import LiquidMetalLogo from "./ui/liquid-metal-hero";
+import dynamic from "next/dynamic";
+import type { FC } from "react";
+
+// Lazy-load LiquidMetalLogo with no SSR to defer expensive WebGL initialization
+// Provides a placeholder skeleton while loading
+const LiquidMetalLogo = dynamic(() => import("./ui/liquid-metal-hero"), {
+  ssr: false,
+  loading: () => (
+    <div
+      className="bg-blue-500/5 rounded-full animate-pulse"
+      style={{ width: "100%", height: "100%" }}
+    />
+  ),
+}) as unknown as FC<{ scale?: number; className?: string }>;
 
 export default function FooterSection() {
   return (
@@ -19,7 +32,7 @@ export default function FooterSection() {
       </div>
 
       <div className="relative mx-auto max-w-[var(--container-content)]">
-        {/* liquid metal logo — own row on mobile/tablet, hidden here on desktop */}
+        {/* liquid metal logo — single instance with responsive sizing via CSS */}
         <div className="mb-8 flex justify-center sm:mb-12 lg:hidden">
           <div className="relative h-[140px] w-full max-w-[180px] sm:h-[160px] sm:max-w-[200px]">
             <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[60px]" />
@@ -29,8 +42,8 @@ export default function FooterSection() {
 
         {/* main footer grid */}
         <div className="grid grid-cols-3 justify-items-center gap-x-3 gap-y-8 sm:gap-x-8 sm:gap-y-12 lg:grid-cols-4">
-          {/* liquid metal logo — only shown inline on lg+ */}
-          <div className="hidden lg:flex lg:h-full lg:w-full lg:items-stretch lg:justify-center">
+          {/* liquid metal logo — only shown on lg+ via CSS, not conditional rendering */}
+          <div className="hidden h-full w-full items-stretch justify-center lg:flex">
             <div className="relative h-full min-h-[160px] w-full max-w-[200px]">
               <div className="absolute inset-0 rounded-full bg-blue-500/10 blur-[60px]" />
               <LiquidMetalLogo scale={1} />

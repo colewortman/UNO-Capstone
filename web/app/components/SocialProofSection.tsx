@@ -1,3 +1,11 @@
+"use client";
+
+import { motion } from "motion/react";
+import {
+  fadeUpContainer,
+  fadeUpItem,
+  fadeUpItemSlow,
+} from "@/lib/animations";
 import { LogoCloud } from "./ui/logo-cloud-4";
 import baLogo from "@/public/logos/BA.svg";
 import bakLogo from "@/public/logos/BAK.svg";
@@ -29,15 +37,29 @@ const logos = [
 
 export default function SocialProofSection() {
   return (
-    <div className="w-full">
-      <h2 className="mb-1 text-center text-xl font-semibold tracking-tight text-white md:text-2xl">
+    <motion.div
+      className="w-full"
+      variants={fadeUpContainer}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      <motion.h2
+        variants={fadeUpItem}
+        style={{ willChange: "transform, opacity, filter" }}
+        className="mb-1 text-center text-xl font-semibold tracking-tight text-white md:text-2xl"
+      >
         These companies increase their profit by 5% with Liqr Vision
-      </h2>
-      <h3 className="mb-5 text-center text-sm font-medium tracking-tight text-white/60 md:text-base">
+      </motion.h2>
+      <motion.h3
+        variants={fadeUpItemSlow}
+        style={{ willChange: "transform, opacity, filter" }}
+        className="mb-5 text-center text-sm font-medium tracking-tight text-white/60 md:text-base"
+      >
         Stop losing your profit!
-      </h3>
+      </motion.h3>
 
       <LogoCloud logos={logos} perPage={4} perPageMobile={3} />
-    </div>
+    </motion.div>
   );
 }
