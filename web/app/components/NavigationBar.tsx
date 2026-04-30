@@ -43,7 +43,7 @@ function HamburgerIcon({ open }: { open: boolean }) {
 const mobileLinks = [
   { href: "/#hero", label: "Home" },
   { href: "/pricing", label: "Pricing" },
-  { href: "/premium", label: "Premium" },
+  { href: "/ROI", label: "ROI Calculator" },
   { href: "/integration", label: "Integration" },
   { href: "/faq", label: "FAQ" },
 ];
