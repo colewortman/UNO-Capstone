@@ -8,8 +8,8 @@ import {
 } from "@/lib/animations";
 import FooterSection from "../components/FooterSection";
 
-// Sequential dropdown entrance — same pattern Testimonials.tsx uses.
-const dropdownsStaggerContainer: Variants = {
+// Sequential card entrance — same pattern Pricing/Testimonials use.
+const cardsStaggerContainer: Variants = {
   hidden: {},
   visible: {
     transition: {
@@ -17,6 +17,20 @@ const dropdownsStaggerContainer: Variants = {
       staggerChildren: 0.1,
     },
   },
+};
+
+// Returns a relevance score for `item` against `value`, or null if no match.
+// Lower scores are better. Question hits beat answer hits; earlier hits beat later.
+const matchScore = (
+  item: { question: string; answer: string },
+  value: string,
+): number | null => {
+  const qIdx = item.question.toLowerCase().indexOf(value);
+  const aIdx = item.answer.toLowerCase().indexOf(value);
+  if (qIdx === -1 && aIdx === -1) return null;
+  return (
+    (qIdx === -1 ? 10_000 : qIdx) + (aIdx === -1 ? 10_000 : aIdx + 1_000)
+  );
 };
 
 const faqItems = [
@@ -51,21 +65,27 @@ export default function FAQSection() {
   const [query, setQuery] = useState("");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const filteredFaqs = useMemo(() => {
+  // Per-card visibility flags + the index of the best match. We keep all cards
+  // mounted (so the parent's one-shot stagger animation isn't disrupted) and
+  // just hide non-matching cards via display:none.
+  const { visibleFlags, anyMatch } = useMemo(() => {
     const value = query.trim().toLowerCase();
-
-    if (!value) return faqItems;
-
-    return faqItems.filter(
-      (item) =>
-        item.question.toLowerCase().includes(value) ||
-        item.answer.toLowerCase().includes(value),
-    );
+    if (!value) {
+      return {
+        visibleFlags: faqItems.map(() => true),
+        anyMatch: true,
+      };
+    }
+    const flags = faqItems.map((item) => matchScore(item, value) !== null);
+    return { visibleFlags: flags, anyMatch: flags.some(Boolean) };
   }, [query]);
 
   return (
     <>
-      <section id="faq" className="flex flex-col justify-center bg-black text-white lg:min-h-[calc(100svh-4rem)]">
+      <section
+        id="faq"
+        className="flex flex-col justify-center bg-black text-white lg:min-h-[calc(100svh-4rem)]"
+      >
         {/* Header */}
         <div className="px-4 py-10 sm:px-6 sm:py-12 md:px-8 md:py-14 lg:px-12 lg:py-16 xl:px-16">
           <div className="mx-auto max-w-7xl">
@@ -99,8 +119,25 @@ export default function FAQSection() {
                   type="text"
                   value={query}
                   onChange={(e) => {
-                    setQuery(e.target.value);
-                    setOpenIndex(0);
+                    const next = e.target.value;
+                    setQuery(next);
+                    const value = next.trim().toLowerCase();
+                    if (!value) {
+                      setOpenIndex(null);
+                      return;
+                    }
+                    // Auto-open the most relevant match so the user immediately
+                    // sees the answer to what they're searching for.
+                    let bestIdx: number | null = null;
+                    let bestScore = Infinity;
+                    faqItems.forEach((item, i) => {
+                      const score = matchScore(item, value);
+                      if (score !== null && score < bestScore) {
+                        bestScore = score;
+                        bestIdx = i;
+                      }
+                    });
+                    setOpenIndex(bestIdx);
                   }}
                   placeholder="Search for questions..."
                   className="w-full rounded-2xl border border-white/10 bg-white/[0.06] px-5 py-4 pl-14 text-base text-white outline-none transition placeholder:text-white/45 focus:border-blue-300/50 focus:bg-white/[0.08] sm:text-lg"
@@ -116,27 +153,30 @@ export default function FAQSection() {
         {/* FAQ Cards */}
         <div className="px-4 pb-10 sm:px-6 sm:pb-12 md:px-8 md:pb-14 lg:px-12 lg:pb-16 xl:px-16">
           <div className="mx-auto max-w-7xl">
-            {filteredFaqs.length === 0 ? (
+            {!anyMatch ? (
               <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-6 py-8 text-white/60">
                 No matching questions found.
               </div>
             ) : (
               <motion.div
                 className="space-y-4"
-                variants={dropdownsStaggerContainer}
+                variants={cardsStaggerContainer}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, amount: 0.1 }}
               >
-                {filteredFaqs.map((item, index) => {
+                {faqItems.map((item, index) => {
                   const isOpen = openIndex === index;
+                  const isVisible = visibleFlags[index];
 
                   return (
                     <motion.div
-                      key={`${item.question}-${index}`}
+                      key={item.question}
                       variants={fadeUpItem}
                       style={{ willChange: "transform, opacity, filter" }}
-                      className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] shadow-[0_0_30px_rgba(59,130,246,0.03)]"
+                      className={`overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] shadow-[0_0_30px_rgba(59,130,246,0.03)] ${
+                        isVisible ? "" : "hidden"
+                      }`}
                     >
                       <button
                         onClick={() =>
